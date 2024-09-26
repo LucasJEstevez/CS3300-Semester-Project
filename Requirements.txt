@@ -1,0 +1,8 @@
+Ease of use
+Clean UI
+Ability to look at individual listings
+Users able to create an account on the website
+After account creation, shall be able to save/add listings
+Ability to share entries/listings with others (minimum a link, ideally email/phone)
+Ability to report suspicious listings (ensure cannot be abused)
+Update car data daily by requesting API 
