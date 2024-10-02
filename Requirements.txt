@@ -6,3 +6,4 @@ After account creation, shall be able to save/add listings
 Ability to share entries/listings with others (minimum a link, ideally email/phone)
 Ability to report suspicious listings (ensure cannot be abused)
 Update car data daily by requesting API 
+Site displays recently sold price for specifically searched car (if applicable/possible)
