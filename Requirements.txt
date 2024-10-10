@@ -13,6 +13,6 @@ Functional Requirements
 Non-Functional Requirements
   - Ease of use
   - Clean UI
-  - Quick feedback when price checking
+  - Quick feedback when price-checking
   - Display (limited) vehicle information without having to look at a car specifically
-  - Display available cars directly on the homepage
+  - Multiple landing pages (homepage, buy page, sell page, login, terms/about)
