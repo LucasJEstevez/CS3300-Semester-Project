@@ -1,0 +1,26 @@
+/*Change style settings*/
+.user
+{
+  width: 35px;
+  height: 50px;
+  position:fixed;
+  top: 10px;
+  right:5px;
+}
+
+.user-button a
+{
+  border: none;
+  text-align: center;
+  padding: 6px 6px 6px 6px;
+  color: #818181;
+  display:block;
+}
+
+/*Change behavior/interaction with button*/
+/*Effects when hovering over button*/
+.user-button a:hover
+{
+  background-color: #f1f1f1;
+  color: rgb(0, 0, 0);
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CS3160 Car Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body
+{
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 150px;
+  margin-right: 50px;
+}
+
+/* Style the side navigation bar */
+.navbar
+{
+  overflow: hidden;
+  margin-left: 25px;
+  background-color: #333;
+}
+
+/* Style the center navigation bar links */
+.navbar a
+{
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* Right-aligned link */
+.navbar a.right
+{
+  float: right;
+}
+
+/* Change color on hover */
+.navbar a:hover
+{
+  background-color: #ddd;
+  color: black;
+}
+
+.header
+{
+  top: 50px;
+  color: #FFFFFF;
+
+  padding: 80px;
+  margin-left: 25px;
+  text-align: center;
+  height: 400px;
+}
+
+/*Font Style(s)*/
+.header h1
+{
+  font-size: 40px;
+  color: rgb(11, 11, 11);
+}
+
+/* Main column */
+.main
+{   
+  flex: 70%;
+  background-color: white;
+  padding: 5px;
+}
+
+/* Fake image, for sake of practice */
+.fakeimg
+{
+  background-color: #27c6df;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Footer Style
+  - Contains links to legal, terms, and help.
+*/
+.footer
+{
+  margin-left: 0px;
+  padding: 10px;
+  text-align: center;
+  background: #111;
+}
+
+.main
+{
+  margin-left: 25px;
+  text-align: center;
+}
+
+</style>
+</head>
+<!--Import css files as stylesheets-->
+<link rel="stylesheet" href="../CSS_Files/userstyle.css">
+<link rel="stylesheet" href="../CSS_Files/dropdownbutton.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Import icons-->
+<body>
+
+
+<div class="user">
+  <div class="user-button">
+    <a href="Main_Pages/userpage.html">
+      <i class="fa fa-user fa-2x"></i>
+    </a>
+  </div>
+</div>
+
+<!--Row of Dropdown Menus for Car Search-->
+<div class="header">
+    <div class="dropdown">
+        <div onclick="myFunction('modelDrop')" class="dropbtn">Model</div>
+        <div id="modelDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="modelInput" onkeyup="filterFunction('modelDrop', 'modelInput')">
+          <a href="#">Honda</a>
+          <a href="#">Toyota</a>
+          <a href="#">Ford</a>
+        </div>
+      </div>
+          <div class="dropdown">
+            <div onclick="myFunction('yearDrop')" class="dropbtn">Year</div>
+            <div id="yearDrop" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="yearInput" onkeyup="filterFunction('yearDrop', 'yearInput')">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <div onclick="myFunction()" class="dropbtn">Smthn</div>
+            <div id="myDropdown2" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction()">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <div onclick="myFunction('usedDrop')" class="dropbtn">Used/New</div>
+            <div id="usedDrop" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="usedInput" onkeyup="filterFunction('usedDrop', 'usedInput')">
+              <a href="#">Used</a>
+              <a href="#">New</a>
+              <a href="#">Either</a>
+            </div>
+          </div>
+  <p>This is text i can change</p>
+</div>
+
+<div class="navbar">
+  <a href="">Link1</a>
+  <a href="">Link2</a>
+  <a href="">Link3</a>
+  <a href="" class="right">Link4</a>
+</div>
+
+<div class="main">
+  <h2>Vehicle Price Estimator</h2>
+  <h5>Title description</h5>
+  <div class="fakeimg" style="height:200px;">Image</div>
+  <p>Some text</p>
+  <p>Some more text</p>
+  <br>
+  <h2>New Section</h2>
+  <h5>description</h5>
+  <div class="fakeimg" style="height:200px;">Image?</div>
+  <p>Some text..</p>
+</div>
+
+<div class="footer">
+  <h2>Footer</h2>
+</div>
+
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction(dropdownid)
+    {
+      document.getElementById(dropdownid).classList.toggle("show");
+    }
+    
+    function filterFunction(dropdownid, inputid)
+    {
+      const input = document.getElementById(inputid);
+      const filter = input.value.toUpperCase();
+      const div = document.getElementById(dropdownid);
+      const a = div.getElementsByTagName("a");
+      for (let i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          a[i].style.display = "";
+        } else {
+          a[i].style.display = "none";
+        }
+      }
+    }
+</script>
+
+</body>
+</html>
