@@ -1,0 +1,27 @@
+/* Style the header
+  - First visual seen when page is opened, background is a photo of a car sale using
+    background-image.css
+  - Should contain 
+*/
+
+.header
+{
+  /*Background Image Style*/
+  background-image: url("../Images/background-image.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  color: #FFFFFF;
+
+  padding: 80px;
+  margin-left: 25px;
+  text-align: center;
+  height: 400px;
+}
+
+/*Font Style(s)*/
+.header h1
+{
+  font-size: 40px;
+  color: rgb(11, 11, 11);
+}

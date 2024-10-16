@@ -1,0 +1,26 @@
+/* Side navigation bar
+  - Contains links to buy, sell, contact, and about pages.
+  - Uses button style from sidebar-button.css
+*/
+.sidebar
+{
+  height: 100%;
+  width: 150px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Side navigation bar style for element 'h1'*/
+.sidebar h1
+{
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
