@@ -1,0 +1,3 @@
+- Update cars hourly and not daily
+- Enforce registering an account
+- Add motorcycles and boats in addition to cars
