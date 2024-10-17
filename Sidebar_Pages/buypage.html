@@ -108,11 +108,21 @@ body
 <body>
 
 
-<div class="user">
+<!-- <div class="user">
   <div class="user-button">
     <a href="Main_Pages/userpage.html">
       <i class="fa fa-user fa-2x"></i>
     </a>
+  </div>
+</div> -->
+
+<div class="user">
+  <div class="user-button" onclick="toggleUserDropdown()">
+    <i class="fa fa-user fa-2x"></i>
+  </div>
+  <div id="userDropdown" class="dropdown-content" style="display: none;">
+    <a href="#">Sign In</a>
+    <a href="#">Register</a>
   </div>
 </div>
 
@@ -202,6 +212,15 @@ body
         } else {
           a[i].style.display = "none";
         }
+      }
+    }
+
+    function toggleUserDropdown() {
+      var dropdown = document.getElementById("userDropdown");
+      if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+      } else {
+        dropdown.style.display = "none";
       }
     }
 </script>
