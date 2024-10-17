@@ -15,5 +15,5 @@
 .sidebar-button a:hover
 {
   background-color: #f1f1f1;
-  color: red;
+  color: rgba(77, 121, 204, 0.5);
 }
