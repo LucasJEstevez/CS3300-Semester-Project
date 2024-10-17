@@ -215,6 +215,32 @@ body
       }
     }
 
+    function filterTable() {
+    const makeInput = document.getElementById("modelInput").value.toUpperCase();
+    const yearInput = document.getElementById("yearInput").value.toUpperCase();
+    const rows = document.querySelectorAll("#csvTable tbody tr");
+
+    rows.forEach(row => {
+        const make = row.cells[1].textContent.toUpperCase();
+        const year = row.cells[0].textContent.toUpperCase();
+
+        // Check if row matches the filter
+        const makeMatch = make.indexOf(makeInput) > -1;
+        const yearMatch = year.indexOf(yearInput) > -1;
+
+        if (makeMatch && yearMatch) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+// Call `filterTable` on keyup events for filtering inputs
+document.getElementById("modelInput").addEventListener('keyup', filterTable);
+document.getElementById("yearInput").addEventListener('keyup', filterTable);
+
+
     function toggleUserDropdown() {
       var dropdown = document.getElementById("userDropdown");
       if (dropdown.style.display === "none" || dropdown.style.display === "") {
@@ -226,9 +252,9 @@ body
 
 </script>
 
-<head1>
+<head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-</head1>
+</head>
 
 <title>CSV Data Display</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -272,7 +298,8 @@ body
               download: true,
               header: true, // Consider the first row as headers
               complete: function(results) {
-                  displayTable(results.data);
+                console.log(results.data); // Add this line to check if data is fetched
+                displayTable(results.data);
               }
           });
       });
