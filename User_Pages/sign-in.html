@@ -14,6 +14,7 @@ body
   font-family: Arial, Helvetica, sans-serif;
   margin-left: 150px;
   margin-right: 50px;
+  margin-bottom:0px;
 }
 
 /* Style the side navigation bar */
@@ -70,7 +71,8 @@ body
 .footer
 {
   margin-left: 0px;
-  padding: 30px;
+  padding: 10px;
+  margin-bottom: 0px;
   text-align: center;
   background: #111;
 }
@@ -114,14 +116,16 @@ body
 </div>
 
 <div class="main">
-  <h2>Vehicle Price Estimator</h2>
-  <div class = "fakeimg" style = "height:85px; background-color: rgba(77, 121, 204, 0.5);">
+  <h2>Log In</h2>
+  <div class = "fakeimg" style = "height160xpx; background-color: rgba(77, 121, 204, 0.5);">
     <form action="/sign_in" method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" >
 
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" ><br>
+
+      <h4>Don't have an account? <a href="register.html">Register</a></h4>
 
       <!--
       <b><br>Or<br></b><br>
@@ -141,7 +145,6 @@ body
       <label for="Trim">Trim:</label>
       <input type="text" id="trim" name="trim" ><br>
     -->
-      <br>
       <button type="submit">Submit</button></center/>
     </form>
   </div>
