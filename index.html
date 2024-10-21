@@ -92,15 +92,18 @@ body
 <link rel="stylesheet" href="CSS_Files/sidebarbutton.css">
 <link rel="stylesheet" href="CSS_Files/sidebarstyle.css">
 <link rel="stylesheet" href="CSS_Files/userstyle.css">
+<link rel="stylesheet" href="../CSS_Files/dropdownbutton.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Import icons-->
 <body>
 
 <!--User login icon displayed on top right of site-->
 <div class="user">
-  <div class="user-button">
-    <a href="Main_Pages/userpage.html">
-      <i class="fa fa-user fa-2x"></i>
-    </a>
+  <div class="user-button" onclick="toggleUserDropdown()">
+    <i class="fa fa-user fa-2x"></i>
+  </div>
+  <div id="userDropdown" class="dropdown-content" style="display: none;">
+    <a href="User_Pages/sign-in.html">Sign In</a>
+    <a href="User_Pages/register.html">Register</a>
   </div>
 </div>
 
@@ -176,6 +179,18 @@ body
     <a href="Sidebar_Pages/aboutpage.html">About</a>
   </div>
 </div>
+
+<script>
+    function toggleUserDropdown()
+    {
+      var dropdown = document.getElementById("userDropdown");
+      if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+      } else {
+        dropdown.style.display = "none";
+      }
+    }
+</script>
 
 </body>
 </html>
