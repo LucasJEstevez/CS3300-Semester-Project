@@ -51,22 +51,44 @@
         }
         
         /* Main column */
+        .main {
+            flex: 70%;
+            background-color: rgb(0, 0, 0);
+            padding: 5px;
+            margin-left: 25px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh; /* Ensure the main area takes up the vertical space */
+        }
+        
+        /* Main column
         .main
         {   
           flex: 70%;
           background-color: white;
           padding: 5px;
-        }
+        } */
         
         /* Footer Style
           - Contains links to legal, terms, and help.
         */
+
+        /* Centered text box with background */
+        .centered-text {
+            background-color: #f0f0f0; /* Background color */
+            padding: 20px; /* Padding around text */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for a 3D effect */
+        }
+
         .footer
         {
           position: relative;
           width: 100%;
-          margin-left: 0px;
-          padding: 10px;
+          /* margin-left: 0px; */
+          /* padding: 10px; */
           text-align: center;
           background: #111;
           bottom: 0;
