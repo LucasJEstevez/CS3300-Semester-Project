@@ -118,12 +118,16 @@ body
 <div class="main">
   <h2>Log In</h2>
   <div class = "fakeimg" style = "height160xpx; background-color: rgba(77, 121, 204, 0.5);">
-    <form action="/sign_in" method="post">
+    <form action="/sign_in" method="post" name="login_form">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" >
 
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" ><br>
+      <input type="password" id="password" name="password" >
+      
+      <output type="error" id="usererror_display"></output>
+      <br>
+
 
       <h4>Don't have an account? <a href="register.html">Register</a></h4>
 
@@ -145,7 +149,7 @@ body
       <label for="Trim">Trim:</label>
       <input type="text" id="trim" name="trim" ><br>
     -->
-      <button type="submit">Submit</button></center/>
+      <button type="submit" onclick="login()">Submit</button>
     </form>
   </div>
   
@@ -169,5 +173,26 @@ body
   </div>
 </div>
 
+<!--End of everything displayed, after this is code for user login-->
+
+<script>
+function login(){
+  <!--Gets Login Information from Text Boxes-->
+  var username=document.getElementById("username").value;
+  var password=document.getElementById("password").value;
+
+  if(username == ''){
+    document.getElementById("error").innerHTML="your mom";
+    alert("Your mom");
+  }
+  else if(password == ''){
+    alert("Please enter password");
+  }
+  else{
+    alert("Username:"+username+"Password:"+password);
+  }
+
+}
+</script>
 </body>
 </html>
