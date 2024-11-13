@@ -104,7 +104,7 @@ body
 
 <!--Test to display over background image-->
 <div class="header">
-  <h1 style="background-color: rgba(77, 121, 204, 0.5); display: inline-block;">Car Something Something</h1>
+  <h1 style="background-color: rgba(77, 121, 204, 0.5); display: inline-block;">1-Stop Car Shop</h1>
   <p>This is text i can change</p>
 </div>
 
@@ -125,10 +125,11 @@ body
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" >
       
-      <output type="error" id="usererror_display"></output>
       <br>
+      <h4 type="error" id="usererror_display" style="color:#ff0000"></h4>
 
 
+      <h4>Forgot Password? <a href="forgot_password.html">Account Recovery</a></h4>
       <h4>Don't have an account? <a href="register.html">Register</a></h4>
 
       <!--
@@ -164,7 +165,7 @@ body
 <!--Sidebar Navigation Menu-->
 <!--Uses sidebarstyle.css-->
 <div class="sidebar">
-  <h1 style="font-size: 20px;">--Project Name--</h1>
+  <h1 style="font-size: 20px;"><a href="../index.html">Home Page</a></h1>
   <div class="sidebar-button">
     <a style="margin-top: 100px;" href="Sidebar_Pages/buypage.html">Buy</a>
     <a href="Sidebar_Pages/sellpage.html">Sell</a>
@@ -182,11 +183,10 @@ function login(){
   var password=document.getElementById("password").value;
 
   if(username == ''){
-    document.getElementById("error").innerHTML="your mom";
-    alert("Your mom");
+    document.getElementById("usererror_display").innerHTML="Error: Username cannot be empty";
   }
   else if(password == ''){
-    alert("Please enter password");
+    document.getElementById("usererror_display").innerHTML="Error: Password cannot be empty";
   }
   else{
     alert("Username:"+username+"Password:"+password);
