@@ -117,8 +117,8 @@ body
 
 <div class="main">
   <h2>Log In</h2>
-  <div class = "fakeimg" style = "height160xpx; background-color: rgba(77, 121, 204, 0.5);">
-    <form action="/sign_in" method="post" name="login_form">
+  <div class="fakeimg" style="height: 160px; background-color: rgba(77, 121, 204, 0.5);">
+    <form action="../Code/User Login Handling/sign_in.php" method="POST" name="login_form" id="login_form">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" >
 
@@ -129,7 +129,8 @@ body
       <h4 type="error" id="usererror_display" style="color:#ff0000"></h4>
 
 
-      <h4>Already have an account? <a href="sign-in.html">Sign-In</a></h4>
+      <h4>Forgot Password? <a href="forgot_password.html">Account Recovery</a></h4>
+      <h4>Don't have an account? <a href="register.html">Register</a></h4>
 
       <!--
       <b><br>Or<br></b><br>
@@ -149,8 +150,9 @@ body
       <label for="Trim">Trim:</label>
       <input type="text" id="trim" name="trim" ><br>
     -->
-      <button type="submit" onclick="login()">Submit</button>
     </form>
+    <button type="submit" onclick="login()">Submit</button>
+
   </div>
   
 
@@ -188,7 +190,7 @@ function login(){
     document.getElementById("usererror_display").innerHTML="Error: Password cannot be empty";
   }
   else{
-    alert("Username:"+username+"Password:"+password);
+    document.getElementById("login_form").submit();
   }
 
 }
