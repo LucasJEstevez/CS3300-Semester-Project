@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CS3160 Car Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body
+{
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 150px;
+  margin-right: 50px;
+}
+
+/* Style the side navigation bar */
+.navbar
+{
+  overflow: hidden;
+  margin-left: 25px;
+  background-color: #333;
+}
+
+/* Style the center navigation bar links */
+.navbar a
+{
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* Right-aligned link */
+.navbar a.right
+{
+  float: right;
+}
+
+/* Change color on hover */
+.navbar a:hover
+{
+  background-color: #ddd;
+  color: black;
+}
+
+.header
+{
+  top: 50px;
+  color: #FFFFFF;
+
+  padding: 10px;
+  margin-left: 25px;
+  text-align: center;
+  height: 100px;
+}
+
+/*Font Style(s)*/
+.header h1
+{
+  font-size: 40px;
+  color: rgb(11, 11, 11);
+}
+
+/* Main column */
+.main
+{   
+  flex: 70%;
+  background-color: white;
+  padding: 5px;
+}
+
+/* Fake image, for sake of practice */
+.fakeimg
+{
+  background-color: #27c6df;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Footer Style
+  - Contains links to legal, terms, and help.
+*/
+.footer
+{
+  margin-left: 0px;
+  padding: 10px;
+  text-align: center;
+  background: #111;
+}
+
+.main
+{
+  margin-left: 25px;
+  text-align: center;
+}
+
+/* Simple styling for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+</style>
+</head>
+<!--Import css files as stylesheets-->
+<link rel="stylesheet" href="../CSS_Files/userstyle.css">
+<link rel="stylesheet" href="../CSS_Files/dropdownbutton.css">
+<link rel="stylesheet" href="../CSS_Files/sidebarbutton.css">
+<link rel="stylesheet" href="../CSS_Files/sidebarstyle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Import icons-->
+<body>
+
+
+<div class="user">
+  <div class="user-button" onclick="toggleUserDropdown()">
+    <i class="fa fa-user fa-2x"></i>
+  </div>
+  <div id="userDropdown" class="dropdown-content" style="display: none;">
+    <a href="../User_Pages/sign-in.html">Sign In</a>
+    <a href="../User_Pages/register.html">Register</a>
+  </div>
+</div>
+
+<!--Sidebar Navigation Menu-->
+<!--Uses sidebarstyle.css-->
+<div class="sidebar">
+  <h1 style="font-size: 20px;">--Project Name--</h1>
+  <div class="sidebar-button">
+    <a style="margin-top: 100px;" href="../Sidebar_Pages/buypage.html">Buy</a>
+    <a href="../Sidebar_Pages/sellpage.html">Sell</a>
+    <a style="margin-top: 200px;" href="../Sidebar_Pages/contactpage.html">Contact Us</a>
+    <a href="../Sidebar_Pages/aboutpage.html">About</a>
+  </div>
+</div>
+
+<!--Row of Dropdown Menus for Car Search-->
+<div class="header">
+    <div class="dropdown">
+        <div onclick="myFunction('modelDrop')" class="dropbtn">Model</div>
+        <div id="modelDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="modelInput" onkeyup="filterFunction('modelDrop', 'modelInput')">
+          <a href="#">Honda</a>
+          <a href="#">Toyota</a>
+          <a href="#">Ford</a>
+        </div>
+      </div>
+          <div class="dropdown">
+            <div onclick="myFunction('yearDrop')" class="dropbtn">Year</div>
+            <div id="yearDrop" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="yearInput" onkeyup="filterFunction('yearDrop', 'yearInput')">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <div onclick="myFunction()" class="dropbtn">Smthn</div>
+            <div id="myDropdown2" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction()">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <div onclick="myFunction('usedDrop')" class="dropbtn">Used/New</div>
+            <div id="usedDrop" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="usedInput" onkeyup="filterFunction('usedDrop', 'usedInput')">
+              <a href="#">Used</a>
+              <a href="#">New</a>
+              <a href="#">Either</a>
+            </div>
+          </div>
+</div>
+
+<script src="../CSS_Files/javafile.js"></script>
+
+<div id="tableContainer"></div>
+
+<!-- Load PapaParse from local file -->
+<script src="papaparse.js"></script>
+<script>
+    const csvUrl = "https://api.csvgetter.com/demo/wwXQBAXihAJYsUc86Aav"; // Replace with your fixed CSV URL
+
+    window.addEventListener("load", function() {
+    fetch(csvUrl)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.text();
+        })
+        .then(csvText => {
+        Papa.parse(csvText, {
+            header: true,           // Use the first row as header
+            dynamicTyping: true,    // Convert data types automatically
+            worker: true,
+            step: function(row) {   // Process each row as it's parsed
+            appendRow(row.data);
+            },
+            complete: function() {
+            console.log("CSV parsing complete.");
+            }
+        });
+        })
+        .catch(error => {
+        console.error("Error fetching the CSV file:", error);
+        document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
+        });
+    });
+
+    function appendRow(rowData) {
+    const tableContainer = document.getElementById("tableContainer");
+    let table = tableContainer.querySelector("table");
+
+    // Create the table if it doesn't exist yet
+    if (!table) {
+        table = document.createElement("table");
+        tableContainer.appendChild(table);
+
+        // Generate and append the header row
+        const headers = Object.keys(rowData);
+        const headerRow = document.createElement("tr");
+        headers.forEach(header => {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+        });
+        table.appendChild(headerRow);
+    }
+
+    // Create and append a new row for the data
+    const rowElement = document.createElement("tr");
+    Object.values(rowData).forEach(cellData => {
+        const cell = document.createElement("td");
+        cell.textContent = cellData !== undefined ? cellData : '';
+        rowElement.appendChild(cell);
+    });
+    table.appendChild(rowElement);
+    }
+</script>
+
+</body>
+</html>
