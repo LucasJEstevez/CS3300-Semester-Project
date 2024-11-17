@@ -176,14 +176,57 @@ body
 
 <!--End of everything displayed, after this is code for user login-->
 
+<script src=" https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js "></script>
 <script>
 function login(){
   <!--Gets Login Information from Text Boxes-->
   var username=document.getElementById("username").value;
   var password=document.getElementById("password").value;
 
-  if(username == ''){
-    document.getElementById("usererror_display").innerHTML="Error: Username cannot be empty";
+      // Check if username is empty
+      if (username == '') {
+          document.getElementById("usererror_display").innerHTML = "Error: Username cannot be empty";
+          return; // Exit the function if username is empty
+      }
+      // Check if password is empty
+      else if (password == '') {
+          document.getElementById("usererror_display").innerHTML = "Error: Password cannot be empty";
+          return; // Exit the function if password is empty
+      }
+      else {
+
+          var hashedUser = dcodeIO.bcrypt.hashSync(username,10);
+          var hashedPwd = dcodeIO.bcrypt.hashSync(password,10);
+
+          var formData = {
+            username: hashedUser;
+            password: hashedPwd;
+          }
+
+          // Use fetch to send data via POST to the Python server
+          fetch('localhost:8000/Code/User Login Handlingsign_in.py', {
+              method: 'POST', // HTTP method
+              headers: {
+                  'Content-Type': 'application/json' // sending JSON data
+              },
+              body: JSON.stringify(formData) // Send the data as JSON string
+          })
+          .then(response => response.json()) // Parse the JSON response
+          .then(data => {
+              // Handle the server response here
+              console.log(data);
+              if (data.message === 'Login successful!') {
+                  // Redirect or show a success message
+                  window.location.href = "dashboard.html"; // Example of redirect
+              } else {
+                  document.getElementById("usererror_display").innerHTML = data.message;
+              }
+          })
+          .catch(error => {
+              console.error('Error during form submission:', error);
+          });
+
+      }
   }
   else if(password == ''){
     document.getElementById("usererror_display").innerHTML="Error: Password cannot be empty";
