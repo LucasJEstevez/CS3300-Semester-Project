@@ -195,16 +195,16 @@ function login(){
       }
       else {
 
-          var hashedUser = dcodeIO.bcrypt.hashSync(username,10);
-          var hashedPwd = dcodeIO.bcrypt.hashSync(password,10);
+          var hashedUser = dcodeIO.bcrypt.hashSync(username, 10);
+          var hashedPwd = dcodeIO.bcrypt.hashSync(password, 10);
 
           var formData = {
-            username: hashedUser;
-            password: hashedPwd;
-          }
+              username: hashedUser,
+              password: hashedPwd
+          };
 
           // Use fetch to send data via POST to the Python server
-          fetch('localhost:8000/Code/User Login Handlingsign_in.py', {
+          fetch('/Code/User Login Handlingsign_in.py', {
               method: 'POST', // HTTP method
               headers: {
                   'Content-Type': 'application/json' // sending JSON data
