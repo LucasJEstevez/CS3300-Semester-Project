@@ -151,41 +151,34 @@ th {
 <!--Row of Dropdown Menus for Car Search-->
 <div class="header">
     <div class="dropdown">
+        <div onclick="myFunction('yearDrop')" class="dropbtn">Year</div>
+        <div id="yearDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="yearInput" onkeyup="filterFunction('yearDrop', 'yearInput')">
+            <a href="#">2022</a>
+            <a href="#">2021</a>
+            <a href="#">2020</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div onclick="myFunction('makeDrop')" class="dropbtn">Make</div>
+        <div id="makeDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="makeInput" onkeyup="filterFunction('makeDrop', 'makeInput')">
+            <a href="#">Honda</a>
+            <a href="#">Toyota</a>
+            <a href="#">Ford</a>
+        </div>
+    </div>
+    <div class="dropdown">
         <div onclick="myFunction('modelDrop')" class="dropbtn">Model</div>
         <div id="modelDrop" class="dropdown-content">
             <input type="text" placeholder="Search.." id="modelInput" onkeyup="filterFunction('modelDrop', 'modelInput')">
-          <a href="#">Honda</a>
-          <a href="#">Toyota</a>
-          <a href="#">Ford</a>
+            <a href="#">Honda</a>
+            <a href="#">Toyota</a>
+            <a href="#">Ford</a>
+        </div> 
+    </div>  
         </div>
-      </div>
-          <div class="dropdown">
-            <div onclick="myFunction('yearDrop')" class="dropbtn">Year</div>
-            <div id="yearDrop" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="yearInput" onkeyup="filterFunction('yearDrop', 'yearInput')">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
-          </div>
-          <div class="dropdown">
-            <div onclick="myFunction()" class="dropbtn">Smthn</div>
-            <div id="myDropdown2" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction()">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
-          </div>
-          <div class="dropdown">
-            <div onclick="myFunction('usedDrop')" class="dropbtn">Used/New</div>
-            <div id="usedDrop" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="usedInput" onkeyup="filterFunction('usedDrop', 'usedInput')">
-              <a href="#">Used</a>
-              <a href="#">New</a>
-              <a href="#">Either</a>
-            </div>
-          </div>
+        </div>
 </div>
 
 <script src="../CSS_Files/javafile.js"></script>
@@ -193,9 +186,9 @@ th {
 <div id="tableContainer"></div>
 
 <!-- Load PapaParse from local file -->
-<script src="papaparse.js"></script>
+<script src="../PapaParse/papaparse.js"></script>
 <script>
-    const csvUrl = "https://api.csvgetter.com/demo/wwXQBAXihAJYsUc86Aav"; // Replace with your fixed CSV URL
+    const csvUrl = "https://api.csvgetter.com/demo/uG3iM1hjk0oTdV3Qbh1j"; // Replace with your fixed CSV URL
 
     window.addEventListener("load", function() {
     fetch(csvUrl)
@@ -253,6 +246,43 @@ th {
     });
     table.appendChild(rowElement);
     }
+
+    //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
+    //Capture dropdown selections
+function filterTable() {
+    const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
+    const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
+    const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
+
+    const table = document.querySelector("#tableContainer table");
+    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+
+    rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
+        const make = cells[1]?.textContent || "";  
+        const model = cells[2]?.textContent || ""; 
+
+        // Show or hide the row based on filters
+        row.style.display = 
+            (yearFilter === "" || year === yearFilter) &&
+            (makeFilter === "" || make === makeFilter) &&
+            (modelFilter === "" || model === modelFilter)
+                ? ""
+                : "none";
+    });
+}
+
+// Add event listeners to dropdown items
+document.querySelectorAll(".dropdown-content a").forEach(item => {
+    item.addEventListener("click", function() {
+        const parentDropdown = this.closest(".dropdown-content");
+        parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
+        this.classList.add("selected");
+        filterTable();
+    });
+});
+
 </script>
 
 </body>
