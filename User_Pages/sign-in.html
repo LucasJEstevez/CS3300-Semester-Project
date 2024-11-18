@@ -90,7 +90,7 @@ body
 <link rel="stylesheet" href="../CSS_Files/sidebarbutton.css">
 <link rel="stylesheet" href="../CSS_Files/sidebarstyle.css">
 <link rel="stylesheet" href="../CSS_Files/userstyle.css">
-<link rel="stylesheet" href="/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Import icons-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Import icons-->
 <body>
 
 <!--User login icon displayed on top right of site-->
@@ -118,8 +118,8 @@ body
 <div class="main">
   <h2>Log In</h2>
   <div class="fakeimg" style="height: 160px; background-color: rgba(77, 121, 204, 0.5);">
-    <form action="../Code/User Login Handling/sign_in.php" method="POST" name="login_form" id="login_form">
-      <label for="username">Username:</label>
+    <form name="login_form" id="login_form">
+      <label for="username">Username or Email:</label>
       <input type="text" id="username" name="username" >
 
       <label for="password">Password:</label>
@@ -132,25 +132,7 @@ body
       <h4>Forgot Password? <a href="forgot_password.html">Account Recovery</a></h4>
       <h4>Don't have an account? <a href="register.html">Register</a></h4>
 
-      <!--
-      <b><br>Or<br></b><br>
-
-      <label for="make">Make:</label>
-      <input type="text" id="make" name="make" >
-
-      <label for="model">Model:</label>
-      <input type="text" id="model" name="model" >
-
-      <label for="year">Year:</label>
-      <input type="number" id="year" name="year" >
-
-      <label for="miles2">Miles:</label>
-      <input type="number" id="miles2" name="miles2" >
-
-      <label for="Trim">Trim:</label>
-      <input type="text" id="trim" name="trim" ><br>
-    -->
-    </form>
+      </form>
     <button type="submit" onclick="login()">Submit</button>
   </div>
   
@@ -175,67 +157,56 @@ body
 </div>
 
 <!--End of everything displayed, after this is code for user login-->
-
-<script src=" https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js "></script>
 <script>
-function login(){
-  <!--Gets Login Information from Text Boxes-->
-  var username=document.getElementById("username").value;
-  var password=document.getElementById("password").value;
+  function login(){
+    // Get login information from text boxes
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+  
+    // Check if username is empty
+    if (username == '') {
+        document.getElementById("usererror_display").innerHTML = "Error: Username cannot be empty";
+    }
 
-      // Check if username is empty
-      if (username == '') {
-          document.getElementById("usererror_display").innerHTML = "Error: Username cannot be empty";
-          return; // Exit the function if username is empty
-      }
-      // Check if password is empty
-      else if (password == '') {
-          document.getElementById("usererror_display").innerHTML = "Error: Password cannot be empty";
-          return; // Exit the function if password is empty
-      }
-      else {
+    // Check if password is empty
+    else if (password == '') {
+        document.getElementById("usererror_display").innerHTML = "Error: Password cannot be empty";
+    }
 
-          var hashedUser = dcodeIO.bcrypt.hashSync(username, 10);
-          var hashedPwd = dcodeIO.bcrypt.hashSync(password, 10);
+    else {
 
-          var formData = {
-              username: hashedUser,
-              password: hashedPwd
-          };
+      // Creates data to send to server
+      var formData = {
+          username: username,
+          password: password
+      };
 
-          // Use fetch to send data via POST to the Python server
-          fetch('/Code/User Login Handlingsign_in.py', {
-              method: 'POST', // HTTP method
-              headers: {
-                  'Content-Type': 'application/json' // sending JSON data
-              },
-              body: JSON.stringify(formData) // Send the data as JSON string
-          })
-          .then(response => response.json()) // Parse the JSON response
-          .then(data => {
-              // Handle the server response here
-              console.log(data);
-              if (data.message === 'Login successful!') {
-                  // Redirect or show a success message
-                  window.location.href = "dashboard.html"; // Example of redirect
-              } else {
-                  document.getElementById("usererror_display").innerHTML = data.message;
-              }
-          })
-          .catch(error => {
-              console.error('Error during form submission:', error);
-          });
+      // Use fetch to send data via POST to the correct Flask endpoint
+      fetch('http://localhost:5000/login', {  // Route to Flask, will need to change
+          method: 'POST',
+          headers: {'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+      })
 
-      }
+      // Get and handle response from server
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+          if (data.message === 'Login successful!') {
+              document.getElementById("usererror_display").innerHTML = "good login, change this";
+          } else {
+              document.getElementById("usererror_display").innerHTML = data.message;
+          }
+      })
+
+      //Error handling
+      .catch(error => {
+          console.error('Error during form submission:', error);
+          
+          document.getElementById("usererror_display").innerHTML = 'Request failed: ' + error.message;
+      });
+    }
   }
-  else if(password == ''){
-    document.getElementById("usererror_display").innerHTML="Error: Password cannot be empty";
-  }
-  else{
-    document.getElementById("login_form").submit();
-  }
-
-}
 </script>
 </body>
 </html>

@@ -120,7 +120,10 @@ body
   <div class="fakeimg" style="height: 160px; background-color: rgba(77, 121, 204, 0.5);">
     <form action="../Code/User Login Handling/sign_in.php" method="POST" name="login_form" id="login_form">
       <label for="username">Username:</label>
-      <input type="text" id="username" name="username" >
+      <input type="text" id="username" name="username">
+
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email">
 
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" >
@@ -128,9 +131,7 @@ body
       <br>
       <h4 type="error" id="usererror_display" style="color:#ff0000"></h4>
 
-
-      <h4>Forgot Password? <a href="forgot_password.html">Account Recovery</a></h4>
-      <h4>Don't have an account? <a href="register.html">Register</a></h4>
+      <h4>Already have an account? <a href="sign-in.html">Sign-In</a></h4>
 
       <!--
       <b><br>Or<br></b><br>
@@ -181,16 +182,51 @@ body
 function login(){
   <!--Gets Login Information from Text Boxes-->
   var username=document.getElementById("username").value;
+  var email=document.getElementById("email").value;
   var password=document.getElementById("password").value;
 
   if(username == ''){
     document.getElementById("usererror_display").innerHTML="Error: Username cannot be empty";
   }
+  else if(email == ''){
+    document.getElementById("usererror_display").innerHTML="Error: Email cannot be empty";
+  }
   else if(password == ''){
     document.getElementById("usererror_display").innerHTML="Error: Password cannot be empty";
   }
   else{
-    document.getElementById("login_form").submit();
+    
+    // Creates data to send to server
+    var formData = {
+      username: username,
+      email: email,
+      password: password
+    }
+
+    // Use fetch to send data via POST to the correct Flask endpoint
+    fetch('http://localhost:5000/register', {  // Route to Flask, will need to change
+          method: 'POST',
+          headers: {'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+      })
+
+    // Get and handle response from server
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.message === 'Registration successful!') {
+            document.getElementById("usererror_display").innerHTML = "Registration Successful!";
+        } else {
+            document.getElementById("usererror_display").innerHTML = data.message;
+        }
+    })
+    //Error handling
+    .catch(error => {
+          console.error('Error during form submission:', error);
+          
+          document.getElementById("usererror_display").innerHTML = 'Request failed: ' + error.message;
+      });
+
   }
 
 }
