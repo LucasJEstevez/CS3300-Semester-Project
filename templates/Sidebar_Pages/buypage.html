@@ -251,6 +251,7 @@ th {
             worker: true,
             step: function(row)
             {   // Process each row as it's parsed
+            delete (row.data).Vehicle_ID;
             appendRow(row.data);
             },
             complete: function()
