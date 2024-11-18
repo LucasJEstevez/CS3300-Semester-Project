@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!--Test to display over background image-->
+<div class="header">
+  <h1 style="background-color: rgba(77, 121, 204, 0.5); display: inline-block;">Car Something Something</h1>
+  <p>This is text i can change</p>
+</div>
+
+<div class="navbar">
+  <a href="">Link1</a>
+  <a href="">Link2</a>
+  <a href="">Link3</a>
+  <a href="" class="right">Link4</a>
+</div>
+
+
+
+<div class="container">
+  <h2>Vehicle Price Estimator</h2>
+  <div class = "fakeimg" style = "height:175px; background-color: rgba(17, 62, 145, 0.6); text-align: center;">
+    <form action="/price_prediction" method="post">
+      <label for="vin">VIN:</label> 
+      <input type="text" id="vin" name="vin" >
+
+      <label for="miles1">Miles:</label>
+      <input type="number" id="miles1" name="miles1" ><br>
+
+      <b><br>Or<br></b><br>
+
+      <label for="make">Make:</label>
+      <input type="text" id="make" name="make" >
+
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" >
+
+      <label for="year">Year:</label>
+      <input type="number" id="year" name="year" >
+
+      <label for="miles2">Miles:</label>
+      <input type="number" id="miles2" name="miles2" >
+
+      <label for="Trim">Trim:</label>
+      <input type="text" id="trim" name="trim" ><br>
+
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+      
+</div>
+
+
+</body>
+</html>
+
+{% endblock %}
