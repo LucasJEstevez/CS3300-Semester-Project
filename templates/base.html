@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}1-Stop Car Shop{% endblock %}</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body
+    {
+      font-family: Arial, Helvetica, sans-serif;
+      margin-left: 150px; /*Same as sidebar width*/
+      margin-right: 50px;
+      margin-bottom: 0;
+    }
+    
+    /* Style the side navigation bar */
+    .navbar
+    {
+      overflow: hidden;
+      margin-left: 25px;
+      background-color: #333;
+    }
+    
+    /* Style the center navigation bar links */
+    .navbar a
+    {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    
+    /* Right-aligned link for navbar*/
+    .navbar a.right
+    {
+      float: right;
+    }
+    
+    /* Change color on hover */
+    .navbar a:hover
+    {
+      background-color: #ddd;
+      color: black;
+    }
+
+/* Main column */
+.main
+{   
+  flex: 70%;
+  background-color: white;
+  padding: 5px;
+  margin-bottom: 25px;
+}
+
+    /* Fake image, for sake of practice */
+    .fakeimg
+    {
+      background-color: #414141;
+      width: 100%;
+      padding: 20px;
+    }
+    
+    /* Footer Style
+      - Contains links to legal, terms, and help.
+    */
+    .footer
+{
+  position: relative;
+  width: 100%;
+  margin-left: 0px;
+  padding: 10px;
+  text-align: center;
+  background: #000;
+  bottom: 0;
+}
+
+.main
+{
+  margin-left: 25px;
+  text-align: center;
+}
+
+    </style>
+    </head>
+
+  <!-- Include external CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/headerstyle.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/sidebarbutton.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/sidebarstyle.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/userstyle.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/dropdownbutton.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+  <!-- User login icon -->
+  <div class="user">
+    <div class="user-button" onclick="toggleUserDropdown()">
+      <i class="fa fa-user fa-2x"></i>
+    </div>
+    <div id="userDropdown" class="dropdown-content" style="display: none;">
+      <a href="{{ url_for('sign_in_page') }}">Sign In</a>
+      <a href="{{ url_for('register_page') }}">Register</a>
+    </div>
+  </div>
+
+
+  <!-- Sidebar Navigation Menu -->
+  <div class="sidebar">
+    <div class="sidebar-button">
+      <a href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='Images/logo.webp') }}" alt="Project Logo" style="height: auto; width:150px;"></a>    
+      <a style="margin-top: 100px;" href="{{ url_for('buy_page') }}">Buy</a>
+      <a href="{{ url_for('sell_page') }}">Sell</a>
+      <a style="margin-top: 200px;" href="{{ url_for('contact_page') }}">Contact Us</a>
+      <a href="{{ url_for('about_page') }}">About</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    {% block content %}
+    <!-- The specific page content will go here -->
+    {% endblock %}
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <h2>Footer</h2>
+  </div>
+
+  <!-- JavaScript -->
+<script src="{{ url_for('static', filename='CSS_Files/javafile.js') }}"></script>
+
+</body>
+</html>

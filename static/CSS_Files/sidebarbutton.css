@@ -1,0 +1,19 @@
+.sidebar-button a
+{
+  background-color: #111;
+  border: none;
+  color: #818181;
+  padding: 6px 6px 6px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 26px;
+}
+
+/*Change behavior/interaction with button*/
+/*Effects when hovering over button*/
+.sidebar-button a:hover
+{
+  background-color: #f1f1f1;
+  color: rgba(77, 121, 204, 0.5);
+}

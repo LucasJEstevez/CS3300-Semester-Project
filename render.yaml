@@ -1,0 +1,8 @@
+version: 1
+services:
+  - type: web
+    name: car_sales_site
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: ./start_app.py
+    plan: free
