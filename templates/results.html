@@ -1,22 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Buy{% endblock %}
+{% block title %}Price Prediction Results{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mt-5">Price Prediction Result</h1>
-        <div class="mt-4">
-            <h4>Predicted Price: ${{ prediction['predicted_price'] }}</h4>
-            <p>Details:</p>
-            <ul>
-                <li>Make: {{ prediction['specs']['make'] }}</li>
-                <li>Model: {{ prediction['specs']['model'] }}</li>
-                <li>Year: {{ prediction['specs']['year'] }}</li>
-                <li>Trim: {{ prediction['specs']['trim'] }}</li>
-            </ul>
-        </div>
-        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
-    </div>
+<body>
+    <h1>Vehicle Price Estimation </h1>
+    <p>Estimated Price: ${{ prediction['predicted_price'] }}</p>
+    <p>Price Range: ${{ prediction['price_range']['lower_bound'] }} - ${{ prediction['price_range']['upper_bound'] }}</p>
+    <a href="/">Go Back</a>
 </body>
 </html>
 
