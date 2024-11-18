@@ -17,6 +17,7 @@ def getUserId(tryUsername, tryPassword):
 
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
+    conn.close()
     
     for row in rows:
         id, username, password, email = row
@@ -31,6 +32,69 @@ def getUserId(tryUsername, tryPassword):
                 return INCORRECT_PASSWORD
 
     return USERNAME_NOT_IN_DATA
+def usernameTaken(newUser):
+    # Opens database file
+    conn = sqlite3.connect('../../Data/userdata/users.db')  # Ensure this path is correct
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, username, password, email FROM users")
+    rows = cursor.fetchall()
+    conn.close()
+    
+    for row in rows:
+        id, username, password, email = row
+
+        if newUser == username:
+            return True
+    
+    return False
+
+def emailTaken(newEmail):
+    # Opens database file
+    conn = sqlite3.connect('../../Data/userdata/users.db')  # Ensure this path is correct
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, username, password, email FROM users")
+    rows = cursor.fetchall()
+    conn.close
+    
+    for row in rows:
+        id, username, password, email = row
+
+        if newEmail == email:
+            return True
+    
+    return False
+
+# Function to hash a password
+def hash_password(password: str) -> str:
+    # Generate a salt
+    salt = bcrypt.gensalt()
+    
+    # Hash the password using the salt
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    
+    # Return the hashed password
+    return hashed_password.decode('utf-8')
+
+# Adds user to database
+def addUserToDB(username,email,password):
+    conn = sqlite3.connect('../../Data/userdata/users.db')
+
+    cursor=conn.cursor()
+
+    cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL,
+                    password TEXT NOT NULL,
+                    email TEXT NOT NULL)''')
+    
+    cursor.execute('''INSERT INTO users (username, password, email) 
+                        VALUES (?, ?, ?)''', (username, password, email))
+    
+    # Commit the change to users.db
+    conn.commit()
+    conn.close()
+
+
 
 # Handles OPTIONS request for CORS preflight, fixes OPTIONS error of pre-post request
 @app.route('/login', methods=["OPTIONS"])
@@ -41,6 +105,8 @@ def options():
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
 
+
+
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
 def login():
@@ -48,11 +114,11 @@ def login():
     data = request.get_json()
 
     # Validate the request data (should already be validated by client, but just in case)
-    if not data or ('username' not in data and 'email' not in data) or 'password' not in data:
+    if not data or 'username' not in data or 'password' not in data:
         return jsonify({"message": "Error: Username or password is missing"}), 400
 
     # Extract username/email and password from data
-    usernameOrEmail = data.get('username') or data.get('email')
+    usernameOrEmail = data.get('username')
     password = data['password']
 
     # Get user ID from the database (will also get errors)
@@ -66,6 +132,33 @@ def login():
 
     # Successful login, return user ID or a success message
     return jsonify({"message": "Login successful!", "user_id": user_id}), 200
+
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    # Get JSON data from the request
+    data = request.get_json()
+
+    #Validate the request data (should already be validated by client, but just in case)
+    if not data or 'username' not in data or 'email' not in data or 'password' not in data:
+        return jsonify({"message": "Error: Username or Email or Password is missing"}), 400
+    
+    # Extract info from request
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+
+    if usernameTaken(username):
+        return jsonify({"message":"Error: Username already taken"}), 409
+    elif emailTaken(email):
+        return jsonify({"message":"Error: Email already taken"}), 409
+
+    hashed_password = hash_password(password)
+
+    addUserToDB(username,email,hashed_password)
+    return jsonify({"message": "Working on it"}), 200
+
 
 #Lets Flask server run
 if __name__ == '__main__':
