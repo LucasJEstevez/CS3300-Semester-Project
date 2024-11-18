@@ -196,7 +196,7 @@ th {
 <!-- Load PapaParse from local file -->
 <script src="../PapaParse/papaparse.js"></script>
 <script>
-    const csvUrl = "https://api.csvgetter.com/demo/AGbFlNK4vd2vjlC9Vyub"; // Replace with your fixed CSV URL
+    const csvUrl = "https://api.csvgetter.com/demo/YVymjt7STfx5UgLKlKdT"; // Replace with your fixed CSV URL
 
     window.addEventListener("load", function() {
     fetch(csvUrl)
@@ -267,29 +267,29 @@ th {
 
     //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
     //Capture dropdown selections
-function filterTable()
-{
-    const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
-    const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
-    const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
-
-    const table = document.querySelector("#tableContainer table");
-    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-
-    rows.forEach(row =>
+    function filterTable()
     {
-        const cells = row.querySelectorAll("td");
-        const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
-        const make = cells[1]?.textContent || "";  
-        const model = cells[2]?.textContent || ""; 
+        const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
+        const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
+        const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
 
-        // Show or hide the row based on filters
-        row.style.display = 
-            (yearFilter === "" || year === yearFilter) &&
-            (makeFilter === "" || make === makeFilter) &&
-            (modelFilter === "" || model === modelFilter)
-                ? ""
-                : "none";
+        const table = document.querySelector("#tableContainer table");
+        const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+
+        rows.forEach(row =>
+        {
+            const cells = row.querySelectorAll("td");
+            const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
+            const make = cells[1]?.textContent || "";  
+            const model = cells[2]?.textContent || ""; 
+
+            // Show or hide the row based on filters
+            row.style.display = 
+                (yearFilter === "" || year === yearFilter) &&
+                (makeFilter === "" || make === makeFilter) &&
+                (modelFilter === "" || model === modelFilter)
+                    ? ""
+                    : "none";
     });
 }
 
@@ -305,15 +305,15 @@ document.querySelectorAll(".dropdown-content a").forEach(item =>
     });
 });
 
-// Close dropdowns when clicking outside
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            dropdowns[i].classList.remove('show');
-        }
-    }
-};
+// // Close dropdowns when clicking outside
+// window.onclick = function (event) {
+//     if (!event.target.matches('.dropbtn')) {
+//         const dropdowns = document.getElementsByClassName("dropdown-content");
+//         for (let i = 0; i < dropdowns.length; i++) {
+//             dropdowns[i].classList.remove('show');
+//         }
+//     }
+// };
 
 function myFunction(dropdownId) {
     document.getElementById(dropdownId).classList.toggle("show");
@@ -339,16 +339,6 @@ function filterModels(make) {
         models[i].style.display = modelMake === make ? "" : "none";
     }
 }
-
-// Close dropdowns when clicking outside
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            dropdowns[i].classList.remove('show');
-        }
-    }
-};
 </script>
 </body>
 </html>
