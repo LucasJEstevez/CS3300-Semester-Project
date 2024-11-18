@@ -3,6 +3,26 @@
 {% block title %}Sign-In{% endblock %}
 
 {% block content %}
+
+<div class="main">
+    <h2>Log In</h2>
+    <div class="fakeimg" style="height: 160px; background-color: rgba(77, 121, 204, 0.5);">
+      <form name="login_form" id="login_form">
+        <label for="username">Username or Email:</label>
+        <input type="text" id="username" name="username" >
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" >
+        
+        <br>
+        <h4 type="error" id="usererror_display" style="color:#ff0000"></h4>
+        <h4>Forgot Password? <a href="forgot_password.html">Account Recovery</a></h4>
+        <h4>Don't have an account? <a href="register.html">Register</a></h4>
+        </form>
+      <button type="submit" onclick="login()">Submit</button>
+    </div>
+        
+  </div>
+
 <script>
   function login(){
     // Get login information from text boxes
