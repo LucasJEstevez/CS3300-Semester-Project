@@ -251,7 +251,7 @@ th {
             worker: true,
             step: function(row)
             {   // Process each row as it's parsed
-            delete (row.data).Vehicle_ID;
+            delete (row.data).Vehicle_ID; //Remove the vehicle_id column
             appendRow(row.data);
             },
             complete: function()
@@ -328,6 +328,7 @@ function filterTable()
     });
 }
 
+//For each dropdown, respond to selections made by the user and call filterTable to filter
 document.querySelectorAll(".dropdown-content a").forEach(item =>
 {
     item.addEventListener("click", function()
@@ -354,10 +355,12 @@ function filterFunction(dropdownId, inputId) {
     }
 }
 
+//Filter the models displayed by the dropdown menu by the chosen make
 function filterModels(make) {
     const modelDropdown = document.getElementById('modelDrop');
     const models = modelDropdown.getElementsByTagName('a');
 
+    //For each model, check if it matches the chosen make and display those rows.
     for (let i = 0; i < models.length; i++) {
         const modelMake = models[i].getAttribute('data-make');
         models[i].style.display = modelMake === make ? "" : "none";
