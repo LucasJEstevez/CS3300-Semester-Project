@@ -221,15 +221,15 @@ th {
         </div>
 </div>
 
-<script src="../static/CSS_Files/javafile.js"></script>
+<script src="../../static/CSS_Files/javafile.js"></script>
 
 <!--Create div for the table that will hold the parsed data-->
 <div id="tableContainer"></div>
 
 <!-- Load PapaParse from local file -->
-<script src="../static/PapaParse/papaparse.js"></script>
+<script src="../../static/PapaParse/papaparse.js"></script>
 <script>
-    const csvUrl = "https://api.csvgetter.com/demo/BxeDT1j8w3mEWB41mSNj"; // Replace with your fixed CSV URL
+    const csvUrl = "{{url_for('static', filename='../../Data/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
     // Event listener to begin parsing upon page loading.
     window.addEventListener("load", function() {
@@ -251,6 +251,7 @@ th {
             worker: true,
             step: function(row)
             {   // Process each row as it's parsed
+            delete (row.data).Vehicle_ID;
             appendRow(row.data);
             },
             complete: function()
@@ -338,17 +339,6 @@ document.querySelectorAll(".dropdown-content a").forEach(item =>
     });
 });
 
-// Commented because it prevents the search function from working at the moment
-// Close dropdowns when clicking outside
-// window.onclick = function (event) {
-//     if (!event.target.matches('.dropbtn')) {
-//         const dropdowns = document.getElementsByClassName("dropdown-content");
-//         for (let i = 0; i < dropdowns.length; i++) {
-//             dropdowns[i].classList.remove('show');
-//         }
-//     }
-// };
-
 function myFunction(dropdownId) {
     document.getElementById(dropdownId).classList.toggle("show");
 }
@@ -374,7 +364,5 @@ function filterModels(make) {
     }
 }
 </script>
-</body>
-</html>
 
 {% endblock %}
