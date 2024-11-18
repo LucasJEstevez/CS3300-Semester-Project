@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Error{% endblock %}
+{% block title %}Results{% endblock %}
 
 {% block content %}
-
-<body>
-    <h1>Error</h1>
-    <p>{{ message }}</p>
-    <a href="/">Go Back</a>
+    <div class="container">
+        <h1 class="mt-5">Error</h1>
+        <p class="mt-4">{{ message }}</p>
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
 </body>
 </html>
 
