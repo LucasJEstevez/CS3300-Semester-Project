@@ -260,8 +260,8 @@ th {
             complete: function()
             {
             console.log("CSV parsing complete.");
-            dropdowns.forEach(button => {
-                dropbtn.addEventListener("click", function(event) {
+            dropdown.forEach(button => {
+                "dropdown-content".addEventListener("click", function(event) {
                     const filterValue = event.target.getAttribute("data-filter-value");
                     filterTable(filterValue);
                 });
