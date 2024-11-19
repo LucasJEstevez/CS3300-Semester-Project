@@ -20,7 +20,7 @@
       <br>
       <h4 type="error" id="usererror_display" style="color:#ff0000"></h4>
 
-      <h4>Already have an account? <a href="sign-in.html">Sign-In</a></h4>
+      <h4>Already have an account? <a href="{{ url_for('sign_in_page') }}">Sign-In</a></h4>
 
     </form>
     <button type="submit" onclick="login()">Submit</button>
