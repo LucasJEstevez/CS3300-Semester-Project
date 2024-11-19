@@ -232,7 +232,7 @@ th {
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
     //Testing if button presses are interpreted correctly.
-    button.addEventListener("click", () => console.log("Button clicked!"));
+    dropbtn.addEventListener("click", () => console.log("Button clicked!"));
 
     // Event listener to begin parsing upon page loading.
     window.addEventListener("load", function() {
@@ -260,7 +260,12 @@ th {
             complete: function()
             {
             console.log("CSV parsing complete.");
-            addDropdownListeners();
+            dropdowns.forEach(button => {
+                dropbtn.addEventListener("click", function(event) {
+                    const filterValue = event.target.getAttribute("data-filter-value");
+                    filterTable(filterValue);
+                });
+            });
             }
         });
         })
@@ -270,17 +275,6 @@ th {
         document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
         });
     });
-
-    //Function to activate dropdown filter functionality after table is loaded
-    function addDropdownListeners() {
-    const dropdowns = document.querySelectorAll(".dropdown-button");
-    dropdowns.forEach(button => {
-        button.addEventListener("click", function(event) {
-            const filterValue = event.target.getAttribute("data-filter-value");
-            filterTable(filterValue);
-        });
-    });
-}
 
     function appendRow(rowData)
     {
