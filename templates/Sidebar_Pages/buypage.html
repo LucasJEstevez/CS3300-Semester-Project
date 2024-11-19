@@ -221,13 +221,13 @@ th {
         </div>
 </div>
 
-<script src="../../static/CSS_Files/javafile.js"></script>
+<script src="{{url_for('static', filename='CSS_Files/javafile.js')}}"></script>
 
 <!--Create div for the table that will hold the parsed data-->
 <div id="tableContainer"></div>
 
 <!-- Load PapaParse from local file -->
-<script src="../../static/PapaParse/papaparse.js"></script>
+<script src="{{url_for('static', filename='PapaParse/papaparse.js')}}"></script>
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
