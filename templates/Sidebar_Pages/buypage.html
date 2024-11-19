@@ -232,7 +232,7 @@ th {
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
     //Testing if button presses are interpreted correctly.
-    dropbtn.addEventListener("click", () => console.log("Button clicked!"));
+    dropbdown.addEventListener("click", () => console.log("Button clicked!"));
 
     // Event listener to begin parsing upon page loading.
     window.addEventListener("load", function() {
@@ -260,12 +260,6 @@ th {
             complete: function()
             {
             console.log("CSV parsing complete.");
-            dropdown.forEach(button => {
-                "dropdown-content".addEventListener("click", function(event) {
-                    const filterValue = event.target.getAttribute("data-filter-value");
-                    filterTable(filterValue);
-                });
-            });
             }
         });
         })
