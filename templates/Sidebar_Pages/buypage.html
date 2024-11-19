@@ -229,7 +229,7 @@ th {
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
 <script>
-    const csvUrl = "{{url_for('static', filename='../../Data/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
+    const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
     // Event listener to begin parsing upon page loading.
     window.addEventListener("load", function() {
