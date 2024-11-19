@@ -5,20 +5,20 @@
 {% block content %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <div class="container">
-        <h1 class="mt-5">Price Prediction Result</h1>
-        <div class="mt-4">
-            <h4>Predicted Price: ${{ prediction['predicted_price'] }}</h4>
-            <p>Details:</p>
-            <ul style="list-style-type: none;">
-                <li>Make: {{ prediction['specs']['make'] }}</li>
-                <li>Model: {{ prediction['specs']['model'] }}</li>
-                <li>Year: {{ prediction['specs']['year'] }}</li>
-                <li>Trim: {{ prediction['specs']['trim'] }}</li>
-            </ul>
-        </div>
-        <a href="/" class="btn btn-primary" >Back to Home</a>
+<div class="container">
+    <h1 class="mt-5 text-center">Price Prediction Result</h1>
+    <div class="mt-4 text-center"> 
+        <h4>Predicted Price: ${{ prediction['predicted_price'] }}</h4>
+        <p>Details:</p>
+        <ul style="list-style-type: none; padding-left: 0;"> 
+            <li>Make: {{ prediction['specs']['make'] }}</li>
+            <li>Model: {{ prediction['specs']['model'] }}</li>
+            <li>Year: {{ prediction['specs']['year'] }}</li>
+            <li>Trim: {{ prediction['specs']['trim'] }}</li>
+        </ul>
     </div>
+    <a href="/" class="btn btn-primary">Back to Home</a>
+</div>
 </body>
 </html>
 
