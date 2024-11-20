@@ -134,7 +134,7 @@ def emailTaken(newEmail):
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
-    conn.close
+    conn.close()
     
     for row in rows:
         id, username, password, email = row
@@ -202,7 +202,7 @@ def login():
     token = create_access_token(identity={"userID": user_id})
     return jsonify(access_token=token,message="Login successful!"), 200
 
-@app.route('/register', methods=['POST'])
+@app.route('/register_account', methods=['POST'])
 def register():
     # Get JSON data from the request
     data = request.get_json()

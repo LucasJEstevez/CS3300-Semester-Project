@@ -58,7 +58,7 @@ function login(){
     }
 
     // Use fetch to send data via POST to the correct Flask endpoint
-    fetch('/register', {  // Route to Flask, will need to change
+    fetch('/register_account', {  // Route to Flask, will need to change
           method: 'POST',
           headers: {'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
