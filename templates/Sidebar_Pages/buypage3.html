@@ -5,79 +5,23 @@
 {% block content %}
 <style>
     /* Simple styling for the table */
-    table {
+    table
+    {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
         margin-left: 20px;
     }
-    th, td {
+    th, td
+    {
         border: 1px solid #ddd;
         padding: 8px;
     }
-    th {
+    th
+    {
         background-color: #f2f2f2;
         font-weight: bold;
     }
-    .dropbtn
-{
-  background-color: #000000;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus
-{
-  background-color: rgba(77, 121, 204);;
-}
-
-#myInput
-{
-  box-sizing: border-box;
-  background-image: url('searchicon.png');
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 14px 20px 12px 45px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-}
-
-#myInput:focus {outline: 3px solid #ddd;}
-
-.dropdown
-{
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content
-{
-  max-height: 150px;
-  overflow-y: auto;
-  display: none;
-  position: absolute;
-  background-color: #f6f6f6;
-  min-width: 230px;
-  overflow: auto;
-  border: 1px solid #ddd;
-  z-index: 1;
-}
-
-.dropdown-content a
-{
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
 </style>
 
 <html>
@@ -257,7 +201,7 @@
         </div>
 </div>
 
-<script src="../../static/CSS_Files/javafile.js"></script>
+<!--<script src="../../static/CSS_Files/javafile.js"></script>-->
 
 <div id="tableContainer"></div>
 
@@ -342,7 +286,8 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("event listener reached for item:", item.textContent); //For the sake of testing
             const parentDropdown = this.closest(".dropdown-content");
             parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
-            this.classList.add("Selected item: ", this.textContent); //Testing that the correct item is logged
+            this.classList.add("selected")
+            console.log("Selected item: ", this.textContent); //Testing that the correct item is logged
             filterTable();
         });
     });
