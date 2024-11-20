@@ -35,9 +35,9 @@ window.onload = function() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-                'token': token,
-            }
+                "Authorization": `Bearer ${token}`
+            },
+            body: {'token':token}
 
         })
         .then(response => {
