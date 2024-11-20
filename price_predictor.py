@@ -256,8 +256,10 @@ def register():
 
 @app.route('/isValidToken', methods=['POST'])
 def isValidToken():
+    print("started isValidToken")
     data = request.get_json()
     token = data.get('token')
+    print("token: ",token)
     if(token):
         username = getUsername(token)
         return jsonify({"isValid":True, "username": username})
