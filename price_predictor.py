@@ -71,6 +71,10 @@ def register_page():
 def sign_in_page():
     return render_template('User_Pages/sign-in.html')
 
+@app.route('/buy3')
+def buy_three_page():
+    return render_template('User_Pages/buypage3.html')
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
     app.run(host='0.0.0.0', port=port)
