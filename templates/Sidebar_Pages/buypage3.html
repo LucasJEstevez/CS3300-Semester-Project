@@ -27,7 +27,6 @@
 <html>
 
 <body>
-
 <!--Row of Dropdown Menus for Car Search-->
 <div class="header">
     <div class="dropdown">
@@ -208,7 +207,7 @@
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
 <script>
-    const csvUrl = "https://api.csvgetter.com/demo/CL4A2YNbT5c4ZSS6gXgy"; // Replace with your fixed CSV URL
+    const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
     window.addEventListener("load", function() {
     fetch(csvUrl)
