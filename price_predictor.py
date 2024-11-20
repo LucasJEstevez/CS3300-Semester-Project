@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, url_for, jsonify, make_response
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import requests
 import os
 import jinja2
@@ -79,6 +80,10 @@ def buy_three_page():
 
 
 # All code to do with login handling
+
+jwt_key=os.environ.get('JWT_KEY') #Gets JWT_KEY from environment variables
+jwt = JWTManager(app)
+
 USERNAME_NOT_IN_DATA = -1
 INCORRECT_PASSWORD = -2
 
@@ -104,6 +109,8 @@ def getUserId(tryUsername, tryPassword):
                 return INCORRECT_PASSWORD
 
     return USERNAME_NOT_IN_DATA
+
+
 
 def usernameTaken(newUser):
     # Opens database file
@@ -191,8 +198,9 @@ def login():
     elif user_id == INCORRECT_PASSWORD:
         return jsonify({"message": "Error: Incorrect password"}), 401
 
-    # Successful login, return user ID or a success message
-    return jsonify({"message": "Login successful!", "user_id": user_id}), 200
+    # Successful login, return token and success message
+    token = create_access_token(identity={"userID": user_id})
+    return jsonify(access_token=token,message="Login successful!"), 200
 
 @app.route('/register', methods=['POST'])
 def register():
