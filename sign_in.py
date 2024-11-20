@@ -34,7 +34,7 @@ def getUserId(tryUsername, tryPassword):
     return USERNAME_NOT_IN_DATA
 def usernameTaken(newUser):
     # Opens database file
-    conn = sqlite3.connect('../../Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -50,7 +50,7 @@ def usernameTaken(newUser):
 
 def emailTaken(newEmail):
     # Opens database file
-    conn = sqlite3.connect('../../Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -77,7 +77,7 @@ def hash_password(password: str) -> str:
 
 # Adds user to database
 def addUserToDB(username,email,password):
-    conn = sqlite3.connect('../../Data/userdata/users.db')
+    conn = sqlite3.connect('Data/userdata/users.db')
 
     cursor=conn.cursor()
 

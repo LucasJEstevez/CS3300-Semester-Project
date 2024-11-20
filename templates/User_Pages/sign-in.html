@@ -48,7 +48,7 @@
       };
 
       // Use fetch to send data via POST to the correct Flask endpoint
-      fetch('http://localhost:5000/login', {  // Route to Flask, will need to change
+      fetch('/login', {  // Route to Flask, will need to change
           method: 'POST',
           headers: {'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
