@@ -233,6 +233,7 @@
             complete: function()
             {
             console.log("CSV parsing complete.");
+            filterTable();
             }
         });
         })
@@ -276,38 +277,6 @@
     table.appendChild(rowElement);
     }
 
-    //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
-    //Capture dropdown selections
-function filterTable()
-{
-    const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
-    const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
-    const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
-
-    console.log("Year Filter:", yearFilter); //Testing that the correct values are received.
-    console.log("Make Filter:", makeFilter);
-    console.log("Model Filter:", modelFilter);
-
-
-    const table = document.querySelector("#tableContainer table");
-    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-
-    rows.forEach(row =>
-    {
-        const cells = row.querySelectorAll("td");
-        const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
-        const make = cells[1]?.textContent || "";  
-        const model = cells[2]?.textContent || ""; 
-
-        // Show or hide the row based on filters
-        row.style.display = 
-            (yearFilter === "" || year === yearFilter) &&
-            (makeFilter === "" || make === makeFilter) &&
-            (modelFilter === "" || model === modelFilter)
-                ? ""
-                : "none";
-    });
-}
 
 // Add event listeners to dropdown items
 document.querySelectorAll(".dropdown-content a").forEach(item =>
@@ -332,6 +301,41 @@ window.onclick = function (event) {
         }
     }
 };
+
+//The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
+    //Capture dropdown selections
+    function filterTable()
+    {
+        console.log("filterTable called");
+        
+        const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
+        const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
+        const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
+
+        console.log("Year Filter:", yearFilter); //Testing that the correct values are received.
+        console.log("Make Filter:", makeFilter);
+        console.log("Model Filter:", modelFilter);
+
+
+        const table = document.querySelector("#tableContainer table");
+        const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+
+        rows.forEach(row =>
+        {
+            const cells = row.querySelectorAll("td");
+            const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
+            const make = cells[1]?.textContent || "";  
+            const model = cells[2]?.textContent || ""; 
+
+            // Show or hide the row based on filters
+            row.style.display = 
+                (yearFilter === "" || year === yearFilter) &&
+                (makeFilter === "" || make === makeFilter) &&
+                (modelFilter === "" || model === modelFilter)
+                    ? ""
+                    : "none";
+        });
+    }
 
 function myFunction(dropdownId) {
     document.getElementById(dropdownId).classList.toggle("show");
