@@ -256,7 +256,10 @@ def register():
 
 @app.route('/isValidToken', methods=['POST'])
 def isValidToken():
-    username = getUsername()
+    data = request.get_json()
+    token = data.get('token')
+
+    username = getUsername(token)
     return jsonify({"isValid":True, "username": username})
 '''
 @jwt_required()
