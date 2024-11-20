@@ -80,7 +80,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
 
 # Handles POST request for login
-@app.route('/login', methods=['POST'])
+@app.route('/login HTTP', methods=['POST'])
 def login():
 
     print("Login request receieved")
