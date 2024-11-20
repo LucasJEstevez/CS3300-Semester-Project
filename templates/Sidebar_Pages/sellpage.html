@@ -35,8 +35,10 @@ window.onload = function() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
+                'token': token,
             }
+
         })
         .then(response => {
             if (!response.ok) {
