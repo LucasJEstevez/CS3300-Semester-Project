@@ -4,9 +4,19 @@
 
 {% block content %}
 
+<style>
+/* Fake image, for sake of practice */
+.bckgrdimg
+{
+  background-color: #414141;
+  width: 100%;
+  padding: 20px;
+}
+</style>
+
 <div class="main">
     <h2>Log In</h2>
-    <div class="fakeimg" style="height: 160px; background-color: rgba(77, 121, 204, 0.5);">
+    <div class="fakeimg" style="height: 250px; background-color: rgba(77, 121, 204, 0.5);">
       <form name="login_form" id="login_form">
         <label for="username">Username or Email:</label>
         <input type="text" id="username" name="username" >
