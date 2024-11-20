@@ -37,8 +37,7 @@ window.onload = function() {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: {'token':token}
-
+            body: JSON.stringify({ token: token }) // Convert body to JSON string
         })
         .then(response => {
             if (!response.ok) {
