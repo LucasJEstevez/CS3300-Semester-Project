@@ -206,7 +206,7 @@
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
 <script>
-    const csvUrl = "https://api.csvgetter.com/demo/VJrJUpndQdrltcfvfH8P"; // Replace with your fixed CSV URL
+    const csvUrl = "https://api.csvgetter.com/demo/CL4A2YNbT5c4ZSS6gXgy"; // Replace with your fixed CSV URL
 
     window.addEventListener("load", function() {
     fetch(csvUrl)
@@ -313,7 +313,7 @@ document.querySelectorAll(".dropdown-content a").forEach(item =>
         const parentDropdown = this.closest(".dropdown-content");
         parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
         this.classList.add("selected");
-        console.log("Selected item:", this.textContent);
+        console.log("Selected item:", this.textContent); //Testing that the correct item is logged
         filterTable();
     });
 });
