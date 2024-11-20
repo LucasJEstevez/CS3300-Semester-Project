@@ -29,6 +29,7 @@ window.onload = function() {
     let loggedIn = false;
 
     if (token) {
+        console.log('Token:', token);
         fetch('/isValidToken', {
             method: "POST",
             headers: {
