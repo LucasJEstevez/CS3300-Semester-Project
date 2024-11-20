@@ -190,6 +190,16 @@ def addUserToDB(username,email,password):
     conn.commit()
     conn.close()
 
+# Function to generate a token
+def generate_token(user_id):
+    expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days=1)
+
+    token = jwt.encode(
+        jwt_key = os.environ.get('JWT_KEY')
+        {'userID': user_id, 'exp': expiration_time}, jwt_key,algorithm='HS256'
+    )
+    return token
+
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
 def login():
