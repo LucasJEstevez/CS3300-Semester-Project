@@ -73,7 +73,7 @@ def sign_in_page():
 
 @app.route('/buy3')
 def buy_three_page():
-    return render_template('User_Pages/buypage3.html')
+    return render_template('Sidebar_Pages/buypage3.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
