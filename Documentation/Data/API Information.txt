@@ -9,17 +9,3 @@ When a vehicle is listed online for sale at a dealership, we create a record for
 - When there is change in price of the vehicle / listing, we create a new record / listing in our system and the old listing that we had been updating is then expired.
 
 - Listings also expire when they are sold or go offline.
-
-
-
-License from Marketcheck Cars Inc and Restrictions
-Marketcheck Cars Inc gives You a personal, worldwide, royalty-free, non-assignable and non-exclusive license to use the software provided to You by Marketcheck Cars Inc as part of the Service as provided to You by Marketcheck Cars Inc. This license is for the sole purpose of enabling You to use and enjoy the benefit of the Service as provided by Marketcheck Cars Inc, in the manner permitted by the Terms.
-
-You may not (and You may not permit anyone else to): (a) cache or save data obtained through use of the MarketCheck APIs, b) resell or otherwise redistribute MarketCheck data in any way that would compete or otherwise diminish MarketCheck’s ability to sell its products, c) copy, modify, create a derivative work of, reverse engineer, decompile or otherwise attempt to extract the source code of the Service or any part thereof, unless this is expressly permitted or required by law, or unless You have been specifically told that You may do so by Marketcheck Cars Inc, in writing (e.g., through an open source software license); or (b) attempt to disable or circumvent any security mechanisms used by the Service.
-
-Open source software licenses for components of the Service released under an open source license constitute separate written agreements. To the limited extent that the open source software licenses expressly supersede these Terms, the open source licenses govern Your agreement with Marketcheck Cars Inc for the use of the components of the Service released under an open source license.
-
-Exclusion of warranties
-You expressly understand and agree that your use of the service is at your sole risk and that the service is provided “as is” and “as available.”.
-You agree that Marketcheck Cars Inc has no responsibility or liability for the deletion or failure to store any Content and other communications maintained or transmitted through use of the Service. You further acknowledge that You are solely responsible for securing and backing up your usage of the service.
-Marketcheck Cars Inc does not warrant to you that: (a) your use of the service will meet your requirements, (b) your use of the service will be uninterrupted, timely, secure or free from error, (c) the results or data provided by the Service will be accurate, (d) the quality of the service will meet your expectations and (e) any errors in the Service will be fixed.
