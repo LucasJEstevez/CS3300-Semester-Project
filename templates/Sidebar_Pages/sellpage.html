@@ -27,27 +27,33 @@
 window.onload = function(){
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
+    
     if(token){
-        fetch('/isValidToken',{
+        fetch('/isValidToken', {
             method: "POST",
-            token: token
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ token: token })
         })
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            isValid = data.isValid;
+            if (data.isValid) {
+                loggedIn = true;
+            } else {
+                document.getElementById("usererror_display").innerHTML = 'Invalid token.';
+            }
         })
-        //Error handling
+        // Error handling
         .catch(error => {
-            console.error('Error during form submission:', error);
-            
+            console.error('Error during request:', error);
             document.getElementById("usererror_display").innerHTML = 'Request failed: ' + error.message;
         });
-    }/*
-    else{
-        document.getElementById("welcome_header").style.color="red";
-        document.getElementById("welcome_header").innerHTML = "Must Sign In to Sell Your Car";
-    }*/
+    } else {
+        document.getElementById("usererror_display").innerHTML = 'No token found.';
+    }
 }
 </script>
 </body>
