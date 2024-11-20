@@ -253,7 +253,11 @@ def register():
     user_id = getUserId(username,password)
 
     token = create_access_token(identity={"userID": user_id})
-    return jsonify(access_token=token,message="Registration successful!"), 200
+
+    #This is for testing
+    key = os.environ.get('JWT_KEY')
+    
+    return jsonify(access_token=token,message="Registration successful!",key=), 200
 
 @app.route('/isValidToken', methods=['POST'])
 @jwt_required()

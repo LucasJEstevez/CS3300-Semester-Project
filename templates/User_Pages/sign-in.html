@@ -63,6 +63,9 @@
               document.getElementById("usererror_display").innerHTML = "Success!";
               const token = data.access_token;
               console.log("Received token:",token);
+
+              //Just for testing, get rid of this console log
+              console.log("Key:",data.key);
               localStorage.setItem('access_token', token);
           } else {
               document.getElementById("usererror_display").innerHTML = data.message;
