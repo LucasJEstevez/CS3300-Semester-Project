@@ -75,10 +75,6 @@ def sign_in_page():
 def buy_three_page():
     return render_template('Sidebar_Pages/buypage3.html')
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
-    app.run(host='0.0.0.0', port=port)
-
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
 def login():
@@ -108,3 +104,7 @@ def login():
 
     # Successful login, return user ID or a success message
     return jsonify({"message": "Login successful!", "user_id": user_id}), 200
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
+    app.run(host='0.0.0.0', port=port)
