@@ -70,6 +70,9 @@ function login(){
         console.log(data);
         if (data.message === 'Registration successful!') {
           document.getElementById("usererror_display").style.color="green";
+          const token = data.access_token;
+          console.log("Received token:",token);
+          localStorage.setItem('access_token', token);
         } 
         document.getElementById("usererror_display").innerHTML = data.message;
     })
