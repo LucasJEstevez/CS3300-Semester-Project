@@ -7,6 +7,7 @@ import jinja2
 import bcrypt
 import sqlite3
 import datetime
+import jwt
 
 app = Flask(__name__)
 
