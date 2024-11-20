@@ -224,7 +224,10 @@ def register():
     hashed_password = hash_password(password)
 
     addUserToDB(username,email,hashed_password)
-    return jsonify({"message": "Registration successful!"}), 200
+    user_id = getUserId(username,password)
+
+    token = create_access_token(identity={"userID": user_id})
+    return jsonify(access_token=token,message="Registration successful!"), 200
 
 # User data handling
 

@@ -63,6 +63,7 @@
               document.getElementById("usererror_display").innerHTML = "Success!";
               const token = data.access_token;
               console.log("Received token:",token);
+              localStorage.setItem('access_token', token);
           } else {
               document.getElementById("usererror_display").innerHTML = data.message;
           }
