@@ -245,18 +245,25 @@ def register():
     addUserToDB(username,email,hashed_password)
     user_id = getUserId(username,password)
 
-    token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    #This is for testing
+    #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
+    token = user_id
+    # This is for testing
     jwt_key = os.environ.get('JWT_KEY')
     
     return jsonify(access_token=token,message="Registration successful!",key=jwt_key), 200
 
+
 @app.route('/isValidToken', methods=['POST'])
+def isValidToken():
+    username = getUsername()
+    return jsonify({"isValid":True, "username": username})
+'''
 @jwt_required()
 def isValidToken():
     current_user = get_jwt_identity()  # Gets the identity from the token
     return jsonify({"isValid": True, "user": current_user}), 200
-
+'''
+    
 # User data handling
 
 if __name__ == '__main__':
