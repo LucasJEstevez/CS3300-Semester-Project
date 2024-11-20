@@ -261,7 +261,7 @@ def isValidToken():
     if(token):
         username = getUsername(token)
         return jsonify({"isValid":True, "username": username})
-    else
+    else:
         return jsonify({"isValid":False})
 '''
 @jwt_required()
