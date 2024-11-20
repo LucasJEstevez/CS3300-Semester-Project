@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, jsonify, make_respon
 import requests
 import os
 import jinja2
+import bcrypt
+import sqlite3
 
 app = Flask(__name__)
 
@@ -75,12 +77,37 @@ def sign_in_page():
 def buy_three_page():
     return render_template('Sidebar_Pages/buypage3.html')
 
+
+# All code to do with login handling
+USERNAME_NOT_IN_DATA = -1
+INCORRECT_PASSWORD = -2
+
+def getUserId(tryUsername, tryPassword):
+    # Opens database file
+    conn = sqlite3.connect('../../Data/userdata/users.db')  # Ensure this path is correct
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, username, password, email FROM users")
+    rows = cursor.fetchall()
+    conn.close()
+    
+    for row in rows:
+        id, username, password, email = row
+
+        # If the username the user entered matches either the username or email in the row
+        if tryUsername == username or tryUsername == email:
+            
+            #Checks password against hash
+            if bcrypt.checkpw(tryPassword.encode(), password.encode()):
+                return id
+            else:
+                return INCORRECT_PASSWORD
+
+    return USERNAME_NOT_IN_DATA
+
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
 def login():
-
-    print("Login request receieved")
-    return jsonify({"message":"Login request received"})
 
     # Get JSON data from the request
     data = request.get_json()
