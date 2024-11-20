@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, url_for, jsonify, make_response
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from functools import wraps
 import requests
 import os
 import jinja2
 import bcrypt
 import sqlite3
+import datetime
 
 app = Flask(__name__)
 
@@ -110,7 +112,21 @@ def getUserId(tryUsername, tryPassword):
 
     return USERNAME_NOT_IN_DATA
 
+def getUsername(userId):
+    conn = sqlite3.connect('Data/userdata/users.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM users WHERE id = ?", (userId,))
+    username = cursor.fetchone()
+    conn.close()
+    return username[0] if username else None
 
+def getEmail(userId):
+    conn = sqlite3.connect('Data/userdata/users.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT email FROM users WHERE id = ?", (userId,))
+    email = cursor.fetchone()
+    conn.close()
+    return email[0] if email else None
 
 def usernameTaken(newUser):
     # Opens database file
@@ -228,6 +244,19 @@ def register():
 
     token = create_access_token(identity={"userID": user_id})
     return jsonify(access_token=token,message="Registration successful!"), 200
+
+@app.route('/isValidToken')
+@jwt_required()
+def isValidToken():
+    user = get_jwt_identity();
+    userID=user['userID']
+    username = getUsername(userID)
+    email = getEmail(userID)
+
+    if username and email:
+        return jsonify({"username":username,"email":email}),200
+    else:
+        return jsonify({"message": "User not found"}), 404
 
 # User data handling
 

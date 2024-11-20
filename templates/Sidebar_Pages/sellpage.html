@@ -26,13 +26,28 @@
 <script>
 window.onload = function(){
     const token = localStorage.getItem("access_token");
+    let loggedIn = false;
     if(token){
-
-    }
+        fetch('/isValidToken',{
+            method: "POST",
+            token: token
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            isValid = data.isValid;
+        })
+        //Error handling
+        .catch(error => {
+            console.error('Error during form submission:', error);
+            
+            document.getElementById("usererror_display").innerHTML = 'Request failed: ' + error.message;
+        });
+    }/*
     else{
         document.getElementById("welcome_header").style.color="red";
         document.getElementById("welcome_header").innerHTML = "Must Sign In to Sell Your Car";
-    }
+    }*/
 }
 </script>
 </body>
