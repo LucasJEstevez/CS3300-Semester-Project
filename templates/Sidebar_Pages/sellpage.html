@@ -48,17 +48,17 @@ window.onload = function() {
             console.log(data);
             if (data.isValid) {
                 loggedIn = true;
-                document.getElementById("usererror_display").innerHTML = `Welcome, ${data.username}!`;
+                document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
             } else {
-                document.getElementById("usererror_display").innerHTML = 'Invalid token or user not found.';
+                document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
             }
         })
         .catch(error => {
             console.error('Error during request:', error);
-            document.getElementById("usererror_display").innerHTML = 'Request failed: ' + error.message;
+            document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
         });
     } else {
-        document.getElementById("usererror_display").innerHTML = 'No token found. Must be logged in to sell your car.';
+        document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
     }
 }
 </script>
