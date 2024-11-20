@@ -254,15 +254,8 @@ def register():
 @app.route('/isValidToken', methods=['POST'])
 @jwt_required()
 def isValidToken():
-    user = get_jwt_identity()
-    userID=user['userID']
-    username = getUsername(userID)
-    email = getEmail(userID)
-
-    if username and email:
-        return jsonify({"isValid": True,"username":username,"email":email}),200
-    else:
-        return jsonify({"isValid": False,"message": "User not found"}), 404
+    current_user = get_jwt_identity()  # Gets the identity from the token
+    return jsonify({"isValid": True, "user": current_user}), 200
 
 # User data handling
 
