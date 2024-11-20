@@ -79,3 +79,31 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
     app.run(host='0.0.0.0', port=port)
 
+# Handles POST request for login
+@app.route('/login', methods=['POST'])
+def login():
+
+    print("Login request receieved")
+
+    # Get JSON data from the request
+    data = request.get_json()
+
+    # Validate the request data (should already be validated by client, but just in case)
+    if not data or 'username' not in data or 'password' not in data:
+        return jsonify({"message": "Error: Username or password is missing"}), 400
+
+    # Extract username/email and password from data
+    usernameOrEmail = data.get('username')
+    password = data['password']
+
+    # Get user ID from the database (will also get errors)
+    user_id = getUserId(usernameOrEmail, password)
+
+    # Invalid Logins
+    if user_id == USERNAME_NOT_IN_DATA:
+        return jsonify({"message": "Error: User does not exist"}), 404
+    elif user_id == INCORRECT_PASSWORD:
+        return jsonify({"message": "Error: Incorrect password"}), 401
+
+    # Successful login, return user ID or a success message
+    return jsonify({"message": "Login successful!", "user_id": user_id}), 200
