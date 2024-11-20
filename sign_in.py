@@ -111,7 +111,7 @@ def options():
 @app.route('/login', methods=['POST'])
 def login():
 
-    return jsonify({"message":"request recieved, response bad"})
+    print("Login request receieved")
 
     # Get JSON data from the request
     data = request.get_json()
