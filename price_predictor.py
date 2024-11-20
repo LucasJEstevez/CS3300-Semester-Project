@@ -254,9 +254,9 @@ def isValidToken():
     email = getEmail(userID)
 
     if username and email:
-        return jsonify({"username":username,"email":email}),200
+        return jsonify({"isValid": True,"username":username,"email":email}),200
     else:
-        return jsonify({"message": "User not found"}), 404
+        return jsonify({"isValid": False,"message": "User not found"}), 404
 
 # User data handling
 

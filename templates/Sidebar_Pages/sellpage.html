@@ -24,29 +24,33 @@
   <button type="submit" onclick="login()">Submit</button>
 
 <script>
-window.onload = function(){
+window.onload = function() {
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
-    
-    if(token){
+
+    if (token) {
         fetch('/isValidToken', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({ token: token })
+            }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             console.log(data);
             if (data.isValid) {
                 loggedIn = true;
+                document.getElementById("usererror_display").innerHTML = `Welcome, ${data.username}!`;
             } else {
-                document.getElementById("usererror_display").innerHTML = 'Invalid token.';
+                document.getElementById("usererror_display").innerHTML = 'Invalid token or user not found.';
             }
         })
-        // Error handling
         .catch(error => {
             console.error('Error during request:', error);
             document.getElementById("usererror_display").innerHTML = 'Request failed: ' + error.message;
