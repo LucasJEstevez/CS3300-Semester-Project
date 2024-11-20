@@ -257,7 +257,7 @@ def register():
     #This is for testing
     key = os.environ.get('JWT_KEY')
     
-    return jsonify(access_token=token,message="Registration successful!",key=), 200
+    return jsonify(access_token=token,message="Registration successful!",key=key), 200
 
 @app.route('/isValidToken', methods=['POST'])
 @jwt_required()
