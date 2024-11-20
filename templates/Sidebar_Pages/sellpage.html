@@ -6,20 +6,34 @@
 <html>
 <body>
 
-<h1>Sell Your Car!</h1>
+    <h1>Sell Your Car!</h1>
 
-<h2 id="welcome_header">Click Me!</h2>
-<br><br><br><br>
-<form name="login_form" id="login_form">
-    <label for="username">Username or Email:</label>
-    <input type="text" id="username" name="username" >
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" >
-    
-    <br>
-    <h4 type="error" id="usererror_display" style="color:#ff0000"></h4>
-    <h4>Forgot Password? <a href="forgot_password.html">Account Recovery</a></h4>
-    <h4>Don't have an account? <a href="{{ url_for('register_page') }}">Register</a></h4>
+    <h2 id="welcome_header">Click Me!</h2>
+    <br><br><br><br>
+    <form action="/price_prediction" method="post">
+        <label for="vin">VIN:</label> 
+        <input type="text" id="vin" name="vin" >
+
+        <label for="miles1">Miles:</label>
+        <input type="number" id="miles1" name="miles1" ><br>
+
+        <b><br>Or<br></b><br>
+
+        <label for="make">Make:</label>
+        <input type="text" id="make" name="make" >
+
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" >
+
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" >
+
+        <label for="miles2">Miles:</label>
+        <input type="number" id="miles2" name="miles2" >
+
+        <label for="Trim">Trim:</label>
+        <input type="text" id="trim" name="trim" ><br>
+        <button type="submit">Submit</button>
     </form>
   <button type="submit" onclick="login()">Submit</button>
 
