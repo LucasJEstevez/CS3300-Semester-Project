@@ -193,9 +193,9 @@ def addUserToDB(username,email,password):
 # Function to generate a token
 def generate_token(user_id):
     expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days=1)
-
+    jwt_key = os.environ.get('JWT_KEY')
     token = jwt.encode(
-        jwt_key = os.environ.get('JWT_KEY')
+        
         {'userID': user_id, 'exp': expiration_time}, jwt_key,algorithm='HS256'
     )
     return token
@@ -258,7 +258,7 @@ def register():
 @app.route('/isValidToken', methods=['POST'])
 @jwt_required()
 def isValidToken():
-    user = get_jwt_identity();
+    user = get_jwt_identity()
     userID=user['userID']
     username = getUsername(userID)
     email = getEmail(userID)
