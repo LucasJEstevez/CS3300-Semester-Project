@@ -69,10 +69,9 @@ function login(){
     .then(data => {
         console.log(data);
         if (data.message === 'Registration successful!') {
-            document.getElementById("usererror_display").innerHTML = "Registration Successful!";
-        } else {
-            document.getElementById("usererror_display").innerHTML = data.message;
-        }
+          document.getElementById("usererror_display").style.color="green";
+        } 
+        document.getElementById("usererror_display").innerHTML = data.message;
     })
     //Error handling
     .catch(error => {

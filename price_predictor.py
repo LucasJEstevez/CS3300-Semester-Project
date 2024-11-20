@@ -216,7 +216,7 @@ def register():
     hashed_password = hash_password(password)
 
     addUserToDB(username,email,hashed_password)
-    return jsonify({"message": "Working on it"}), 200
+    return jsonify({"message": "Registration successful!"}), 200
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
