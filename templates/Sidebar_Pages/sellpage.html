@@ -8,7 +8,7 @@
 
 <h1>Sell Your Car!</h1>
 
-<button type="button" onclick="alert('Hello world!')">Click Me!</button>
+<h2 id="welcome_header">Click Me!</button>
 <br><br><br><br>
 <form name="login_form" id="login_form">
     <label for="username">Username or Email:</label>
@@ -22,6 +22,19 @@
     <h4>Don't have an account? <a href="{{ url_for('register_page') }}">Register</a></h4>
     </form>
   <button type="submit" onclick="login()">Submit</button>
+
+<script>
+window.onload = function(){
+    const token = localStorage.getItem("access_token");
+    if(token){
+
+    }
+    else{
+        document.getElementById("welcome_header").style.color="red";
+        document.getElementById("welcome_header").innerHTML = "Must Sign In to Sell Your Car";
+    }
+}
+</script>
 </body>
 </html>
 
