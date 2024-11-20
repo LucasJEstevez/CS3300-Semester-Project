@@ -84,7 +84,7 @@ INCORRECT_PASSWORD = -2
 
 def getUserId(tryUsername, tryPassword):
     # Opens database file
-    conn = sqlite3.connect('../../Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, username, password, email FROM users")
