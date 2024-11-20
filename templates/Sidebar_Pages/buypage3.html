@@ -284,6 +284,11 @@ function filterTable()
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
 
+    console.log("Year Filter:", yearFilter); //Testing that the correct values are received.
+    console.log("Make Filter:", makeFilter);
+    console.log("Model Filter:", modelFilter);
+
+
     const table = document.querySelector("#tableContainer table");
     const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
 
