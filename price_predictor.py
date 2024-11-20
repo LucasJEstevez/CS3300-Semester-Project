@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for 
+from flask import Flask, render_template, request, url_for, jsonify, make_response
 import requests
 import os
 import jinja2
@@ -84,6 +84,7 @@ if __name__ == '__main__':
 def login():
 
     print("Login request receieved")
+    return jsonify({"message":"Login request received"})
 
     # Get JSON data from the request
     data = request.get_json()
