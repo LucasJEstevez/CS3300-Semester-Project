@@ -59,7 +59,8 @@
       .then(data => {
           console.log(data);
           if (data.message === 'Login successful!') {
-              document.getElementById("usererror_display").innerHTML = "good login, change this";
+              document.getElementById("usererror_display").element.style.color="green";
+              document.getElementById("usererror_display").innerHTML = "Success!";
           } else {
               document.getElementById("usererror_display").innerHTML = data.message;
           }
