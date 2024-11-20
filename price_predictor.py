@@ -81,7 +81,7 @@ def buy_three_page():
 
 # All code to do with login handling
 
-jwt_key=os.environ.get('JWT_KEY') #Gets JWT_KEY from environment variables
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_KEY')
 jwt = JWTManager(app)
 
 USERNAME_NOT_IN_DATA = -1
