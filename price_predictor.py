@@ -218,6 +218,8 @@ def register():
     addUserToDB(username,email,hashed_password)
     return jsonify({"message": "Registration successful!"}), 200
 
+# User data handling
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
     app.run(host='0.0.0.0', port=port)
