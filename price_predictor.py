@@ -258,9 +258,11 @@ def register():
 def isValidToken():
     data = request.get_json()
     token = data.get('token')
-
-    username = getUsername(token)
-    return jsonify({"isValid":True, "username": username})
+    if(token):
+        username = getUsername(token)
+        return jsonify({"isValid":True, "username": username})
+    else
+        return jsonify({"isValid":False})
 '''
 @jwt_required()
 def isValidToken():
