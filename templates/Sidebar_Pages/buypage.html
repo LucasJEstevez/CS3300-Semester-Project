@@ -29,7 +29,7 @@ th {
 <!--Row of Dropdown Menus for Car Search-->
 <div class="header">
     <div class="dropdown">
-        <div onclick="myFunction('yearDrop')" class="dropbtn">Year</div>
+        <div class="dropdown-button" data-dropdown="yearDrop">Year</div>
         <div id="yearDrop" class="dropdown-content">
             <input type="text" placeholder="Search.." id="yearInput" onkeyup="filterFunction('yearDrop', 'yearInput')">
             <a href="#">2024</a>
@@ -65,7 +65,7 @@ th {
         </div>
     </div>
     <div class="dropdown">
-        <div onclick="myFunction('makeDrop')" class="dropbtn">Make</div>
+        <div class="dropdown-button" data-dropdown="makeDrop">Make</div>
         <div id="makeDrop" class="dropdown-content">
             <input type="text" placeholder="Search.." id="makeInput" onkeyup="filterFunction('makeDrop', 'makeInput')">
             <a href="#" onclick="filterModels('Honda')">Honda</a>
@@ -91,7 +91,7 @@ th {
         </div>
     </div>
     <div class="dropdown">
-        <div onclick="myFunction('modelDrop')" class="dropbtn">Model</div>
+        <div class="dropdown-button" data-dropdown="modelDrop">Model</div>
         <div id="modelDrop" class="dropdown-content">
             <input type="text" placeholder="Search.." id="modelInput" onkeyup="filterFunction('modelDrop', 'modelInput')">
               <!-- Toyota -->
@@ -254,12 +254,13 @@ th {
             worker: true,
             step: function(row)
             {   // Process each row as it's parsed
-            delete (row.data).Vehicle_ID; //Remove the vehicle_id column
-            appendRow(row.data);
+                delete (row.data).Vehicle_ID; //Remove the vehicle_id column
+                appendRow(row.data);
             },
-            complete: function()
+                complete: function()
             {
-            console.log("CSV parsing complete.");
+                console.log("CSV parsing complete.");
+                addDropdownListeners();
             }
         });
         })
@@ -369,6 +370,37 @@ function filterModels(make) {
         models[i].style.display = modelMake === make ? "" : "none";
     }
 }
+
+//The following is chatgpt generated code as a product of trying to find a solution to
+//non-functional filtering after the pages were transferred to the web service
+function addDropdownListeners() {
+    const dropdowns = document.querySelectorAll(".dropdown-button");
+    dropdowns.forEach(button => {
+        button.addEventListener("click", function(event) {
+            const dropdownId = event.target.getAttribute("data-dropdown");
+            toggleDropdown(dropdownId);
+        });
+    });
+}
+
+// Toggle the visibility of a dropdown
+function toggleDropdown(dropdownId) {
+    document.querySelectorAll(".dropdown-content").forEach(dropdown => {
+        dropdown.id === dropdownId
+            ? dropdown.classList.toggle("show")
+            : dropdown.classList.remove("show");
+    });
+}
+
+// Close all dropdowns if the user clicks outside
+window.addEventListener("click", function(event) {
+    if (!event.target.matches('.dropdown-button')) {
+        document.querySelectorAll(".dropdown-content").forEach(dropdown => {
+            dropdown.classList.remove("show");
+        });
+    }
+});
+
 </script>
 
 {% endblock %}
