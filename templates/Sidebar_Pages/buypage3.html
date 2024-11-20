@@ -309,6 +309,7 @@ document.querySelectorAll(".dropdown-content a").forEach(item =>
 {
     item.addEventListener("click", function()
     {
+        console.log("event listener reached");//For the sake of testing
         const parentDropdown = this.closest(".dropdown-content");
         parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
         this.classList.add("selected");
