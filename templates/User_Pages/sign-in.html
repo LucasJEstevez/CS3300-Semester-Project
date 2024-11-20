@@ -61,6 +61,8 @@
           if (data.message === 'Login successful!') {
               document.getElementById("usererror_display").style.color="green";
               document.getElementById("usererror_display").innerHTML = "Success!";
+              const token = data.access_token;
+              console.log("Received token:",token);
           } else {
               document.getElementById("usererror_display").innerHTML = data.message;
           }
