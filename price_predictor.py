@@ -191,16 +191,6 @@ def addUserToDB(username,email,password):
     conn.commit()
     conn.close()
 
-# Function to generate a token
-def generate_token(user_id):
-    expiration_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=1)
-    jwt_key = os.environ.get('JWT_KEY')
-    token = jwt.encode(
-        
-        {'userID': user_id, 'exp': expiration_time}, jwt_key,algorithm='HS256'
-    )
-    return token
-
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
 def login():
@@ -226,8 +216,7 @@ def login():
         return jsonify({"message": "Error: Incorrect password"}), 401
 
     # Successful login, return token and success message
-    token = generate_token(user_id)
-    return jsonify(access_token=token,message="Login successful!"), 200
+    token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))    return jsonify(access_token=token,message="Login successful!"), 200
 
 @app.route('/register_account', methods=['POST'])
 def register():
@@ -253,8 +242,7 @@ def register():
     addUserToDB(username,email,hashed_password)
     user_id = getUserId(username,password)
 
-    token = generate_token(user_id)
-
+    token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
     #This is for testing
     jwt_key = os.environ.get('JWT_KEY')
     
