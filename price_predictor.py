@@ -245,7 +245,7 @@ def register():
     token = create_access_token(identity={"userID": user_id})
     return jsonify(access_token=token,message="Registration successful!"), 200
 
-@app.route('/isValidToken')
+@app.route('/isValidToken', methods=['POST'])
 @jwt_required()
 def isValidToken():
     user = get_jwt_identity();
