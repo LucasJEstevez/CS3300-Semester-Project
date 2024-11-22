@@ -1,14 +1,18 @@
-{% extends "base.html" %}
+{% extends "base.html" %} <!-- Extending a base template to maintain a consistent layout across pages -->
 
-{% block title %}Buy{% endblock %}
+{% block title %}Buy{% endblock %} <!-- Title of the page, will be inserted into the <title> block of the base template -->
 
 {% block content %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <div class="container">
     <h1 class="mt-5 text-center">Price Prediction Result</h1>
+
+    <!-- Section displaying the prediction details -->
     <div class="mt-4 text-center"> 
         <h4>Predicted Price: ${{ prediction['predicted_price'] }}</h4>
+        
+        <!-- Additional details about the prediction -->
         <p>Details:</p>
         <ul style="list-style-type: none; padding-left: 0;"> 
             <li>Make: {{ prediction['specs']['make'] }}</li>
@@ -17,6 +21,8 @@
             <li>Trim: {{ prediction['specs']['trim'] }}</li>
         </ul>
     </div>
+
+    <!-- Button to navigate back to the home page -->
     <a href="/" class="btn btn-primary">Back to Home</a>
 </div>
 </body>

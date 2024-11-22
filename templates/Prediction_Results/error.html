@@ -1,0 +1,23 @@
+{% extends "base.html" %} <!-- Extending a base template to maintain a consistent layout across pages -->
+
+{% block title %}Buy{% endblock %} <!-- Title of the page, will be inserted into the <title> block of the base template -->
+
+{% block content %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<body>
+    <div class="container">
+        <h1 class="mt-5">Error</h1>
+
+        <!-- Displaying the dynamic error message passed from the backend -->
+        <p class="mt-4">{{ message }}</p>
+
+        <!-- Button to navigate back to the home page -->
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+

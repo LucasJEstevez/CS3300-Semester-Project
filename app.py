@@ -9,35 +9,51 @@ import sqlite3
 import datetime
 import jwt
 
+#Initialize the Flask application 
 app = Flask(__name__)
+
+
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_KEY')
 jwt = JWTManager(app)
 print(f"JWT Secret Key: {os.environ.get('JWT_KEY')}")
 
+# Function to construct the URL for the car price prediction API request 
 def construct_url(car_info, key):
+
+    # Base URL for the MarketCheck API with an API key and the car type set to 'used'
     url = f"https://mc-api.marketcheck.com/v2/predict/car/price?api_key={key}&car_type=used"
     
-    vin = car_info.get('vin', None)
+    vin = car_info.get('vin', None) #Retrieve the VIN if it is given by user, or None if not 
+
     if vin:
+        # If VIN is provided include the VIN and mileage information in the URL
         url += f"&vin={car_info['vin']}&miles={car_info['miles1']}"
     else:
+        # If no VIN is provided, use other car details 
         url += f"&miles={car_info['miles2']}&year={car_info['year']}&make={car_info['make']}&model={car_info['model']}&trim={car_info['trim']}"
 
+    # Returns the constructed URL to be used for API requests
     return url
 
+# Function to make the API request and retrieve car price prediction data 
 def get_car_prediction(car_info, key, url):
+    # Make a GET request to the contructed URL
     response = requests.get(url)
+
+    # Check if the response status code indicates success
     if response.status_code == 200:
         return response.json()
     else:
         return None
-
+    
+# Create route to index page
 @app.route('/')
 def home():
     return render_template('index.html')
 
 @app.route('/price_prediction', methods=['POST'])
 def price_prediction():
+    # Get car data from submitted form
     car_info = {
         'vin': request.form.get('vin', None),
         'miles1': request.form.get('miles1', None),
@@ -48,15 +64,23 @@ def price_prediction():
         'miles2': request.form.get('miles2', None),
     }
 
+    # Retrieve API key from environment variable 
     key = os.environ.get('API_KEY')  # Ensure your API key is set as an environment variable
+
+    # Construct the URL for the API request 
     url = construct_url(car_info, key)
+
+    # Make the API request 
     prediction = get_car_prediction(car_info, key, url)
 
+    # Check if prediction was succesful 
     if prediction:
-        return render_template('results.html', prediction=prediction)
+        return render_template('Prediction_Results/results.html', prediction=prediction)
     else:
-        return render_template('error.html', message="Failed to retrieve prediction.")
+        return render_template('Prediction_Results/error.html', message="Failed to retrieve prediction.")
    
+
+#Create routes for each page
 @app.route('/buy')
 def buy_page():
     return render_template('Sidebar_Pages/buypage.html')
