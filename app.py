@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, jsonify, make_response
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from functools import wraps
+from email_validator import validate_email, EmailNotValidError
 import requests
 import os
 import jinja2
@@ -8,7 +9,7 @@ import bcrypt
 import sqlite3
 import datetime
 import jwt
-import re
+
 
 #Initialize the Flask application 
 app = Flask(__name__)
@@ -156,11 +157,13 @@ def getEmail(userId):
     conn.close()
     return email[0] if email else None
 
+# Function to validate email
 def is_valid_email(email):
-    email_regex=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-    if re.match(email_regex, email):
-     return True
-    return False    
+    try:
+        validate_email(email)
+        return True
+    except EmailNotValidError as e:
+        return False
 
 def usernameTaken(newUser):
     # Opens database file
@@ -267,8 +270,8 @@ def register():
     email = data.get('email')
     password = data.get('password')
 
-    #if not is_valid_email(email):
-    #    return jsonify({"message": "Error: Invalid email"}), 400
+    if not is_valid_email(email):
+       return jsonify({"message": "Error: Invalid email"}), 400
 
     if usernameTaken(username):
         return jsonify({"message":"Error: Username already taken"}), 409
