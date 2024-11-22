@@ -267,8 +267,8 @@ def register():
     email = data.get('email')
     password = data.get('password')
 
-    if not is_valid_email(email):
-        return jsonify({"message": "Error: Invalid email"}), 400
+    #if not is_valid_email(email):
+    #    return jsonify({"message": "Error: Invalid email"}), 400
 
     if usernameTaken(username):
         return jsonify({"message":"Error: Username already taken"}), 409
