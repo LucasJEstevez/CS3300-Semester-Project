@@ -8,6 +8,7 @@ import bcrypt
 import sqlite3
 import datetime
 import jwt
+import re
 
 #Initialize the Flask application 
 app = Flask(__name__)
@@ -155,6 +156,12 @@ def getEmail(userId):
     conn.close()
     return email[0] if email else None
 
+def is_valid_email(email):
+    email_regex=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if re.match(email_regex, email):
+     return True
+    return False    
+
 def usernameTaken(newUser):
     # Opens database file
     conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
@@ -259,6 +266,9 @@ def register():
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
+
+    if not is_valid_email(email):
+        return jsonify({"message": "Error: Invalid email"}), 400
 
     if usernameTaken(username):
         return jsonify({"message":"Error: Username already taken"}), 409
