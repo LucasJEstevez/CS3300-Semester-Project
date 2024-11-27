@@ -1,0 +1,22 @@
+/* liststyle.css */
+/* This style sheet was created with the help of ChatGPT after understanding HTML lists and style sheets, which helped in understanding how to use unicode characters in this style sheet (which is used in: about/licensing/contact pages) */
+
+/* Custom List Styling */
+ul.custom-list {
+    list-style: none; /* Removes default bullets */
+    padding-left: 0; /* Aligns content to the left edge */
+}
+
+ul.custom-list li {
+    position: relative; /* For positioning the pseudo-element */
+    margin-bottom: 10px; /* Adds spacing between list items */
+    padding-left: 30px; /* Adds space for the bullet icon */
+}
+
+ul.custom-list li::before {
+    content: '⚙'; /* Unicode gear icon */
+    position: absolute;
+    left: 0; /* Aligns the icon to the left of the text */
+    font-size: 1; /* Adjust size as needed */
+    color: #0073e6;
+}
