@@ -106,9 +106,9 @@ def register_page():
 def sign_in_page():
     return render_template('User_Pages/sign-in.html')
 
-@app.route('/buy3')
-def buy_three_page():
-    return render_template('Sidebar_Pages/buypage3.html')
+@app.route('/buytest')
+def buy_test_page():
+    return render_template('Sidebar_Pages/buypagetest.html')
 
 @app.route('/saved-cars')
 def saved_cars_page():
