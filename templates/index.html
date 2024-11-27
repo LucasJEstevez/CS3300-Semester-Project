@@ -46,6 +46,14 @@
       <br>
       <button type="submit">Submit</button>
     </form>
+
+          <!-- Error message display -->
+          {% if error %}
+          <div style="color: red; margin-top: 20px; text-align: center;">
+            {{ error }}
+          </div>
+          {% endif %}
+          
   </div>
       
 </div>

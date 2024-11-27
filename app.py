@@ -79,7 +79,7 @@ def price_prediction():
     if prediction:
         return render_template('Prediction_Results/results.html', prediction=prediction)
     else:
-        return render_template('Prediction_Results/error.html', message="Failed to retrieve prediction.")
+        return render_template('index.html', error="Error: Failed to retrieve prediction.")
    
 
 #Create routes for each page
