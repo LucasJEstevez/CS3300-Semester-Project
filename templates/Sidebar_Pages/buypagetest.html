@@ -309,6 +309,9 @@
     table.appendChild(rowElement);
     updatePagination();
     }
+    
+    let currentPage = 1;
+    const rowsPerPage = 10; // Number of rows per page
 
     function updatePagination() {
     const table = document.querySelector("#tableContainer table");
