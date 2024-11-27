@@ -68,6 +68,9 @@
               //Just for testing, get rid of this console log
               console.log("Key:",data.key);
               localStorage.setItem('access_token', token);
+
+              // Redirects to saved cars
+              window.location.href="/saved-cars";
           } else {
               document.getElementById("usererror_display").innerHTML = data.message;
           }
