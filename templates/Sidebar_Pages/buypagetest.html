@@ -23,6 +23,10 @@
         background-color: #f2f2f2;
         font-weight: bold;
     }
+    #pagination
+    {
+        text-align: center;
+    }
 </style>
 
 <html>
@@ -225,6 +229,7 @@
 <!--<script src="../../static/CSS_Files/javafile.js"></script>-->
 
 <div id="tableContainer"></div>
+<div id="pagination"></div>
 
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
@@ -298,7 +303,35 @@
         rowElement.appendChild(cell);
     });
     table.appendChild(rowElement);
+    updatePagination();
     }
+
+    function updatePagination() {
+    const table = document.querySelector("#tableContainer table");
+    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+    const totalRows = rows.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // Update pagination controls
+    document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById("prevPage").disabled = currentPage === 1;
+    document.getElementById("nextPage").disabled = currentPage === totalPages;
+
+    // Show only the rows for the current page
+    rows.forEach((row, index) => {
+        row.style.display = (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) ? "" : "none";
+    });
+}
+
+function changePage(offset) {
+    const table = document.querySelector("#tableContainer table");
+    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+    const totalRows = rows.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    currentPage = Math.max(1, Math.min(currentPage + offset, totalPages)); // Adjust page number within range
+    updatePagination();
+}
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
@@ -347,6 +380,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     ? ""
                     : "none";
         });
+        updatePagination();
     }
 
 function myFunction(dropdownId) {
