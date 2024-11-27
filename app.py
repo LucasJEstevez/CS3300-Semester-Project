@@ -110,6 +110,9 @@ def sign_in_page():
 def buy_three_page():
     return render_template('Sidebar_Pages/buypage3.html')
 
+@app.route('\saved-cars')
+def saved_cars_page():
+    return render_template('User_Pages/saved-cars.html')
 
 # All code to do with login handling
 
