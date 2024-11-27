@@ -229,7 +229,11 @@
 <!--<script src="../../static/CSS_Files/javafile.js"></script>-->
 
 <div id="tableContainer"></div>
-<div id="pagination"></div>
+<div id="paginationControls" style="text-align: center; margin: 20px;">
+    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+    <span id="pageInfo"></span>
+    <button id="nextPage" onclick="changePage(1)">Next</button>
+</div>
 
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
