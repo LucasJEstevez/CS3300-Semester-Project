@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, jsonify, make_response
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, decode_token
 from functools import wraps
 from email_validator import validate_email, EmailNotValidError
 import requests
@@ -304,7 +304,7 @@ def isValidToken():
     token = data.get('token')
     print("token: ",token)
     if(token):
-        decoded = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=["HS256"])
+        decoded = decode_token(token)
         id = decoded.get('userID' , None)
         username = getUsername(id)
         if(username):
