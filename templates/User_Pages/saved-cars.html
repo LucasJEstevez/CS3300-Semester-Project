@@ -233,7 +233,7 @@
     window.onload = function() {
         const token = localStorage.getItem("access_token");
         let loggedIn = false;
-        console.log("Token (if=false):",token);
+        console.log("Token (if=false):", token);
 
         if (token) {
             console.log('Token (if=true):', token);
@@ -242,13 +242,16 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ token: token }) // Convert body to JSON string
+                body: JSON.stringify({ token: token }) // Send token only in body
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    // If the response is not ok, throw an error
+                    return response.text().then(text => {
+                        throw new Error(`HTTP error! status: ${response.status} - ${text}`);
+                    });
                 }
-                return response.json();
+                return response.json(); // Parse the JSON if response is ok
             })
             .then(data => {
                 console.log(data);
@@ -261,18 +264,12 @@
             })
             .catch(error => {
                 console.error('Error during request:', error);
-                response.text().then(text => {
-                    console.log('Error details:', text);
-                });
-            document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+                document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
             });
-        } 
-        
-        else {
+        } else {
             document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
         }
     }
-
 </script>
 
 <script>
