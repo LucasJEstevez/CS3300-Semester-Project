@@ -22,11 +22,15 @@ if (token) {
         console.log(data);
         if (data.isValid) {
             loggedIn = true;
-            document.getElementById("sign-in_button").innerHTML = 'Saved Cars';
-            document.getElementById("sign-in_button").href="{{ url_for('saved_cars_page') }}";
 
-            document.getElementById("register_button").innerHTML = 'Sign Out';
-            document.getElementById("register_button").href="";
+            var signin_button = document.getElementById("sign-in_button");
+            signin_button.innerHTML = 'Saved Cars';
+            signin_button.href="{{ url_for('saved_cars_page') }}";
+
+            var register_button = document.getElementById("register_button");
+            register_button.innerHTML = 'Sign Out';
+            register_button.removeAttribute('href');
+            register_button.onclick = signOut;
         } else {
             document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
         }
@@ -35,4 +39,9 @@ if (token) {
         console.error('Error during request:', error);
         document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
     });
+}
+
+function signOut(){
+    localStorage.removeItem("access_token");
+    location.reload();
 }
