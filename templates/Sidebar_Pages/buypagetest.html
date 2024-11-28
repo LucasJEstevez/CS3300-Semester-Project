@@ -262,7 +262,7 @@
             {
                 console.log("CSV parsing complete.");
                 renderTable();
-                updateTableDisplay();
+                renderPagination();
             }
         });
         })
@@ -367,46 +367,63 @@ function renderTable() {
 //-----------------------------------------------------------------
 //Pagination
 // Add pagination controls
-function updateTableDisplay() {
-    const table = document.querySelector("#tableContainer table");
-    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-    const totalPages = Math.ceil(rows.length / rowsPerPage);
+function renderPagination() {
+    const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
+    paginationContainer.id = "paginationContainer";
+    document.body.appendChild(paginationContainer);
+    paginationContainer.innerHTML = ""; // Clear existing buttons
 
-    rows.forEach((row, index) => {
-        row.style.display = 
-            index >= currentPage * rowsPerPage && 
-            index < (currentPage + 1) * rowsPerPage
-                ? ""
-                : "none";
-    });
-
-    // Update pagination controls
-    const paginationContainer = document.getElementById("paginationContainer");
-    if (!paginationContainer) {
-        const container = document.createElement("div");
-        container.id = "paginationContainer";
-        container.style.marginTop = "20px";
-        container.style.textAlign = "center";
-
-        const prevButton = document.createElement("button");
-        prevButton.id = "prevButton";
-        prevButton.textContent = "Previous";
-        prevButton.onclick = () => changePage(-1);
-        container.appendChild(prevButton);
-
-        const nextButton = document.createElement("button");
-        nextButton.id = "nextButton";
-        nextButton.textContent = "Next";
-        nextButton.onclick = () => changePage(1);
-        container.appendChild(nextButton);
-
-        document.body.appendChild(container);
+    const totalPages = Math.ceil(buffer.length / rowsPerPage);
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.addEventListener("click", () => {
+            currentPage = i;
+            renderTable();
+        });
+        paginationContainer.appendChild(button);
     }
-
-    // Enable or disable buttons based on the current page
-    document.getElementById("prevButton").disabled = currentPage === 0;
-    document.getElementById("nextButton").disabled = currentPage === totalPages - 1;
 }
+// function updateTableDisplay() {
+//     const table = document.querySelector("#tableContainer table");
+//     const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+//     const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+//     rows.forEach((row, index) => {
+//         row.style.display = 
+//             index >= currentPage * rowsPerPage && 
+//             index < (currentPage + 1) * rowsPerPage
+//                 ? ""
+//                 : "none";
+//     });
+
+//     // Update pagination controls
+//     const paginationContainer = document.getElementById("paginationContainer");
+//     if (!paginationContainer) {
+//         const container = document.createElement("div");
+//         container.id = "paginationContainer";
+//         container.style.marginTop = "20px";
+//         container.style.textAlign = "center";
+
+//         const prevButton = document.createElement("button");
+//         prevButton.id = "prevButton";
+//         prevButton.textContent = "Previous";
+//         prevButton.onclick = () => changePage(-1);
+//         container.appendChild(prevButton);
+
+//         const nextButton = document.createElement("button");
+//         nextButton.id = "nextButton";
+//         nextButton.textContent = "Next";
+//         nextButton.onclick = () => changePage(1);
+//         container.appendChild(nextButton);
+
+//         document.body.appendChild(container);
+//     }
+
+//     // Enable or disable buttons based on the current page
+//     document.getElementById("prevButton").disabled = currentPage === 0;
+//     document.getElementById("nextButton").disabled = currentPage === totalPages - 1;
+// }
 
 // Function to change the page
 function changePage(offset) {
@@ -441,6 +458,7 @@ function filterTable() {
     buffer = filteredRows;
     currentPage = 1;
     renderTable();
+    renderPagination();
 }
 
 
