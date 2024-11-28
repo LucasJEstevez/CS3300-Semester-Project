@@ -240,6 +240,7 @@
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
+    let dataSet = [];
     window.addEventListener("load", function() {
     fetch(csvUrl)
         .then(response =>
@@ -261,16 +262,16 @@
             {   // Process each row as it's parsed
             delete (row.data).Vehicle_ID; //Remove the vehicle_id column
             // Only load rows for the first page initially
-            if (rowCounter < rowsPerPage) {
-                appendRow(row.data);
+            dataSet.push(row.data); // Store all rows
+            if (dataSet.length <= rowsPerPage) {
+                appendRow(row.data); // Render initial rows
             }
-            // Add parsed rows to a buffer for later rendering
-            rowBuffer.push(row.data);
-            rowCounter++;
+            filterTable();
             },
             complete: function()
             {
             console.log("CSV parsing complete.");
+            updatePagination();
             renderRemainingRows();
             filterTable();
             }
