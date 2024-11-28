@@ -262,7 +262,6 @@
             {
                 console.log("CSV parsing complete.");
                 renderTable();
-                renderPagination();
             }
         });
         })
@@ -367,23 +366,6 @@ function renderTable() {
 //-----------------------------------------------------------------
 //Pagination
 // Add pagination controls
-function renderPagination() {
-    const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
-    paginationContainer.id = "paginationContainer";
-    document.body.appendChild(paginationContainer);
-    paginationContainer.innerHTML = ""; // Clear existing buttons
-
-    const totalPages = Math.ceil(buffer.length / rowsPerPage);
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement("button");
-        button.textContent = i;
-        button.addEventListener("click", () => {
-            currentPage = i;
-            renderTable();
-        });
-        paginationContainer.appendChild(button);
-    }
-}
 function updateTableDisplay() {
     const table = document.querySelector("#tableContainer table");
     const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
