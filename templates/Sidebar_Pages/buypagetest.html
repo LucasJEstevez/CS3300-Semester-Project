@@ -234,7 +234,8 @@
 
     let buffer = []; // Stores loaded rows
     let currentPage = 1;
-    const rowsPerPage = 10;
+    let totalRows = 0;
+    const rowsPerPage = 20;
 
     window.addEventListener("load", function() {
     fetch(csvUrl)
@@ -273,97 +274,17 @@
         });
     });
 
-    function appendRow(rowData)
-    {
+    function appendRow(rowData) {
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
 
     // Create the table if it doesn't exist yet
-    if (!table)
-    {
-        table = document.createElement("table");
-        tableContainer.appendChild(table);
-
-        // Generate and append the header row
-        const headers = Object.keys(rowData);
-        const headerRow = document.createElement("tr");
-        headers.forEach(header => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        headerRow.appendChild(th);
-        });
-        table.appendChild(headerRow);
-    }
-
-    // Create and append a new row for the data
-    const rowElement = document.createElement("tr");
-    Object.values(rowData).forEach(cellData =>
-    {
-        const cell = document.createElement("td");
-        cell.textContent = cellData !== undefined ? cellData : '';
-        rowElement.appendChild(cell);
-    });
-    table.appendChild(rowElement);
-    }
-
-// Add event listeners to dropdown items
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".dropdown-content a").forEach(item => {
-        item.addEventListener("click", function() {
-            console.log("event listener reached for item:", item.textContent); //For the sake of testing
-            const parentDropdown = this.closest(".dropdown-content");
-            parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
-            this.classList.add("selected")
-            console.log("Selected item: ", this.textContent); //Testing that the correct item is logged
-            filterTable();
-        });
-    });
-});
-
-//The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
-
-// Load and process CSV
-window.addEventListener("load", function () {
-    fetch(csvUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.text();
-        })
-        .then(csvText => {
-            Papa.parse(csvText, {
-                header: true,
-                dynamicTyping: true,
-                worker: true,
-                step: function (row) {
-                    delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
-                    buffer.push(row.data); // Add row to buffer
-                },
-                complete: function () {
-                    console.log("CSV parsing complete.");
-                    renderTable(); // Render the first page
-                    renderPagination(); // Add pagination controls
-                }
-            });
-        })
-        .catch(error => {
-            console.error("Error fetching the CSV file:", error);
-            document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
-        });
-});
-
-// Render table rows for the current page
-function renderTable() {
-    const tableContainer = document.getElementById("tableContainer");
-    let table = tableContainer.querySelector("table");
-
-    // Create table if it doesn't exist
     if (!table) {
         table = document.createElement("table");
         tableContainer.appendChild(table);
-        // Add headers
-        const headers = Object.keys(buffer[0]);
+
+        // Header row
+        const headers = Object.keys(rowData);
         const headerRow = document.createElement("tr");
         headers.forEach(header => {
             const th = document.createElement("th");
@@ -373,23 +294,29 @@ function renderTable() {
         table.appendChild(headerRow);
     }
 
-    // Clear previous rows
-    const oldRows = table.querySelectorAll("tr:not(:first-child)");
-    oldRows.forEach(row => row.remove());
+    // Create and append a new row for the data
+    const rowElement = document.createElement("tr");
+    Object.values(rowData).forEach(cellData => {
+        const cell = document.createElement("td");
+        cell.textContent = cellData !== undefined ? cellData : '';
+        rowElement.appendChild(cell);
+    });
+    rowElement.style.display = "none"; //Initially hide all rows
+    table.appendChild(rowElement);
 
-    // Add rows for current page
-    const startIdx = (currentPage - 1) * rowsPerPage;
-    const endIdx = startIdx + rowsPerPage;
-    const rows = buffer.slice(startIdx, endIdx);
+    totalRows++;
+    updatePagination();
+}
+function updateTableDisplay() {
+    const table = document.querySelector("#tableContainer table");
+    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
 
-    rows.forEach(rowData => {
-        const row = document.createElement("tr");
-        Object.values(rowData).forEach(cellData => {
-            const cell = document.createElement("td");
-            cell.textContent = cellData !== undefined ? cellData : '';
-            row.appendChild(cell);
-        });
-        table.appendChild(row);
+    rows.forEach((row, index) => {
+        row.style.display = 
+            index >= currentPage * rowsPerPage && 
+            index < (currentPage + 1) * rowsPerPage
+                ? ""
+                : "none";
     });
 }
 
@@ -411,6 +338,47 @@ function renderPagination() {
         paginationContainer.appendChild(button);
     }
 }
+
+function updatePagination() {
+    const paginationContainer = document.getElementById("paginationContainer");
+    if (!paginationContainer) {
+        // Create the pagination container if it doesn't exist
+        const newContainer = document.createElement("div");
+        newContainer.id = "paginationContainer";
+        newContainer.style.marginTop = "20px";
+        newContainer.style.textAlign = "center";
+
+        const prevButton = document.createElement("button");
+        prevButton.id = "prevButton";
+        prevButton.textContent = "Previous";
+        prevButton.onclick = () => changePage(-1);
+        newContainer.appendChild(prevButton);
+
+        const nextButton = document.createElement("button");
+        nextButton.id = "nextButton";
+        nextButton.textContent = "Next";
+        nextButton.onclick = () => changePage(1);
+        newContainer.appendChild(nextButton);
+
+        document.body.appendChild(newContainer);
+    }
+
+    // Disable/enable buttons based on the current page
+    document.getElementById("prevButton").disabled = currentPage === 0;
+    document.getElementById("nextButton").disabled = currentPage >= Math.ceil(totalRows / rowsPerPage) - 1;
+}
+
+// Function to change the page
+function changePage(offset) {
+    currentPage += offset;
+    updateTableDisplay();
+    updatePagination();
+}
+
+
+window.addEventListener("load", function () {
+    updateTableDisplay();
+});
 
 // Filter table based on dropdown selections
 function filterTable() {
