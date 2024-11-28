@@ -5,18 +5,19 @@
 ul.custom-list {
     list-style: none; /* Removes default bullets */
     padding-left: 0; /* Aligns content to the left edge */
+    margin: 0;
 }
 
 ul.custom-list li {
     position: relative; /* For positioning the pseudo-element */
-    margin-bottom: 10px; /* Adds spacing between list items */
-    padding-left: 30px; /* Adds space for the bullet icon */
+    padding-left: 1.5em; /* Space for gear icon */
 }
 
 ul.custom-list li::before {
     content: '⚙'; /* Unicode gear icon */
     position: absolute;
     left: 0; /* Aligns the icon to the left of the text */
-    font-size: 1; /* Adjust size as needed */
+    top: 0.1em; /* Adjusts vertical alignment slightly */
+    font-size: 1; /* Matches size of text */
     color: #0073e6;
 }
