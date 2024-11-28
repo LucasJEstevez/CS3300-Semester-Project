@@ -67,6 +67,7 @@
   </div>
 </div>
 
+<script src="../static/CSS_Files/changeloginbuttons.js"></script>
 <script>
   // Function to show the modal
   function showModal(content) {
@@ -77,66 +78,6 @@
   // Function to close the modal
   function closeModal() {
     document.getElementById("resultModal").style.display = "none";
-  }
-
-
-  window.onload = function () {
-    {% if prediction %}
-    var price = {{ prediction['predicted_price'] }};
-        var make = "{{ prediction['specs']['make'] }}";
-        var model = "{{ prediction['specs']['model'] }}";
-        var year = "{{ prediction['specs']['year'] }}";
-        var trim = "{{ prediction['specs']['trim'] }}";
-        
-        var content = "<h4>Predicted Price: $" + price.toFixed(2) + "</h4>";
-        content += "<p>Details:</p>";
-        content += "<ul style='list-style-type: none; padding-left:0;'>";
-        content += "<li>Make: " + make + "</li>";
-        content += "<li>Model: " + model + "</li>";
-        content += "<li>Year: " + year + "</li>";
-        content += "<li>Trim: " + trim + "</li>";
-        content += "</ul>";
-      showModal(content);
-    {% endif %}
-  };
-
-  const token = localStorage.getItem("access_token");
-  let loggedIn = false;
-  console.log("Token (if=false):",token);
-
-  if (token) {
-      console.log('Token (if=true):', token);
-      fetch('/isValidToken', {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({ token: token }) // Convert body to JSON string
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-      })
-      .then(data => {
-          console.log(data);
-          if (data.isValid) {
-              loggedIn = true;
-              document.getElementById("sign-in_button").innerHTML = 'Saved Cars';
-              document.getElementById("sign-in_button").href="{{ url_for('saved_cars_page') }}";
-
-              document.getElementById("register_button").innerHTML = 'Sign Out';
-              document.getElementById("register_button").href="";
-          } else {
-              document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
-          }
-      })
-      .catch(error => {
-          console.error('Error during request:', error);
-          document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
-      });
   }
 </script>
 
