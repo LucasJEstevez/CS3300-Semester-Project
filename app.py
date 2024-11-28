@@ -94,9 +94,14 @@ def sell_page():
 @app.route('/contact')
 def contact_page():
     return render_template('Sidebar_Pages/contactpage.html')
+
 @app.route('/about')
 def about_page():
     return render_template('Sidebar_Pages/aboutpage.html')
+
+@app.route('/terms')
+def terms_page():
+    return render_template('Sidebar_Pages/terms.html')
 
 @app.route('/register')
 def register_page():
