@@ -258,8 +258,8 @@ def login():
         return jsonify({"message": "Error: Incorrect password"}), 401
 
     # Successful login, return token and success message
-    #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = user_id
+    token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
+    # token = user_id
     return jsonify(access_token=token,message="Login successful!"), 200
 
 @app.route('/register_account', methods=['POST'])
@@ -304,8 +304,13 @@ def isValidToken():
     token = data.get('token')
     print("token: ",token)
     if(token):
-        username = getUsername(token)
-        return jsonify({"isValid":True, "username": username})
+        decoded = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=["HS256"])
+        id = decoded.get('userID' , None)
+        username = getUsername(id)
+        if(username):
+            return jsonify({"isValid":True, "username": username})
+        else:
+            return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
 '''
