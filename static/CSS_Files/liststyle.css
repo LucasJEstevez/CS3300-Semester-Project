@@ -4,20 +4,19 @@
 /* Custom List Styling */
 ul.custom-list {
     list-style: none; /* Removes default bullets */
-    padding-left: 0; /* Aligns content to the left edge */
-    margin: 0;
+    padding-left: 0; /* Removes left padding for the list */
+    margin: 0; /* Ensures no extra spacing */
 }
 
 ul.custom-list li {
-    position: relative; /* For positioning the pseudo-element */
-    padding-left: 1.5em; /* Space for gear icon */
+    display: flex; /* Aligns the icon and text inline */
+    align-items: center; /* Ensures vertical alignment */
+    gap: 0.5em; /* Adds spacing between the icon and text */
 }
 
 ul.custom-list li::before {
     content: '⚙'; /* Unicode gear icon */
-    position: absolute;
-    left: 0; /* Aligns the icon to the left of the text */
-    top: 0.1em; /* Adjusts vertical alignment slightly */
-    font-size: 1; /* Matches size of text */
-    color: #0073e6;
+    font-size: 1.2em; /* Adjust size relative to the text */
+    color: #386592; /* Customize the color */
 }
+
