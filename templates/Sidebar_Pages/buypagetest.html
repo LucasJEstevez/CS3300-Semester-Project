@@ -225,6 +225,7 @@
 
 <div id="tableContainer"></div>
 <div id="paginationContainer"></div>
+</body>
 
 <script src="../../static/CSS_Files/changeloginbuttons.js"></script>
 <!-- Load PapaParse from local file -->
@@ -373,16 +374,24 @@ function renderPagination() {
     document.body.appendChild(paginationContainer);
     paginationContainer.innerHTML = ""; // Clear existing buttons
 
-    const totalPages = Math.ceil(buffer.length / rowsPerPage);
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement("button");
-        button.textContent = i;
-        button.addEventListener("click", () => {
-            currentPage = i;
-            renderTable();
-        });
-        paginationContainer.appendChild(button);
-    }
+
+    const paginationCont = document.getElementById("paginationContainer");
+    paginationCont.style.marginTop = "20px";
+    paginationCont.style.textAlign = "center";
+
+    const prevButton = document.createElement("button");
+    prevButton.id = "prevButton";
+    prevButton.textContent = "Previous";
+    prevButton.onclick = () => changePage(-1);
+    container.appendChild(prevButton);
+
+    const nextButton = document.createElement("button");
+    nextButton.id = "nextButton";
+    nextButton.textContent = "Next";
+    nextButton.onclick = () => changePage(1);
+    container.appendChild(nextButton);
+
+    document.body.appendChild(container);
 }
 // function updateTableDisplay() {
 //     const table = document.querySelector("#tableContainer table");
@@ -487,6 +496,5 @@ function filterModels(make) {
     }
 }
 </script>
-</body>
 </html>
 {% endblock %}
