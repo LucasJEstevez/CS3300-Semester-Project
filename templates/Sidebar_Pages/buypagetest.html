@@ -326,42 +326,54 @@ document.addEventListener("DOMContentLoaded", function() {
 // Render table rows for the current page
 function renderTable() {
     const tableContainer = document.getElementById("tableContainer");
-    let table = tableContainer.querySelector("table");
+    tableContainer.innerHTML = ""; // Clear existing table content
 
-    // Create table if it doesn't exist
-    if (!table) {
-        table = document.createElement("table");
-        tableContainer.appendChild(table);
-        // Add headers
-        const headers = Object.keys(buffer[0]);
-        const headerRow = document.createElement("tr");
-        headers.forEach(header => {
-            const th = document.createElement("th");
-            th.textContent = header;
-            headerRow.appendChild(th);
+    // Define the starting and ending indices for the current page
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = Math.min(startIndex + rowsPerPage, buffer.length);
+
+    // Create the table
+    const table = document.createElement("table");
+    const tbody = document.createElement("tbody");
+
+    // Populate the table with data for the current page
+    for (let i = startIndex; i < endIndex; i++) {
+        const row = document.createElement("tr");
+        buffer[i].forEach(cell => {
+            const td = document.createElement("td");
+            td.textContent = cell;
+            row.appendChild(td);
         });
-        table.appendChild(headerRow);
+        tbody.appendChild(row);
     }
 
-    // Clear previous rows
-    const oldRows = table.querySelectorAll("tr:not(:first-child)");
-    oldRows.forEach(row => row.remove());
+    table.appendChild(tbody);
+    tableContainer.appendChild(table);
 
-    // Add rows for current page
-    const startIdx = (currentPage - 1) * rowsPerPage;
-    const endIdx = startIdx + rowsPerPage;
-    const rows = buffer.slice(startIdx, endIdx);
+    // Create "Previous" and "Next" buttons
+    const paginationControls = document.createElement("div");
 
-    rows.forEach(rowData => {
-        const row = document.createElement("tr");
-        Object.values(rowData).forEach(cellData => {
-            const cell = document.createElement("td");
-            cell.textContent = cellData !== undefined ? cellData : '';
-            row.appendChild(cell);
-        });
-        table.appendChild(row);
-    });
+    const prevButton = document.createElement("button");
+    prevButton.textContent = "Previous";
+    prevButton.disabled = currentPage === 1; // Disable if on the first page
+    prevButton.onclick = () => {
+        currentPage--;
+        renderTable();
+    };
+    paginationControls.appendChild(prevButton);
+
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Next";
+    nextButton.disabled = currentPage === Math.ceil(buffer.length / rowsPerPage); // Disable if on the last page
+    nextButton.onclick = () => {
+        currentPage++;
+        renderTable();
+    };
+    paginationControls.appendChild(nextButton);
+
+    tableContainer.appendChild(paginationControls);
 }
+
 
 //-----------------------------------------------------------------
 //Pagination
