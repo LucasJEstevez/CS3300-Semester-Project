@@ -371,27 +371,24 @@ function renderTable() {
 function renderPagination() {
     const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
     paginationContainer.id = "paginationContainer";
-    document.body.appendChild(paginationContainer);
     paginationContainer.innerHTML = ""; // Clear existing buttons
 
-
-    const paginationCont = document.getElementById("paginationContainer");
-    paginationCont.style.marginTop = "20px";
-    paginationCont.style.textAlign = "center";
+    paginationContainer.style.marginTop = "20px";
+    paginationContainer.style.textAlign = "center";
 
     const prevButton = document.createElement("button");
     prevButton.id = "prevButton";
     prevButton.textContent = "Previous";
     prevButton.onclick = () => changePage(-1);
-    container.appendChild(prevButton);
+    prevButton.style.textAlign = "left";
+    paginationContainer.appendChild(prevButton);
 
     const nextButton = document.createElement("button");
     nextButton.id = "nextButton";
     nextButton.textContent = "Next";
     nextButton.onclick = () => changePage(1);
-    container.appendChild(nextButton);
-
-    document.body.appendChild(container);
+    nextButton.style.textAlign = "right";
+    paginationContainer.appendChild(nextButton);
 }
 // function updateTableDisplay() {
 //     const table = document.querySelector("#tableContainer table");
