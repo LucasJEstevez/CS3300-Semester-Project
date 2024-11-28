@@ -374,6 +374,7 @@ function renderPagination() {
     paginationContainer.innerHTML = ""; // Clear existing buttons
 
     paginationContainer.style.marginTop = "20px";
+    paginationContainer.style.marginBottom = "20px"
     paginationContainer.style.textAlign = "center";
 
     const prevButton = document.createElement("button");
@@ -434,7 +435,7 @@ function renderPagination() {
 // Function to change the page
 function changePage(offset) {
     currentPage += offset;
-    updateTableDisplay();
+    renderTable();
 }
 
 //------------------------------------------------------------
