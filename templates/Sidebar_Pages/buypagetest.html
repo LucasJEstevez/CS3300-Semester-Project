@@ -260,11 +260,18 @@
             step: function(row)
             {   // Process each row as it's parsed
             delete (row.data).Vehicle_ID; //Remove the vehicle_id column
-            appendRow(row.data);
+            // Only load rows for the first page initially
+            if (rowCounter < rowsPerPage) {
+                appendRow(row.data);
+            }
+            // Add parsed rows to a buffer for later rendering
+            rowBuffer.push(row.data);
+            rowCounter++;
             },
             complete: function()
             {
             console.log("CSV parsing complete.");
+            renderRemainingRows();
             filterTable();
             }
         });
@@ -309,7 +316,7 @@
     table.appendChild(rowElement);
     updatePagination();
     }
-    
+
     let currentPage = 1;
     const rowsPerPage = 10; // Number of rows per page
 
@@ -339,6 +346,31 @@ function changePage(offset) {
     currentPage = Math.max(1, Math.min(currentPage + offset, totalPages)); // Adjust page number within range
     updatePagination();
 }
+
+let rowBuffer = [];
+let rowCounter = 0;
+
+function renderRemainingRows() {
+    const tableContainer = document.getElementById("tableContainer");
+    const table = tableContainer.querySelector("table");
+
+    // Process the buffer in chunks
+    const chunkSize = 20; // Number of rows to render at a time
+    const renderChunk = () => {
+        for (let i = 0; i < chunkSize && rowBuffer.length > 0; i++) {
+            const rowData = rowBuffer.shift();
+            appendRow(rowData); // Add row to the table
+        }
+        if (rowBuffer.length > 0) {
+            requestAnimationFrame(renderChunk); // Continue rendering next chunk
+        } else {
+            updatePagination(); // Update pagination controls after all rows are loaded
+        }
+    };
+
+    renderChunk();
+}
+
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
