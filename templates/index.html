@@ -67,7 +67,7 @@
   </div>
 </div>
 
-<script src="../static/CSS_Files/changeloginbuttons.js"></script>
+
 <script>
   // Function to show the modal
   function showModal(content) {
@@ -79,7 +79,30 @@
   function closeModal() {
     document.getElementById("resultModal").style.display = "none";
   }
+
+  window.onload = function () {
+  {% if prediction %}
+  var price = {{ prediction['predicted_price'] }};
+      var make = "{{ prediction['specs']['make'] }}";
+      var model = "{{ prediction['specs']['model'] }}";
+      var year = "{{ prediction['specs']['year'] }}";
+      var trim = "{{ prediction['specs']['trim'] }}";
+      
+      var content = "<h4>Predicted Price: $" + price.toFixed(2) + "</h4>";
+      content += "<p>Details:</p>";
+      content += "<ul style='list-style-type: none; padding-left:0;'>";
+      content += "<li>Make: " + make + "</li>";
+      content += "<li>Model: " + model + "</li>";
+      content += "<li>Year: " + year + "</li>";
+      content += "<li>Trim: " + trim + "</li>";
+      content += "</ul>";
+    showModal(content);
+  {% endif %}
+};
+
 </script>
+
+<script src="../static/CSS_Files/changeloginbuttons.js"></script>
 
 </body>
 </html>
