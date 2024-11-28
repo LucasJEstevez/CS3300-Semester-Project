@@ -5,18 +5,16 @@
 ul.custom-list {
     list-style: none; /* Removes default bullets */
     padding-left: 0; /* Removes left padding for the list */
-    margin: 0; /* Ensures no extra spacing */
+    margin: 0 auto; /* Centers the list horizontally */
+    display: flex; /* Enables flexbox */
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center; /* Centers items horizontally */
 }
 
 ul.custom-list li {
     display: flex; /* Aligns the icon and text inline */
     align-items: center; /* Ensures vertical alignment */
     gap: 0.5em; /* Adds spacing between the icon and text */
-}
-
-ul.custom-list li::before {
-    content: '⚙'; /* Unicode gear icon */
-    font-size: 1.2em; /* Adjust size relative to the text */
-    color: #386592; /* Customize the color */
+    text-align: center; /* Centers text content */
 }
 
