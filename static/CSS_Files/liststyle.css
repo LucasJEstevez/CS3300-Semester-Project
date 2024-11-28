@@ -6,15 +6,22 @@ ul.custom-list {
     list-style: none; /* Removes default bullets */
     padding-left: 0; /* Removes left padding for the list */
     margin: 0 auto; /* Centers the list horizontally */
-    display: flex; /* Enables flexbox */
-    flex-direction: column; /* Stacks items vertically */
-    align-items: center; /* Centers items horizontally */
+    display: block; /* Keep it as a block-level element for natural flow */
+    width: 80%; /* Or a fixed width for centering */
+    text-align: center; /* Ensures that text in each list item is centered */
 }
 
 ul.custom-list li {
-    display: flex; /* Aligns the icon and text inline */
+    display: inline-flex; /* Aligns the icon and text inline */
     align-items: center; /* Ensures vertical alignment */
+    justify-content: center; /* Centers the icon and text horizontally */
     gap: 0.5em; /* Adds spacing between the icon and text */
-    text-align: center; /* Centers text content */
+    margin-bottom: 10px; /* Adds space between list items */
+}
+
+ul.custom-list li::before {
+    content: '⚙'; /* Unicode gear icon */
+    font-size: 1.5em; /* Adjust size relative to the text */
+    color: #0073e6; /* Customize the color */
 }
 
