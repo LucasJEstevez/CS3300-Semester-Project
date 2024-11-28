@@ -125,7 +125,7 @@
           if (data.isValid) {
               loggedIn = true;
               document.getElementById("sign-in_button").innerHTML = 'Saved Cars';
-              document.getElementById("sign-in_button").href="{{ url_for('saved-cars') }}";
+              document.getElementById("sign-in_button").href="{{ url_for('saved_cars_page') }}";
 
               document.getElementById("register_button").innerHTML = 'Sign Out';
               document.getElementById("register_button").href="";
@@ -137,8 +137,6 @@
           console.error('Error during request:', error);
           document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
       });
-  } else {
-      document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
   }
 </script>
 
