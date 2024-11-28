@@ -70,6 +70,7 @@ window.onload = function() {
         });
     } else {
         document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
+        window.location.href = "/sign-in";
     }
 }
 function sell(){

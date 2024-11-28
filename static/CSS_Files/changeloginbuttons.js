@@ -25,7 +25,7 @@ if (token) {
 
             var signin_button = document.getElementById("sign-in_button");
             signin_button.innerHTML = 'Saved Cars';
-            signin_button.href="/saved-cars";
+            signin_button.href = "/saved-cars";
 
             var register_button = document.getElementById("register_button");
             register_button.innerHTML = 'Sign Out';
