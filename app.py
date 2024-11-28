@@ -77,7 +77,7 @@ def price_prediction():
 
     # Check if prediction was succesful 
     if prediction:
-        return render_template('Prediction_Results/results.html', prediction=prediction)
+        return render_template('index.html', prediction=prediction)
     else:
         return render_template('index.html', error="Error: Failed to retrieve prediction.")
    
