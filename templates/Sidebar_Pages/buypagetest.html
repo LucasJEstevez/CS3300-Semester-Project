@@ -240,7 +240,7 @@
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
-    let dataSet = [];
+    parsedData = [];
     window.addEventListener("load", function() {
     fetch(csvUrl)
         .then(response =>
@@ -258,22 +258,21 @@
             header: true,           // Use the first row as header
             dynamicTyping: true,    // Convert data types automatically
             worker: true,
-            step: function(row)
-            {   // Process each row as it's parsed
-            delete (row.data).Vehicle_ID; //Remove the vehicle_id column
-            // Only load rows for the first page initially
-            dataSet.push(row.data); // Store all rows
-            if (dataSet.length <= rowsPerPage) {
-                appendRow(row.data); // Render initial rows
-            }
-            filterTable();
-            },
+            // step: function(row)
+            // {   // Process each row as it's parsed
+            // delete (row.data).Vehicle_ID; //Remove the vehicle_id column
+            // // Only load rows for the first page initially
+            // if (rowCounter < rowsPerPage) {
+            //     appendRow(row.data);
+            // }
+            // filterTable();
+            // },
             complete: function()
             {
-            console.log("CSV parsing complete.");
-            updatePagination();
-            renderRemainingRows();
-            filterTable();
+                delete (result.data).Vehicle_ID;
+                parsedData = result.data.filter(row => row.Year); // Remove invalid rows
+                    updateTable();
+                    updatePagination();
             }
         });
         })
@@ -283,6 +282,39 @@
         document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
         });
     });
+
+    function updateTable() {
+    const tableContainer = document.getElementById("tableContainer");
+    tableContainer.innerHTML = ""; // Clear existing table
+
+    const table = document.createElement("table");
+    tableContainer.appendChild(table);
+
+    // Add table headers
+    if (parsedData.length > 0) {
+        const headerRow = document.createElement("tr");
+        Object.keys(parsedData[0]).forEach(header => {
+            const th = document.createElement("th");
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+        table.appendChild(headerRow);
+    }
+
+    // Add rows for the current page
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = Math.min(startIndex + rowsPerPage, parsedData.length);
+
+    parsedData.slice(startIndex, endIndex).forEach(rowData => {
+        const row = document.createElement("tr");
+        Object.values(rowData).forEach(cellData => {
+            const cell = document.createElement("td");
+            cell.textContent = cellData !== undefined ? cellData : '';
+            row.appendChild(cell);
+        });
+        table.appendChild(row);
+    });
+}
 
     function appendRow(rowData)
     {
@@ -322,55 +354,46 @@
     const rowsPerPage = 10; // Number of rows per page
 
     function updatePagination() {
-    const table = document.querySelector("#tableContainer table");
-    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-    const totalRows = rows.length;
+    const totalRows = parsedData.length;
     const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-    // Update pagination controls
     document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${totalPages}`;
     document.getElementById("prevPage").disabled = currentPage === 1;
     document.getElementById("nextPage").disabled = currentPage === totalPages;
-
-    // Show only the rows for the current page
-    rows.forEach((row, index) => {
-        row.style.display = (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) ? "" : "none";
-    });
 }
 
 function changePage(offset) {
-    const table = document.querySelector("#tableContainer table");
-    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-    const totalRows = rows.length;
+    const totalRows = parsedData.length;
     const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-    currentPage = Math.max(1, Math.min(currentPage + offset, totalPages)); // Adjust page number within range
+    currentPage = Math.max(1, Math.min(currentPage + offset, totalPages));
+    updateTable();
     updatePagination();
 }
 
 let rowBuffer = [];
 let rowCounter = 0;
 
-function renderRemainingRows() {
-    const tableContainer = document.getElementById("tableContainer");
-    const table = tableContainer.querySelector("table");
+// function renderRemainingRows() {
+//     const tableContainer = document.getElementById("tableContainer");
+//     const table = tableContainer.querySelector("table");
 
-    // Process the buffer in chunks
-    const chunkSize = 20; // Number of rows to render at a time
-    const renderChunk = () => {
-        for (let i = 0; i < chunkSize && rowBuffer.length > 0; i++) {
-            const rowData = rowBuffer.shift();
-            appendRow(rowData); // Add row to the table
-        }
-        if (rowBuffer.length > 0) {
-            requestAnimationFrame(renderChunk); // Continue rendering next chunk
-        } else {
-            updatePagination(); // Update pagination controls after all rows are loaded
-        }
-    };
+//     // Process the buffer in chunks
+//     const chunkSize = 20; // Number of rows to render at a time
+//     const renderChunk = () => {
+//         for (let i = 0; i < chunkSize && rowBuffer.length > 0; i++) {
+//             const rowData = rowBuffer.shift();
+//             appendRow(rowData); // Add row to the table
+//         }
+//         if (rowBuffer.length > 0) {
+//             requestAnimationFrame(renderChunk); // Continue rendering next chunk
+//         } else {
+//             updatePagination(); // Update pagination controls after all rows are loaded
+//         }
+//     };
 
-    renderChunk();
-}
+//     renderChunk();
+// }
 
 
 // Add event listeners to dropdown items
