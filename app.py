@@ -77,7 +77,7 @@ def price_prediction():
 
     # Check if prediction was succesful 
     if prediction:
-        return render_template('Prediction_Results/results.html', prediction=prediction)
+        return render_template('index.html', prediction=prediction)
     else:
         return render_template('index.html', error="Error: Failed to retrieve prediction.")
    
@@ -94,9 +94,14 @@ def sell_page():
 @app.route('/contact')
 def contact_page():
     return render_template('Sidebar_Pages/contactpage.html')
+
 @app.route('/about')
 def about_page():
     return render_template('Sidebar_Pages/aboutpage.html')
+
+@app.route('/terms')
+def terms_page():
+    return render_template('Sidebar_Pages/terms.html')
 
 @app.route('/register')
 def register_page():
@@ -114,10 +119,8 @@ def buy_test_page():
 def saved_cars_page():
     return render_template('User_Pages/saved-cars.html')
 
+
 # All code to do with login handling
-
-
-
 USERNAME_NOT_IN_DATA = -1
 INCORRECT_PASSWORD = -2
 

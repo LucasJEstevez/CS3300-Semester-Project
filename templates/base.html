@@ -68,7 +68,7 @@
 }
 
 /* Footer Style
-  - Contains links to legal, terms, and help.
+  - Contains links to terms.
 */
 .footer
 {
@@ -95,7 +95,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/sidebarbutton.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/sidebarstyle.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/userstyle.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/modalstyle.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/dropdownbutton.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS_Files/liststyle.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -116,7 +118,7 @@
   <div class="sidebar">
     <div class="sidebar-button">
       <a href="{{ url_for('home') }}">
-        <img src="{{ url_for('static', filename='Images/logo.webp') }}" alt="Project Logo" style="height: auto; width:150px;"></a>    
+        <img src="{{ url_for('static', filename='Images/logo.webp') }}" alt="Home" style="height: auto; width:150px;"></a>    
       <a style="margin-top: 100px;" href="{{ url_for('buy_page') }}">Buy</a>
       <a href="{{ url_for('sell_page') }}">Sell</a>
       <a style="margin-top: 200px;" href="{{ url_for('contact_page') }}">Contact Us</a>
@@ -133,7 +135,9 @@
 
   <!-- Footer Section -->
   <div class="footer">
-    <h2>Footer</h2>
+    <div class="sidebar-button">
+      <a href="{{ url_for('terms_page') }}">Terms</a>
+    </div>
   </div>
 
   <!-- JavaScript -->
