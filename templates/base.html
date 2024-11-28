@@ -68,7 +68,7 @@
 }
 
 /* Footer Style
-  - Contains links to legal, terms, and help.
+  - Contains links to terms.
 */
 .footer
 {
@@ -135,7 +135,9 @@
 
   <!-- Footer Section -->
   <div class="footer">
-    <a href="{{ url_for('terms_page') }}">Terms</a>
+    <div class="sidebar-button">
+      <a href="{{ url_for('terms_page') }}">Terms</a>
+    </div>
   </div>
 
   <!-- JavaScript -->

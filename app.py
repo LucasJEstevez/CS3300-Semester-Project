@@ -119,10 +119,8 @@ def buy_test_page():
 def saved_cars_page():
     return render_template('User_Pages/saved-cars.html')
 
+
 # All code to do with login handling
-
-
-
 USERNAME_NOT_IN_DATA = -1
 INCORRECT_PASSWORD = -2
 
