@@ -231,44 +231,47 @@
 <script src="../../static/PapaParse/papaparse.js"></script>
 <script>
     window.onload = function() {
-      const token = localStorage.getItem("access_token");
-      let loggedIn = false;
-      console.log("Token (if=false):",token);
+        const token = localStorage.getItem("access_token");
+        let loggedIn = false;
+        console.log("Token (if=false):",token);
 
-      if (token) {
-          console.log('Token (if=true):', token);
-          fetch('/isValidToken', {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${token}`
-              },
-              body: JSON.stringify({ token: token }) // Convert body to JSON string
-          })
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.json();
-          })
-          .then(data => {
-              console.log(data);
-              if (data.isValid) {
-                  loggedIn = true;
-                  document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
-              } else {
-                  document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
-              }
-          })
-          .catch(error => {
-              console.error('Error during request:', error);
-              document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
-          });
-      } else {
-          document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
-      }
+        if (token) {
+            console.log('Token (if=true):', token);
+            fetch('/isValidToken', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ token: token }) // Convert body to JSON string
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                if (data.isValid) {
+                    loggedIn = true;
+                    document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
+                } else {
+                    document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
+                }
+            })
+            .catch(error => {
+                console.error('Error during request:', error);
+                response.text().then(text => {
+                    console.log('Error details:', text);
+                });
+            document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+            });
+        } 
+        
+        else {
+            document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
+        }
     }
-    
 
 </script>
 
