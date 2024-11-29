@@ -418,18 +418,36 @@ function filterTable()
     console.log(originalData[2]);
 
     // Apply filters to the buffer
-    const filteredRows = buffer.filter(row => {
-        const cells = row.querySelectorAll("td");
-        const year = cells[0]?.textContent || ""; // Assuming 'Year' is the first column
-        const make = cells[1]?.textContent || "";
-        const model = cells[2]?.textContent || "";
+    // const filteredRows = buffer.filter(row => {
+    //     const cells = row.querySelectorAll("td");
+    //     const year = cells[0]?.textContent || ""; // Assuming 'Year' is the first column
+    //     const make = cells[1]?.textContent || "";
+    //     const model = cells[2]?.textContent || "";
 
-        return (yearFilter === "" || year === yearFilter) &&
-               (makeFilter === "" || make === makeFilter) &&
-               (modelFilter === "" || model === modelFilter);
+    //     return (yearFilter === "" || year === yearFilter) &&
+    //            (makeFilter === "" || make === makeFilter) &&
+    //            (modelFilter === "" || model === modelFilter);
+    // });
+
+    const table = document.querySelector("#tableContainer table");
+    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+
+    //Apply filters to the buffer
+    const filteredRows = rows.forEach(row =>
+    {
+        const cells = row.querySelectorAll("td");
+        const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
+        const make = cells[1]?.textContent || "";  
+        const model = cells[2]?.textContent || ""; 
+
+        // Show or hide the row based on filters
+        row.style.display = 
+            (yearFilter === "" || year === yearFilter) &&
+            (makeFilter === "" || make === makeFilter) &&
+            (modelFilter === "" || model === modelFilter)
+                ? ""
+                : "none";
     });
-    // const table = document.querySelector("#tableContainer table");
-    // const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
 
     // rows.forEach(row =>
     // {
