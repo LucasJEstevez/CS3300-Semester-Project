@@ -419,6 +419,9 @@ function filterTable()
         const year = row['Year'] || "";  //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
+        console.log(year);
+        console.log(make);
+        console.log(model);
 
         return (yearFilter === "" || year === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
