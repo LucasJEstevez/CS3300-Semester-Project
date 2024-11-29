@@ -66,6 +66,19 @@ def price_prediction():
         'miles2': request.form.get('miles2', None),
     }
 
+    # Validate year is within the allowed range
+    error="Error: Failed to retrieve prediction."
+    vin = car_info.get('vin', None)
+    if not vin:
+
+        year = car_info.get('year')
+        if not year or not year.isdigit():
+            return render_template('index.html', error=error)
+        
+        year = int(year)
+        if not (1975 <= year <= 2024):
+            return render_template('index.html', error=error)
+
     # Retrieve API key from environment variable 
     key = os.environ.get('API_KEY')  # Ensure your API key is set as an environment variable
 
@@ -79,7 +92,7 @@ def price_prediction():
     if prediction:
         return render_template('index.html', prediction=prediction)
     else:
-        return render_template('index.html', error="Error: Failed to retrieve prediction.")
+        return render_template('index.html', error=error)
    
 
 #Create routes for each page

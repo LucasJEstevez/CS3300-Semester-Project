@@ -233,9 +233,11 @@
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
+    let originalData = [];
     let buffer = []; // Stores loaded rows
     let currentPage = 1;
     const rowsPerPage = 20;
+    let totalPages = 0;
 
     window.addEventListener("load", function() {
     fetch(csvUrl)
@@ -257,6 +259,7 @@
             step: function(row)
             {   // Process each row as it's parsed
                 delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                originalData.push(row.data);
                 buffer.push(row.data);
             },
             complete: function()
@@ -264,6 +267,7 @@
                 console.log("CSV parsing complete.");
                 renderTable();
                 renderPagination();
+                totalPages = Math.ceil(buffer.length / rowsPerPage);
             }
         });
         })
@@ -274,40 +278,40 @@
         });
     });
 
-    function appendRow(rowData)
-    {
-    const tableContainer = document.getElementById("tableContainer");
-    let table = tableContainer.querySelector("table");
+//     function appendRow(rowData)
+//     {
+//     const tableContainer = document.getElementById("tableContainer");
+//     let table = tableContainer.querySelector("table");
 
-    // Create the table if it doesn't exist yet
-    if (!table)
-    {
-        table = document.createElement("table");
-        tableContainer.appendChild(table);
+//     // Create the table if it doesn't exist yet
+//     if (!table)
+//     {
+//         table = document.createElement("table");
+//         tableContainer.appendChild(table);
 
-        // Generate and append the header row
-        const headers = Object.keys(rowData);
-        const headerRow = document.createElement("tr");
-        headers.forEach(header => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        headerRow.appendChild(th);
-        });
-        table.appendChild(headerRow);
-    }
+//         // Generate and append the header row
+//         const headers = Object.keys(rowData);
+//         const headerRow = document.createElement("tr");
+//         headers.forEach(header => {
+//         const th = document.createElement("th");
+//         th.textContent = header;
+//         headerRow.appendChild(th);
+//         });
+//         table.appendChild(headerRow);
+//     }
 
-    // Create and append a new row for the data
-    const rowElement = document.createElement("tr");
-    Object.values(rowData).forEach(cellData =>
-    {
-        const cell = document.createElement("td");
-        cell.textContent = cellData !== undefined ? cellData : '';
-        rowElement.appendChild(cell);
-    });
-    table.appendChild(rowElement);
+//     // Create and append a new row for the data
+//     const rowElement = document.createElement("tr");
+//     Object.values(rowData).forEach(cellData =>
+//     {
+//         const cell = document.createElement("td");
+//         cell.textContent = cellData !== undefined ? cellData : '';
+//         rowElement.appendChild(cell);
+//     });
+//     table.appendChild(rowElement);
 
-    updateTableDisplay();
-    }
+//     updateTableDisplay();
+// }
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
@@ -324,7 +328,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
-
 // Render table rows for the current page
 function renderTable() {
     const tableContainer = document.getElementById("tableContainer");
@@ -367,7 +370,7 @@ function renderTable() {
 
 //-----------------------------------------------------------------
 //Pagination
-// Add pagination controls
+//Add pagination controls
 function renderPagination() {
     const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
     paginationContainer.id = "paginationContainer";
@@ -384,6 +387,12 @@ function renderPagination() {
     prevButton.style.textAlign = "left";
     paginationContainer.appendChild(prevButton);
 
+    const pageInfo = document.createElement("span");
+    pageInfo.id = "pageInfo";
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    pageInfo.style.margin = "0 10px";
+    paginationContainer.appendChild(pageInfo);
+
     const nextButton = document.createElement("button");
     nextButton.id = "nextButton";
     nextButton.textContent = "Next";
@@ -391,46 +400,6 @@ function renderPagination() {
     nextButton.style.textAlign = "right";
     paginationContainer.appendChild(nextButton);
 }
-// function updateTableDisplay() {
-//     const table = document.querySelector("#tableContainer table");
-//     const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-//     const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-//     rows.forEach((row, index) => {
-//         row.style.display = 
-//             index >= currentPage * rowsPerPage && 
-//             index < (currentPage + 1) * rowsPerPage
-//                 ? ""
-//                 : "none";
-//     });
-
-//     // Update pagination controls
-//     const paginationContainer = document.getElementById("paginationContainer");
-//     if (!paginationContainer) {
-//         const container = document.createElement("div");
-//         container.id = "paginationContainer";
-//         container.style.marginTop = "20px";
-//         container.style.textAlign = "center";
-
-//         const prevButton = document.createElement("button");
-//         prevButton.id = "prevButton";
-//         prevButton.textContent = "Previous";
-//         prevButton.onclick = () => changePage(-1);
-//         container.appendChild(prevButton);
-
-//         const nextButton = document.createElement("button");
-//         nextButton.id = "nextButton";
-//         nextButton.textContent = "Next";
-//         nextButton.onclick = () => changePage(1);
-//         container.appendChild(nextButton);
-
-//         document.body.appendChild(container);
-//     }
-
-//     // Enable or disable buttons based on the current page
-//     document.getElementById("prevButton").disabled = currentPage === 0;
-//     document.getElementById("nextButton").disabled = currentPage === totalPages - 1;
-// }
 
 // Function to change the page
 function changePage(offset) {
@@ -441,7 +410,10 @@ function changePage(offset) {
 //------------------------------------------------------------
 //Filtering Functions
 // Filter table based on dropdown selections
-function filterTable() {
+function filterTable()
+{
+    console.log("filterTable called");
+
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
@@ -450,20 +422,28 @@ function filterTable() {
     console.log("Make Filter:", makeFilter);
     console.log("Model Filter:", modelFilter);
 
-    // Apply filters to the buffer
-    const filteredRows = buffer.filter(row => {
-        const year = row['Year'] || "";  // Assuming 'Year' is the column name
+    // Apply filters to the originalData
+    console.log(originalData);
+    const filteredRows = originalData.filter(row => {
+        const year = row['Year'] || "";  //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
+        // console.log(year);
+        // console.log(make);
+        // console.log(model);
 
-        return (yearFilter === "" || year === yearFilter) &&
+        return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
                (modelFilter === "" || model === modelFilter);
     });
 
+    console.log("Filtered rows:", filteredRows); //Check the filtered results
+
     // Update buffer and reset pagination
-    buffer = filteredRows;
+    buffer = filteredRows.length > 0 ? filteredRows : [...originalData];
+    console.log("buffer:", buffer);
     currentPage = 1;
+    totalPages = Math.ceil(filteredRows.length / rowsPerPage);
     renderTable();
     renderPagination();
 }
