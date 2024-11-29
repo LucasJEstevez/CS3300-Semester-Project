@@ -415,10 +415,10 @@ function filterTable()
     console.log("Model Filter:", modelFilter);
 
     // Apply filters to the buffer
-    const filteredRows = originalData.filter(row => {
-        const year = cells[0]?.textContent || ""; //Assuming 'Year' is the first column
-        const make = cells[1]?.textContent || ""; 
-        const model = cells[2]?.textContent || "";
+    const filteredRows = buffer.filter(row => {
+        const year = row[0] || "";
+        const make = row[1] || "";
+        const model = row[2] || "";
 
         return (yearFilter === "" || year === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
@@ -445,6 +445,8 @@ function filterTable()
 
     // Update buffer and reset pagination
     buffer = filteredRows;
+    console.log("buffer=filteredRows")
+    console.log(filteredRows) //Testing
     currentPage = 1;
     renderTable();
     renderPagination();
