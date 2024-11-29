@@ -72,24 +72,31 @@ The user logo in the top right corner of each page will link to the necessary pa
 
 ### Functional
 
-Functional reqs
+- Ability to estimate a car’s value based on make, model, miles, year, or VIN
+- Users able to create an account on the website (but optional)
+- After account creation, the account holder shall be able to save/add cars to an expandable list
+- When browsing available vehicles, the user should be able to filter cars by certain criteria (make, miles, year, etc.) to look at individual listings
+- All vehicle data to be in .csv or .xlsx, to be processed with JS (PapaParse)
 
 ### Non-Functional
 
-Non-functional reqs
+- Easy to use website interface
+- Quick price estimation feedback (<5 seconds)
+- Zero access to API key
+- The user’s login and save data must be private and secure
 
+# Tools
 
-
-# Papa Parse
+### Papa Parse
 
 Our software uses an external resource called Papa Parse. This is a CSV parser using JavaScript that we implemented to parse through our car data and display it to our various webpages. As we parse through the CSV, each row is appended to an HTML class. Due to the large size of our data, we used the step option provided by Papa Parse which streams the input. This can result in slower load times depending on the file’s relative location but felt necessary for the size of our files due to limited browser memory.
 
 Papa Parse GitHub: <https://github.com/mholt/PapaParse>
 
-# SQLite3
+### SQLite3
 
 Our software uses an external database tool called SQLite3, a software library that provides a lightweight database engine which allows us to store our user-login information.
 
-# BCrypt
+### BCrypt
 
 In order to store our user data securely, we use BCrypt to hash our users’ passwords before storing them in our database so we do not keep plaintext passwords stored.
