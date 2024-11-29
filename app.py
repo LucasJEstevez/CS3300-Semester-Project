@@ -139,7 +139,7 @@ INCORRECT_PASSWORD = -2
 
 def getUserId(tryUsername, tryPassword):
     # Opens database file
-    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, username, password, email FROM users")
@@ -161,7 +161,7 @@ def getUserId(tryUsername, tryPassword):
     return USERNAME_NOT_IN_DATA
 
 def getUsername(userId):
-    conn = sqlite3.connect('Data/userdata/users.db')
+    conn = sqlite3.connect('User Data/users.db')
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM users WHERE id = ?", (userId,))
     username = cursor.fetchone()
@@ -169,7 +169,7 @@ def getUsername(userId):
     return username[0] if username else None
 
 def getEmail(userId):
-    conn = sqlite3.connect('Data/userdata/users.db')
+    conn = sqlite3.connect('User Data/users.db')
     cursor = conn.cursor()
     cursor.execute("SELECT email FROM users WHERE id = ?", (userId,))
     email = cursor.fetchone()
@@ -186,7 +186,7 @@ def is_valid_email(email):
 
 def usernameTaken(newUser):
     # Opens database file
-    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -202,7 +202,7 @@ def usernameTaken(newUser):
 
 def emailTaken(newEmail):
     # Opens database file
-    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -229,7 +229,7 @@ def hash_password(password: str) -> str:
 
 # Adds user to database
 def addUserToDB(username,email,password):
-    conn = sqlite3.connect('Data/userdata/users.db')
+    conn = sqlite3.connect('User Data/users.db')
 
     cursor=conn.cursor()
 
