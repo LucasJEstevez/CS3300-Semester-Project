@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, jsonify, make_response
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, decode_token
 from functools import wraps
 from email_validator import validate_email, EmailNotValidError
 import requests
@@ -139,7 +139,7 @@ INCORRECT_PASSWORD = -2
 
 def getUserId(tryUsername, tryPassword):
     # Opens database file
-    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, username, password, email FROM users")
@@ -161,7 +161,7 @@ def getUserId(tryUsername, tryPassword):
     return USERNAME_NOT_IN_DATA
 
 def getUsername(userId):
-    conn = sqlite3.connect('Data/userdata/users.db')
+    conn = sqlite3.connect('User Data/users.db')
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM users WHERE id = ?", (userId,))
     username = cursor.fetchone()
@@ -169,7 +169,7 @@ def getUsername(userId):
     return username[0] if username else None
 
 def getEmail(userId):
-    conn = sqlite3.connect('Data/userdata/users.db')
+    conn = sqlite3.connect('User Data/users.db')
     cursor = conn.cursor()
     cursor.execute("SELECT email FROM users WHERE id = ?", (userId,))
     email = cursor.fetchone()
@@ -186,7 +186,7 @@ def is_valid_email(email):
 
 def usernameTaken(newUser):
     # Opens database file
-    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -202,7 +202,7 @@ def usernameTaken(newUser):
 
 def emailTaken(newEmail):
     # Opens database file
-    conn = sqlite3.connect('Data/userdata/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -229,7 +229,7 @@ def hash_password(password: str) -> str:
 
 # Adds user to database
 def addUserToDB(username,email,password):
-    conn = sqlite3.connect('Data/userdata/users.db')
+    conn = sqlite3.connect('User Data/users.db')
 
     cursor=conn.cursor()
 
@@ -266,13 +266,17 @@ def login():
 
     # Invalid Logins
     if user_id == USERNAME_NOT_IN_DATA:
-        return jsonify({"message": "Error: User does not exist"}), 404
+        return jsonify({"message": "Error: User does not exist"}), 401
     elif user_id == INCORRECT_PASSWORD:
         return jsonify({"message": "Error: Incorrect password"}), 401
 
     # Successful login, return token and success message
     #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = user_id
+    token = create_access_token(
+        identity=str(user_id),
+        expires_delta=datetime.timedelta(minutes=5)
+    )
+    # token = user_id
     return jsonify(access_token=token,message="Login successful!"), 200
 
 @app.route('/register_account', methods=['POST'])
@@ -303,7 +307,10 @@ def register():
     user_id = getUserId(username,password)
 
     #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = user_id
+    token = create_access_token(
+        identity=str(user_id),
+        expires_delta=datetime.timedelta(minutes=5)
+    )
     # This is for testing
     jwt_key = os.environ.get('JWT_KEY')
     
@@ -314,19 +321,21 @@ def register():
 def isValidToken():
     print("started isValidToken")
     data = request.get_json()
+    print("data: ",data)
     token = data.get('token')
-    print("token: ",token)
     if(token):
-        username = getUsername(token)
-        return jsonify({"isValid":True, "username": username})
+        print("Received token: ",token)
+        decoded = decode_token(token)
+        id = decoded.get('sub')
+        username = getUsername(id)
+        if(username):
+            print("username valid")
+            print("username: ",username)
+            return jsonify({"isValid":True, "username": username})
+        else:
+            return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
-'''
-@jwt_required()
-def isValidToken():
-    current_user = get_jwt_identity()  # Gets the identity from the token
-    return jsonify({"isValid": True, "user": current_user}), 200
-'''
     
 # User data handling
 
