@@ -76,7 +76,7 @@ function login(){
           const token = data.access_token;
           localStorage.setItem('access_token', token);
           document.getElementById("usererror_display").innerHTML = data.message;
-          window.location.href = "/buy_page"
+          window.location.href = "/buy"
         } 
         document.getElementById("usererror_display").innerHTML = data.message;
     })
