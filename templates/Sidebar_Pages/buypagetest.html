@@ -413,12 +413,15 @@ function filterTable()
     console.log("Year Filter:", yearFilter);
     console.log("Make Filter:", makeFilter);
     console.log("Model Filter:", modelFilter);
+    console.log(originalData[0]);
+    console.log(originalData[1]);
+    console.log(originalData[2]);
 
     // Apply filters to the buffer
     const filteredRows = buffer.filter(row => {
-        const year = row[0] || "";
-        const make = row[1] || "";
-        const model = row[2] || "";
+        const year = row['Year'] || "";
+        const make = row['Make'] || "";
+        const model = row['Model'] || "";
 
         return (yearFilter === "" || year === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
