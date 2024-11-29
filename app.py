@@ -258,7 +258,8 @@ def login():
         return jsonify({"message": "Error: Incorrect password"}), 401
 
     # Successful login, return token and success message
-    token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
+    #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
+    token = create_access_token(identity=str(user_id))
     # token = user_id
     return jsonify(access_token=token,message="Login successful!"), 200
 
@@ -306,7 +307,7 @@ def isValidToken():
     if(token):
         print("Received token: ",token)
         decoded = decode_token(token)
-        id = decoded.get('userID' , None)
+        id = decoded.get('sub')
         username = getUsername(id)
         if(username):
             print("username valid")
