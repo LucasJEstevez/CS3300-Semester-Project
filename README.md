@@ -113,9 +113,19 @@ Papa Parse GitHub: <https://github.com/mholt/PapaParse>
 
 Our software uses an external database tool called SQLite3, a software library that provides a lightweight database engine which allows us to store our user-login information.
 
+SQLite documentation: <https://www.sqlite.org/docs.html>
+
 ### BCrypt
 
 In order to store our user data securely, we use BCrypt to hash our users’ passwords before storing them in our database so we do not keep plaintext passwords stored.
+
+BCrypt Documentation: <https://pypi.org/project/bcrypt/>
+
+### MarketCheck API
+
+Used to obtain instant vehicle price estimation after user inputs vehicle data into website.
+
+MarketCheck API Documentation: <https://www.marketcheck.com/apis/cars/> and <https://apidocs.marketcheck.com/>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
