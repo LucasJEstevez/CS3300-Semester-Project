@@ -103,6 +103,12 @@ The user logo in the top right corner of each page will link to the necessary pa
 
 ## Tools
 
+### Flask
+
+We use Flask (with Python) as our backend, creating our dynamic webpages and landing pages. Mainly for API and user data/login requests.
+
+Flask documentation: <https://flask.palletsprojects.com/en/stable/>
+
 ### Papa Parse
 
 Our software uses an external resource called Papa Parse. This is a CSV parser using JavaScript that we implemented to parse through our car data and display it to our various webpages. As we parse through the CSV, each row is appended to an HTML class. Due to the large size of our data, we used the step option provided by Papa Parse which streams the input. This can result in slower load times depending on the file’s relative location but felt necessary for the size of our files due to limited browser memory.
@@ -126,6 +132,12 @@ BCrypt Documentation: <https://pypi.org/project/bcrypt/>
 Used to obtain instant vehicle price estimation after user inputs vehicle data into website.
 
 MarketCheck API Documentation: <https://www.marketcheck.com/apis/cars/> and <https://apidocs.marketcheck.com/>
+
+### Email-Validator
+
+To help us validate user-inputted emails (when creating an account), we used the Email-Validator library.
+
+Email-Validator Documentation: <https://pypi.org/project/email-validator/>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
