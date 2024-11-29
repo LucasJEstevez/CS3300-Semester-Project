@@ -415,6 +415,7 @@ function filterTable()
     console.log("Model Filter:", modelFilter);
 
     // Apply filters to the originalData
+    console.log(originalData);
     const filteredRows = originalData.filter(row => {
         const year = row['Year'] || "";  //Match keys to your CSV headers
         const make = row['Make'] || "";
@@ -432,7 +433,7 @@ function filterTable()
 
     // Update buffer and reset pagination
     buffer = filteredRows.length > 0 ? filteredRows : [...originalData];
-    console.log(buffer);
+    console.log("buffer:", buffer);
     currentPage = 1;
     renderTable();
     renderPagination();
