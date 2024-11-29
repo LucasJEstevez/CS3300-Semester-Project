@@ -108,11 +108,10 @@ git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
     - Users can login/register using a username and/or valid email and password (which is hashed with BCrypt)
 
 The user logo in the top right corner of each page will link to the necessary pages.
-
-1. Any user may navigate to the Buy page, where they can filter through a large list of cars using intuitive buttons which are reactive and filter as you press
-2. Any user may navigate to the About page, which explains what the service is and why it exists
-3. Any user may navigate to the Contact Us page, which has a link to our GitHub along with an email users may reach out to with questions
-4. Any user may navigate to the Terms page, which details the licenses used by the service and by MarketCheck (to use their API)
+4. Any user may navigate to the Buy page, where they can filter through a large list of cars using intuitive buttons which are reactive and filter as you press
+5. Any user may navigate to the About page, which explains what the service is and why it exists
+6. Any user may navigate to the Contact Us page, which has a link to our GitHub along with an email users may reach out to with questions
+7. Any user may navigate to the Terms page, which details the licenses used by the service and by MarketCheck (to use their API)
 
 # Features
 
@@ -137,7 +136,7 @@ The user logo in the top right corner of each page will link to the necessary pa
 
 We used Render to host our Web Service (for free), it was easy to use after understanding the basic blueprint for a Render web service.
 
-Render help and documentation, along with specifics/limits of what you can access with the free tier: About: <https://render.com/about>; Documentation: <https://render.com/docs/free>
+Render help and documentation, along with specifics/limits of what you can access with the free tier: <br>About: <https://render.com/about>; Documentation: <https://render.com/docs/free>
 
 ### Flask
 
