@@ -419,9 +419,10 @@ function filterTable()
 
     // Apply filters to the buffer
     const filteredRows = buffer.filter(row => {
-        const year = row['Year'] || "";
-        const make = row['Make'] || "";
-        const model = row['Model'] || "";
+        const cells = row.querySelectorAll("td");
+        const year = cells[0]?.textContent || ""; // Assuming 'Year' is the first column
+        const make = cells[1]?.textContent || "";
+        const model = cells[2]?.textContent || "";
 
         return (yearFilter === "" || year === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
