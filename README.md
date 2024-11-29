@@ -29,6 +29,7 @@ This web service was created mainly as a team-based class project for CS3300 at 
 - HTML and CSS with JS
 - SQLite 3
 - MarketCheck’s Price Predictor API
+- Render (Web Hosting)
 
 # Developer Set-up and Execution
 
@@ -65,10 +66,10 @@ This web service was created mainly as a team-based class project for CS3300 at 
       &emsp;&emsp;&emsp;| -- Directories for different landing pages<br>
 &emsp;| -- /Testing&emsp;<-- includes test case files and other files for testing deployments<br>
 &emsp;| -- .gitattributes<br>
-&emsp;| -- render.yaml<br>
-&emsp;| -- requirements.txt<br>
-&emsp;| -- app.py<br>
-&emsp;| -- start_app.sh<br>
+&emsp;| -- render.yaml&emsp;<-- render template file; go to Tools -> Render for more information<br>
+&emsp;| -- requirements.txt&emsp;<-- system dependencies to be installed on deployment (Prerequisites)<br>
+&emsp;| -- app.py&emsp;<-- creates backend (server) for service; includes routes and price predictor/user logic<br>
+&emsp;| -- start_app.sh&emsp;<-- runs app.py (which builds the backend)<br>
 &emsp;| -- LICENSE/README<br>
 
 ### Installation and Hosting/Execution
