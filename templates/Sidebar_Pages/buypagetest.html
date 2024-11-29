@@ -413,45 +413,22 @@ function filterTable()
     console.log("Year Filter:", yearFilter);
     console.log("Make Filter:", makeFilter);
     console.log("Model Filter:", modelFilter);
-    console.log(originalData[0]);
-    console.log(originalData[1]);
-    console.log(originalData[2]);
 
-    // Apply filters to the buffer
-    // const filteredRows = buffer.filter(row => {
-    //     const cells = row.querySelectorAll("td");
-    //     const year = cells[0]?.textContent || ""; // Assuming 'Year' is the first column
-    //     const make = cells[1]?.textContent || "";
-    //     const model = cells[2]?.textContent || "";
+    // Apply filters to the originalData
+    const filteredRows = originalData.filter(row => {
+        const year = row['Year'] || "";  //Match keys to your CSV headers
+        const make = row['Make'] || "";
+        const model = row['Model'] || "";
 
-    //     return (yearFilter === "" || year === yearFilter) &&
-    //            (makeFilter === "" || make === makeFilter) &&
-    //            (modelFilter === "" || model === modelFilter);
-    // });
-
-    const table = document.querySelector("#tableContainer table");
-    const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-
-    rows.forEach(row =>
-    {
-        const cells = row.querySelectorAll("td");
-        const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
-        const make = cells[1]?.textContent || "";  
-        const model = cells[2]?.textContent || ""; 
-
-        // Show or hide the row based on filters
-        row.style.display = 
-            (yearFilter === "" || year === yearFilter) &&
-            (makeFilter === "" || make === makeFilter) &&
-            (modelFilter === "" || model === modelFilter)
-                ? ""
-                : "none";
+        return (yearFilter === "" || year === yearFilter) &&
+               (makeFilter === "" || make === makeFilter) &&
+               (modelFilter === "" || model === modelFilter);
     });
 
+    console.log("Filtered rows:", filteredRows); //Check the filtered results
+
     // Update buffer and reset pagination
-    //buffer = filteredRows;
-    console.log("buffer=filteredRows")
-    console.log(rows) //Testing
+    buffer = filteredRows.length > 0 ? filteredRows : [...originalData];
     currentPage = 1;
     renderTable();
     renderPagination();
