@@ -72,8 +72,9 @@ def price_prediction():
     # Construct the URL for the API request 
     url = construct_url(car_info, key)
 
-    # Make the API request 
-    prediction = get_car_prediction(car_info, key, url)
+    if car_info['year']<2025 or car_info['year']>1980:
+        # Make the API request 
+        prediction = get_car_prediction(car_info, key, url)
 
     # Check if prediction was succesful 
     if prediction:
