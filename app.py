@@ -66,15 +66,20 @@ def price_prediction():
         'miles2': request.form.get('miles2', None),
     }
 
+    year = car_info.get('year')
+    year = int(year)
+    if not (1981 <= year <= 2024):
+        return render_template('index.html', error="Error: Failed to retrieve prediction.")
+
     # Retrieve API key from environment variable 
     key = os.environ.get('API_KEY')  # Ensure your API key is set as an environment variable
 
     # Construct the URL for the API request 
     url = construct_url(car_info, key)
 
-    if car_info['year']<2025 or car_info['year']>1980:
-        # Make the API request 
-        prediction = get_car_prediction(car_info, key, url)
+
+    # Make the API request 
+    prediction = get_car_prediction(car_info, key, url)
 
     # Check if prediction was succesful 
     if prediction:
