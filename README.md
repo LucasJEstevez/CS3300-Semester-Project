@@ -133,6 +133,12 @@ The user logo in the top right corner of each page will link to the necessary pa
 
 ## Tools
 
+### Render
+
+We used Render to host our Web Service (for free), it was easy to use after understanding the basic blueprint for a Render web service.
+
+Render help and documentation, along with specifics/limits of what you can access with the free tier: About: <https://render.com/about>; Documentation: <https://render.com/docs/free>
+
 ### Flask
 
 We use Flask (with Python) as our backend, creating our dynamic webpages and landing pages. Mainly for API and user data/login requests.
