@@ -52,6 +52,7 @@ git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
 ![Getting Started](Documentation/Images/getstarted.png "Getting Started")
 
 4. Once you have an account with Render which is attached to your GitHub account, in the Dashboard, click the “+ New” tab next to your current workspace in the top-left of the page. Select Web Service. You should see the GitHub repository you just cloned as one of the first options under ”Git Provider”. Alternatively, you can paste the link to the GitHub repository directly into the “Public Git Repository” section.
+![New Service](Documentation/Images/newservice2.png "New Service")
 ![Connect](Documentation/Images/newserviceconnect.png "Connect")
 
 5. Next, after naming the project, you can leave most sections blank/with their default values, but scroll to Build Command and Start Command, and input: pip install -r requirements.txt and ./start_app.sh respectively. Also ensure you are using the “Free” Instance Type (can use others if you’d like, unnecessary).
