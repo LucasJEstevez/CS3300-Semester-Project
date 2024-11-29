@@ -34,7 +34,7 @@ This web service was created mainly as a team-based class project for CS3300 at 
 2. Clone the repo:
 git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
 
-3. Create a Render account (Get Started for Free) and link to your Github account at <https://render.com/>
+3. Create a Render account (Get Started for Free) and link to your Github account at <https://render.com/>. Can also find more information on Render Hosting here!
 ![Getting Started](Documentation/Images/getstarted.png "Getting Started")
 
 4. Once you have an account with Render which is attached to your GitHub account, in the Dashboard, click the “+ New” tab next to your current workspace in the top-left of the page. Select Web Service. You should see the GitHub repository you just cloned as one of the first options under ”Git Provider”. Alternatively, you can paste the link to the GitHub repository directly into the “Public Git Repository” section.
