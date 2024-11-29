@@ -1,6 +1,20 @@
-1-Stop Car Shop
+<!-- Commented sections were guided by the Best-README-Template GitHub Repository (which we did not use any templates from, just looked at for ideas/banners (https://github.com/othneildrew/Best-README-Template) -->
 
-Created by: John Camargo, Kylie Sanchez, Jackson Seales, Lucas Estevez
+<!-- Contributors and License banners -->
+[![Contributors][contributors-shield]][contributors-url]
+[![AFL License][license-shield]][license-url]
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/LucasJEstevez/CS3300-Semester-Project">
+    <img src="static/Images/logo.webp" alt="Logo" width="300" height="300">
+  </a>
+</div>
+
+<div align="center">
+    Created by: John Camargo, Kylie Sanchez, Jackson Seales, Lucas Estevez
+</div>
 
 # What is 1-Stop Car Shop?
 
@@ -100,3 +114,10 @@ Our software uses an external database tool called SQLite3, a software library t
 ### BCrypt
 
 In order to store our user data securely, we use BCrypt to hash our users’ passwords before storing them in our database so we do not keep plaintext passwords stored.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/LucasJEstevez/CS3300-Semester-Project.svg?style=for-the-badge
+[contributors-url]: https://github.com/LucasJEstevez/CS3300-Semester-Project/graphs/contributors
+[license-shield]: https://img.shields.io/github/license/LucasJEstevez/CS3300-Semester-Project.svg?style=for-the-badge
+[license-url]: https://github.com/LucasJEstevez/CS3300-Semester-Project/LICENSE
