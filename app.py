@@ -259,7 +259,10 @@ def login():
 
     # Successful login, return token and success message
     #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = create_access_token(identity=str(user_id))
+    token = create_access_token(
+        identity=str(user_id),
+        expires_delta=datetime.timedelta(days=1)
+    )
     # token = user_id
     return jsonify(access_token=token,message="Login successful!"), 200
 
@@ -291,7 +294,10 @@ def register():
     user_id = getUserId(username,password)
 
     #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = user_id
+    token = create_access_token(
+        identity=str(user_id),
+        expires_delta=datetime.timedelta(days=1)
+    )
     # This is for testing
     jwt_key = os.environ.get('JWT_KEY')
     
@@ -317,12 +323,6 @@ def isValidToken():
             return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
-'''
-@jwt_required()
-def isValidToken():
-    current_user = get_jwt_identity()  # Gets the identity from the token
-    return jsonify({"isValid": True, "user": current_user}), 200
-'''
     
 # User data handling
 
