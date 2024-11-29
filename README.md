@@ -44,31 +44,32 @@ This web service was created mainly as a team-based class project for CS3300 at 
 
 ### Architecture
 
-/root
-| -- /Code
-      | -- Python/.py files (not including app.py)
-| -- /User Data
-| -- /Documentation
-      | -- Data
-      | -- Devs and Users
-      | -- Images
-      | -- Legal
-| -- /static  <-- Flask is designed to serve static files only from the static directory by default
-      | -- Car Data 
-      | -- CSS_Files
-      | -- Images
-      | -- PapaParse (in this case used for .csv parsing)
-| -- /templates  <-- will keep all the web pages/html files
-      | -- base.html (optional if using Jinja)
-      | -- index.html
-      | -- Directories for different landing pages
-| -- /Testing  <-- includes test case files and other files for testing deployments
-| -- .gitattributes
-| -- render.yaml
-| -- requirements.txt
-| -- app.py
-| -- start_app.sh
-| -- LICENSE/README
+/root<br>
+&emsp;| -- /Code<br>
+      &emsp;&emsp;&emsp;| -- Python/.py files (not including app.py)<br>
+&emsp;| -- /User Data<br>
+      &emsp;&emsp;&emsp;| -- Files such as saved_cars.csv, and user database<br>
+&emsp;| -- /Documentation<br>
+      &emsp;&emsp;&emsp;| -- Data<br>
+      &emsp;&emsp;&emsp;| -- Devs and Users<br>
+      &emsp;&emsp;&emsp;| -- Images<br>
+      &emsp;&emsp;&emsp;| -- Legal<br>
+&emsp;| -- /static&emsp;<-- Flask is designed to serve static files only from the static directory by default<br>
+      &emsp;&emsp;&emsp;| -- Car Data<br>
+      &emsp;&emsp;&emsp;| -- CSS_Files<br>
+      &emsp;&emsp;&emsp;| -- Images<br>
+      &emsp;&emsp;&emsp;| -- PapaParse (in this case used for .csv parsing)<br>
+&emsp;| -- /templates&emsp;<-- will keep all the web pages/html files<br>
+      &emsp;&emsp;&emsp;| -- base.html (optional if using Jinja)<br>
+      &emsp;&emsp;&emsp;| -- index.html<br>
+      &emsp;&emsp;&emsp;| -- Directories for different landing pages<br>
+&emsp;| -- /Testing&emsp;<-- includes test case files and other files for testing deployments<br>
+&emsp;| -- .gitattributes<br>
+&emsp;| -- render.yaml<br>
+&emsp;| -- requirements.txt<br>
+&emsp;| -- app.py<br>
+&emsp;| -- start_app.sh<br>
+&emsp;| -- LICENSE/README<br>
 
 ### Installation and Hosting/Execution
 
