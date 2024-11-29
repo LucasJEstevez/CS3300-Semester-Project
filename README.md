@@ -23,6 +23,7 @@ Welcome to 1-Stop Car Shop! This free software combines “all present market li
 
 This web service was created mainly as a team-based class project for CS3300 at the University of Colorado Colorado Springs by Computer Science students John Camargo, Jackson Seales, Kylie Sanchez, and Lucas Estevez
 
+<br><br>
 # Built With
 
 - Python (data creation, Flask for backend)
@@ -31,6 +32,7 @@ This web service was created mainly as a team-based class project for CS3300 at 
 - MarketCheck’s Price Predictor API
 - Render (Web Hosting)
 
+<br><br>
 # Developer Set-up and Execution
 
 ### Prerequisites
@@ -98,7 +100,7 @@ git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
 8. To suspend the service, navigate to the Settings section on the left-hand side of the Render menu, and scroll until you see “Suspend Web Service” in red text (which you simply click once).
 ![Suspend](Documentation/Images/suspend.png "Suspend")
 
-
+<br><br>
 # User Usage
 
 1. Once the web service is deployed, all the user needs to access the service is a link to the website (which if you are a developer, you can find on your Render Dashboard)
@@ -107,12 +109,13 @@ git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
     - If a user is trying to access the sell page without being logged in, it will re-direct to the login/register pages.
     - Users can login/register using a username and/or valid email and password (which is hashed with BCrypt)
 
-The user logo in the top right corner of each page will link to the necessary pages.
-4. Any user may navigate to the Buy page, where they can filter through a large list of cars using intuitive buttons which are reactive and filter as you press
-5. Any user may navigate to the About page, which explains what the service is and why it exists
-6. Any user may navigate to the Contact Us page, which has a link to our GitHub along with an email users may reach out to with questions
-7. Any user may navigate to the Terms page, which details the licenses used by the service and by MarketCheck (to use their API)
+4. The user logo in the top right corner of each page will link to the necessary pages.<br>
+5. Any user may navigate to the Buy page, where they can filter through a large list of cars using intuitive buttons which are reactive and filter as you press<br>
+6. Any user may navigate to the About page, which explains what the service is and why it exists<br>
+7. Any user may navigate to the Contact Us page, which has a link to our GitHub along with an email users may reach out to with questions<br>
+8. Any user may navigate to the Terms page, which details the licenses used by the service and by MarketCheck (to use their API)<br>
 
+<br><br>
 # Features
 
 ### Functional
