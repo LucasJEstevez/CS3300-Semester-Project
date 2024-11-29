@@ -42,6 +42,34 @@ This web service was created mainly as a team-based class project for CS3300 at 
 - flask-jwt-extended version 4.7.0
 - email-validator version 2.2.0
 
+### Architecture
+
+/root
+| -- /Code
+      | -- Python/.py files (not including app.py)
+| -- /User Data
+| -- /Documentation
+      | -- Data
+      | -- Devs and Users
+      | -- Images
+      | -- Legal
+| -- /static  <-- Flask is designed to serve static files only from the static directory by default
+      | -- Car Data 
+      | -- CSS_Files
+      | -- Images
+      | -- PapaParse (in this case used for .csv parsing)
+| -- /templates  <-- will keep all the web pages/html files
+      | -- base.html (optional if using Jinja)
+      | -- index.html
+      | -- Directories for different landing pages
+| -- /Testing  <-- includes test case files and other files for testing deployments
+| -- .gitattributes
+| -- render.yaml
+| -- requirements.txt
+| -- app.py
+| -- start_app.sh
+| -- LICENSE/README
+
 ### Installation and Hosting/Execution
 
 1. Create an account and get a free Car Price Predictor API key at [https://www.marketcheck.com/apis/](https://www.marketcheck.com/apis/%20)
