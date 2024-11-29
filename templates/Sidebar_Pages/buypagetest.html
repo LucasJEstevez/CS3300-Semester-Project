@@ -385,6 +385,10 @@ function renderPagination() {
     prevButton.textContent = "Previous";
     prevButton.onclick = () => changePage(-1);
     prevButton.style.textAlign = "left";
+    if (currentPage === 1)
+    {
+        prevButton.disabled = true; // Disable on the first page
+    }
     paginationContainer.appendChild(prevButton);
 
     const pageInfo = document.createElement("span");
@@ -398,13 +402,19 @@ function renderPagination() {
     nextButton.textContent = "Next";
     nextButton.onclick = () => changePage(1);
     nextButton.style.textAlign = "right";
+    if (currentPage === totalPages)
+    {
+        nextButton.disabled = true; // Disable on the first page
+    }
     paginationContainer.appendChild(nextButton);
 }
 
 // Function to change the page
-function changePage(offset) {
+function changePage(offset)
+{
     currentPage += offset;
     renderTable();
+    renderPagination();
 }
 
 //------------------------------------------------------------
