@@ -265,9 +265,9 @@
             complete: function()
             {
                 console.log("CSV parsing complete.");
+                totalPages = Math.ceil(buffer.length / rowsPerPage);
                 renderTable();
                 renderPagination();
-                totalPages = Math.ceil(buffer.length / rowsPerPage);
             }
         });
         })
@@ -425,7 +425,7 @@ function filterTable()
     // Apply filters to the originalData
     console.log(originalData);
     const filteredRows = originalData.filter(row => {
-        const year = row['Year'] || "";  //Match keys to your CSV headers
+        const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
         // console.log(year);
