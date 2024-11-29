@@ -85,7 +85,7 @@ The user logo in the top right corner of each page will link to the necessary pa
 - Zero access to API key
 - The user’s login and save data must be private and secure
 
-# Tools
+## Tools
 
 ### Papa Parse
 
