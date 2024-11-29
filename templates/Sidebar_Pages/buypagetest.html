@@ -233,6 +233,7 @@
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
+    let originalData = [];
     let buffer = []; // Stores loaded rows
     let currentPage = 1;
     const rowsPerPage = 20;
@@ -257,6 +258,7 @@
             step: function(row)
             {   // Process each row as it's parsed
                 delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                originalData.push(row.data);
                 buffer.push(row.data);
             },
             complete: function()
@@ -274,40 +276,40 @@
         });
     });
 
-    function appendRow(rowData)
-    {
-    const tableContainer = document.getElementById("tableContainer");
-    let table = tableContainer.querySelector("table");
+//     function appendRow(rowData)
+//     {
+//     const tableContainer = document.getElementById("tableContainer");
+//     let table = tableContainer.querySelector("table");
 
-    // Create the table if it doesn't exist yet
-    if (!table)
-    {
-        table = document.createElement("table");
-        tableContainer.appendChild(table);
+//     // Create the table if it doesn't exist yet
+//     if (!table)
+//     {
+//         table = document.createElement("table");
+//         tableContainer.appendChild(table);
 
-        // Generate and append the header row
-        const headers = Object.keys(rowData);
-        const headerRow = document.createElement("tr");
-        headers.forEach(header => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        headerRow.appendChild(th);
-        });
-        table.appendChild(headerRow);
-    }
+//         // Generate and append the header row
+//         const headers = Object.keys(rowData);
+//         const headerRow = document.createElement("tr");
+//         headers.forEach(header => {
+//         const th = document.createElement("th");
+//         th.textContent = header;
+//         headerRow.appendChild(th);
+//         });
+//         table.appendChild(headerRow);
+//     }
 
-    // Create and append a new row for the data
-    const rowElement = document.createElement("tr");
-    Object.values(rowData).forEach(cellData =>
-    {
-        const cell = document.createElement("td");
-        cell.textContent = cellData !== undefined ? cellData : '';
-        rowElement.appendChild(cell);
-    });
-    table.appendChild(rowElement);
+//     // Create and append a new row for the data
+//     const rowElement = document.createElement("tr");
+//     Object.values(rowData).forEach(cellData =>
+//     {
+//         const cell = document.createElement("td");
+//         cell.textContent = cellData !== undefined ? cellData : '';
+//         rowElement.appendChild(cell);
+//     });
+//     table.appendChild(rowElement);
 
-    updateTableDisplay();
-    }
+//     updateTableDisplay();
+// }
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
@@ -324,7 +326,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
-
 // Render table rows for the current page
 function renderTable() {
     const tableContainer = document.getElementById("tableContainer");
@@ -367,7 +368,7 @@ function renderTable() {
 
 //-----------------------------------------------------------------
 //Pagination
-// Add pagination controls
+//Add pagination controls
 function renderPagination() {
     const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
     paginationContainer.id = "paginationContainer";
@@ -391,46 +392,6 @@ function renderPagination() {
     nextButton.style.textAlign = "right";
     paginationContainer.appendChild(nextButton);
 }
-// function updateTableDisplay() {
-//     const table = document.querySelector("#tableContainer table");
-//     const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
-//     const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-//     rows.forEach((row, index) => {
-//         row.style.display = 
-//             index >= currentPage * rowsPerPage && 
-//             index < (currentPage + 1) * rowsPerPage
-//                 ? ""
-//                 : "none";
-//     });
-
-//     // Update pagination controls
-//     const paginationContainer = document.getElementById("paginationContainer");
-//     if (!paginationContainer) {
-//         const container = document.createElement("div");
-//         container.id = "paginationContainer";
-//         container.style.marginTop = "20px";
-//         container.style.textAlign = "center";
-
-//         const prevButton = document.createElement("button");
-//         prevButton.id = "prevButton";
-//         prevButton.textContent = "Previous";
-//         prevButton.onclick = () => changePage(-1);
-//         container.appendChild(prevButton);
-
-//         const nextButton = document.createElement("button");
-//         nextButton.id = "nextButton";
-//         nextButton.textContent = "Next";
-//         nextButton.onclick = () => changePage(1);
-//         container.appendChild(nextButton);
-
-//         document.body.appendChild(container);
-//     }
-
-//     // Enable or disable buttons based on the current page
-//     document.getElementById("prevButton").disabled = currentPage === 0;
-//     document.getElementById("nextButton").disabled = currentPage === totalPages - 1;
-// }
 
 // Function to change the page
 function changePage(offset) {
@@ -441,7 +402,10 @@ function changePage(offset) {
 //------------------------------------------------------------
 //Filtering Functions
 // Filter table based on dropdown selections
-function filterTable() {
+function filterTable()
+{
+    console.log("filterTable called");
+
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
@@ -451,15 +415,33 @@ function filterTable() {
     console.log("Model Filter:", modelFilter);
 
     // Apply filters to the buffer
-    const filteredRows = buffer.filter(row => {
-        const year = row['Year'] || "";  // Assuming 'Year' is the column name
-        const make = row['Make'] || "";
-        const model = row['Model'] || "";
+    const filteredRows = originalData.filter(row => {
+        const year = cells[0]?.textContent || ""; //Assuming 'Year' is the first column
+        const make = cells[1]?.textContent || ""; 
+        const model = cells[2]?.textContent || "";
 
         return (yearFilter === "" || year === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
                (modelFilter === "" || model === modelFilter);
     });
+    // const table = document.querySelector("#tableContainer table");
+    // const rows = table.querySelectorAll("tr:not(:first-child)"); // Skip the header row
+
+    // rows.forEach(row =>
+    // {
+    //     const cells = row.querySelectorAll("td");
+    //     const year = cells[0]?.textContent || "";  // Assuming 'Year' is the first column
+    //     const make = cells[1]?.textContent || "";  
+    //     const model = cells[2]?.textContent || ""; 
+
+    //     // Show or hide the row based on filters
+    //     row.style.display = 
+    //         (yearFilter === "" || year === yearFilter) &&
+    //         (makeFilter === "" || make === makeFilter) &&
+    //         (modelFilter === "" || model === modelFilter)
+    //             ? ""
+    //             : "none";
+    // });
 
     // Update buffer and reset pagination
     buffer = filteredRows;
