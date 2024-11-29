@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, jsonify, make_response
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, decode_token
 from functools import wraps
 from email_validator import validate_email, EmailNotValidError
 import requests
@@ -266,13 +266,17 @@ def login():
 
     # Invalid Logins
     if user_id == USERNAME_NOT_IN_DATA:
-        return jsonify({"message": "Error: User does not exist"}), 404
+        return jsonify({"message": "Error: User does not exist"}), 401
     elif user_id == INCORRECT_PASSWORD:
         return jsonify({"message": "Error: Incorrect password"}), 401
 
     # Successful login, return token and success message
     #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = user_id
+    token = create_access_token(
+        identity=str(user_id),
+        expires_delta=datetime.timedelta(minutes=5)
+    )
+    # token = user_id
     return jsonify(access_token=token,message="Login successful!"), 200
 
 @app.route('/register_account', methods=['POST'])
@@ -303,7 +307,10 @@ def register():
     user_id = getUserId(username,password)
 
     #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
-    token = user_id
+    token = create_access_token(
+        identity=str(user_id),
+        expires_delta=datetime.timedelta(minutes=5)
+    )
     # This is for testing
     jwt_key = os.environ.get('JWT_KEY')
     
@@ -314,19 +321,21 @@ def register():
 def isValidToken():
     print("started isValidToken")
     data = request.get_json()
+    print("data: ",data)
     token = data.get('token')
-    print("token: ",token)
     if(token):
-        username = getUsername(token)
-        return jsonify({"isValid":True, "username": username})
+        print("Received token: ",token)
+        decoded = decode_token(token)
+        id = decoded.get('sub')
+        username = getUsername(id)
+        if(username):
+            print("username valid")
+            print("username: ",username)
+            return jsonify({"isValid":True, "username": username})
+        else:
+            return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
-'''
-@jwt_required()
-def isValidToken():
-    current_user = get_jwt_identity()  # Gets the identity from the token
-    return jsonify({"isValid": True, "user": current_user}), 200
-'''
     
 # User data handling
 

@@ -32,6 +32,9 @@
 
 <!--End of everything displayed, after this is code for user login-->
 
+<!--If already signed in, will redirect to saved cars-->
+<script src="../../static/CSS_Files/ifloggedinredirect.js"></script>
+
 <script>
 function login(){
   <!--Gets Login Information from Text Boxes-->
@@ -71,8 +74,9 @@ function login(){
         if (data.message === 'Registration successful!') {
           document.getElementById("usererror_display").style.color="green";
           const token = data.access_token;
-          console.log("Received token:",token);
           localStorage.setItem('access_token', token);
+          document.getElementById("usererror_display").innerHTML = data.message;
+          window.location.href = "/buy_page"
         } 
         document.getElementById("usererror_display").innerHTML = data.message;
     })
