@@ -253,7 +253,7 @@ def login():
 
     # Invalid Logins
     if user_id == USERNAME_NOT_IN_DATA:
-        return jsonify({"message": "Error: User does not exist"}), 404
+        return jsonify({"message": "Error: User does not exist"}), 401
     elif user_id == INCORRECT_PASSWORD:
         return jsonify({"message": "Error: Incorrect password"}), 401
 
@@ -301,13 +301,16 @@ def register():
 def isValidToken():
     print("started isValidToken")
     data = request.get_json()
+    print("data: ",data)
     token = data.get('token')
-    print("token: ",token)
     if(token):
+        print("Received token: ",token)
         decoded = decode_token(token)
         id = decoded.get('userID' , None)
         username = getUsername(id)
         if(username):
+            print("username valid")
+            print("username: ",username)
             return jsonify({"isValid":True, "username": username})
         else:
             return jsonify({"isValid":False})
