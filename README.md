@@ -1,4 +1,5 @@
 <!-- Commented sections were guided by the Best-README-Template GitHub Repository (which we did not use any templates from, just looked at for ideas/banners (https://github.com/othneildrew/Best-README-Template) -->
+<!-- Converted README originally from .docx to .md using https://word2md.com/ -->
 
 <!-- Contributors and License banners -->
 [![Contributors][contributors-shield]][contributors-url]
