@@ -277,14 +277,12 @@ def getCarIDArray(user_id):
             for row in csvReader:
                 if int(row['User_ID']) == user_id:
                     carIds = parseCarArray(row['Car_IDs'])
-                    print(f"Car IDs for user {user_id}: {carIds}")  # Debugging log
                     return carIds
+                    return [0]
     except FileNotFoundError:
-        print("CSV file not found")
-        return []
+        return [1]
     except Exception as e:
-        print(f"Error: {str(e)}")
-        return []
+        return [2]
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
