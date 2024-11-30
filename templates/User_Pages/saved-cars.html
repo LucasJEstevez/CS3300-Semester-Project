@@ -275,10 +275,12 @@
 <!--Get id numbers of saved cars-->>
 <script>
 window.onload() = function2(){
+    console.log("The function you want is running")
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
 
     if (token) {
+        console.log("if token true")
         fetch('/getSavedCars?token=#${token}', {
             method: "GET",
             headers: {
