@@ -373,7 +373,6 @@ def isValidToken():
             return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
-<<<<<<< Updated upstream
 
 @app.route('/getSavedCars', methods=['POST'])
 def getSavedCars():
@@ -394,7 +393,6 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
-=======
     
 #Comparing available cars to sold cars
 @app.before_first_request
@@ -405,7 +403,6 @@ def compare_csv_on_startup():
         match_columns=[1, 2, 3],
         additional_column=6,
     )
->>>>>>> Stashed changes
 
 
 if __name__ == '__main__':
