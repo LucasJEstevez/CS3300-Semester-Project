@@ -1,3 +1,8 @@
+# These test cases were created mostly by using a template from ChatGPT, which was then modified to qwork qith our specific feature cases
+# Before running any tests, open a terminal and change the working dircetory to the project root (where app.py is located) and run: pip install -r requirements.txt
+# Then, run these test by running (in the same open terminal): python -m unittest -v  Testing.testing
+
+
 import unittest
 import sys
 import os
@@ -21,7 +26,6 @@ class TestApp(unittest.TestCase):
         # Assert that the status code is 200
         self.assertEqual(response.status_code, 200)
         # Assert that the rendered page contains specific content
-        # Replace 'Welcome to the Home Page' with actual content in your index.html
         self.assertIn(b'<h2>Vehicle Price Estimator</h2>', response.data)
 
     def test_buy_page(self):
