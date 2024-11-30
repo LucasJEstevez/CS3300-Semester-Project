@@ -395,7 +395,8 @@ def getSavedCars():
 
     
 #Comparing available cars to sold cars
-@app.before_first_request
+#@app.before_first_request
+@app.route('/compare_csv_on_startup', methods=['POST'])
 def compare_csv_on_startup():
     compare_and_merge_csv(
         file1='file1.csv',
