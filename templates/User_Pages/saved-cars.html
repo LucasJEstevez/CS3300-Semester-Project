@@ -274,6 +274,7 @@
 
 <!--Get id numbers of saved cars-->>
 <script>
+window.onload() = function2(){
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
 
@@ -303,6 +304,7 @@
             document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
         });
     }
+}
 </script>
 
 <script>
