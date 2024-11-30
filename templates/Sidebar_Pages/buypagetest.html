@@ -265,8 +265,9 @@
             <a href="#">60000</a>
         </div>
     </div>
-        </div>
-        </div>
+    </div>
+    <button onclick="resetFilters()">Reset Filters</button>
+    </div>
 </div>
 
 <!--<script src="../../static/CSS_Files/javafile.js"></script>-->
@@ -278,6 +279,7 @@
 <script src="../../static/CSS_Files/changeloginbuttons.js"></script>
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
+<!--Script for available cars csv-->
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
@@ -485,31 +487,48 @@ function filterTable()
     renderPagination();
 }
 
-
-function myFunction(dropdownId) {
+//----------------------------------------------------------------
+//Functions for filering the table once the dropdown buttons are selected
+function myFunction(dropdownId)
+{
     document.getElementById(dropdownId).classList.toggle("show");
 }
 
-function filterFunction(dropdownId, inputId) {
+//The following two functions are adopted from ChatGPT
+function filterFunction(dropdownId, inputId)
+{
     const input = document.getElementById(inputId).value.toUpperCase();
     const dropdown = document.getElementById(dropdownId);
     const links = dropdown.getElementsByTagName("a");
 
-    for (let i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i++)
+    {
         const text = links[i].textContent || links[i].innerText;
         links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
     }
 }
-
-function filterModels(make) {
+function filterModels(make)
+{
     const modelDropdown = document.getElementById('modelDrop');
     const models = modelDropdown.getElementsByTagName('a');
 
-    for (let i = 0; i < models.length; i++) {
+    for (let i = 0; i < models.length; i++)
+    {
         const modelMake = models[i].getAttribute('data-make');
         models[i].style.display = modelMake === make ? "" : "none";
     }
 }
+
+//Reset filters
+function resetFilters()
+{
+    document.querySelectorAll(".dropdown-content a").forEach(a => a.classList.remove("selected"));
+    buffer = [...originalData];
+    currentPage = 1;
+    renderTable();
+    renderPagination();
+}
+
 </script>
 </html>
 {% endblock %}

@@ -278,6 +278,7 @@
 <script src="../../static/CSS_Files/changeloginbuttons.js"></script>
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
+<!--Script for available cars csv-->
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
@@ -511,5 +512,6 @@ function filterModels(make) {
     }
 }
 </script>
+<!--Script for sold cars csv-->
 </html>
 {% endblock %}
