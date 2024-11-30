@@ -184,4 +184,4 @@ Email-Validator Documentation: <https://pypi.org/project/email-validator/>
 [contributors-shield]: https://img.shields.io/github/contributors/LucasJEstevez/CS3300-Semester-Project.svg?style=for-the-badge
 [contributors-url]: https://github.com/LucasJEstevez/CS3300-Semester-Project/graphs/contributors
 [license-shield]: https://img.shields.io/github/license/LucasJEstevez/CS3300-Semester-Project.svg?style=for-the-badge
-[license-url]: https://github.com/LucasJEstevez/CS3300-Semester-Project/LICENSE
+[license-url]: https://github.com/LucasJEstevez/CS3300-Semester-Project/blob/main/LICENSE
