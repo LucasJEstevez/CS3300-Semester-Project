@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, jsonify, make_respon
 from flask_jwt_extended import JWTManager, create_access_token, decode_token
 from functools import wraps
 from email_validator import validate_email, EmailNotValidError
+from Code.Python.compare_csvs import compare_and_merge_csv
 import requests
 import os
 import jinja2
@@ -372,6 +373,7 @@ def isValidToken():
             return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
+<<<<<<< Updated upstream
 
 @app.route('/getSavedCars', methods=['POST'])
 def getSavedCars():
@@ -392,6 +394,18 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
+=======
+    
+#Comparing available cars to sold cars
+@app.before_first_request
+def compare_csv_on_startup():
+    compare_and_merge_csv(
+        file1='file1.csv',
+        file2='file2.csv',
+        match_columns=[1, 2, 3],
+        additional_column=6,
+    )
+>>>>>>> Stashed changes
 
 
 if __name__ == '__main__':

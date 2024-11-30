@@ -33,6 +33,7 @@
         cursor: pointer;
         margin:auto;
         width: 15%;
+        padding-top: 10px;
     }
 
     .resetbtn:hover, .dropbtn:focus
@@ -297,7 +298,7 @@
 <script src="../../static/PapaParse/papaparse.js"></script>
 <!--Script for available cars csv-->
 <script>
-    const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
+    const csvUrl = "{{url_for('static', filename='cars/site_available_cars.csv')}}"; // Replace with your fixed CSV URL
 
     let originalData = [];
     let buffer = []; // Stores loaded rows
