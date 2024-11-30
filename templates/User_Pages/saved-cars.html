@@ -269,12 +269,14 @@
         } else {
             document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
         }
+    
+    getSavedCars()
     }
 </script>
 
 <!--Get id numbers of saved cars-->>
 <script>
-window.onload() = function2(){
+function getSavedCars() {
     console.log("The function you want is running")
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
