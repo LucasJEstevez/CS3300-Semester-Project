@@ -52,7 +52,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'<title>About</title>', response.data)  # Replace with actual content on the about page
 
-    def test_price_prediction_post_request(self):
+    def test_price_prediction_post_request_vin(self):
         # Test the /price_prediction endpoint with a POST request
         data = {
             'vin': '1FTEW1EP4JKE30880',
@@ -77,8 +77,52 @@ class TestApp(unittest.TestCase):
         # self.assertIn(b'Year:', response.data)
         # self.assertIn(b'Trim:', response.data)
 
+    def test_price_prediction_post_request_no_vin(self):
+        # Test the /price_prediction endpoint with a POST request
+        data = {
+            'vin': '',  # Empty strings instead of None for form submission
+            'miles1': '',
+            'year': '2016',  
+            'make': 'subaru',
+            'model': 'legacy',
+            'trim': 'base',
+            'miles2': '100000',
+        }
+        response = self.app.post('/price_prediction', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        # print(response.data.decode())
 
-    def test_invalid_price_prediction(self):
+        response = self.app.post('/price_prediction', data=data, follow_redirects=True)
+        print(response.data.decode())
+
+        # Validate that the predicted price section is present
+        self.assertIn(b'<h4>Predicted Price: $', response.data)
+
+        # Validate that the details section is correctly rendered
+        self.assertIn(b'make = "subaru"', response.data)
+        self.assertIn(b'model = "legacy"', response.data)
+        self.assertIn(b'year = "2016"', response.data)
+        self.assertIn(b'trim = "base"', response.data)
+
+    def test_price_prediction_case_sensitivity(self):
+        # Test the /price_prediction endpoint with a POST request
+        data = {
+            'vin': '',  
+            'miles1': '',
+            'year': '2016',  
+            'make': 'Subaru',
+            'model': 'LeGaCy',
+            'trim': 'base',
+            'miles2': '100000',
+        }
+        response = self.app.post('/price_prediction', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        # print(response.data.decode())
+
+        # Validate that the predicted price section is present
+        self.assertIn(b'<h4>Predicted Price: $', response.data)
+
+    def test_invalid_price_prediction_year(self):
         # Test the /price_prediction endpoint with invalid data
         data = {
             'vin': None,
@@ -88,6 +132,36 @@ class TestApp(unittest.TestCase):
             'model': 'Camry',
             'trim': 'LE',
             'miles2': '10000',
+        }
+        response = self.app.post('/price_prediction', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Error: Failed to retrieve prediction.', response.data)  # Replace with error message content
+
+    def test_invalid_price_prediction_no_vin_missing_data(self):
+        # Test the /price_prediction endpoint with invalid data
+        data = {
+            'vin': None,
+            'miles1': None,
+            'year': '2015',  
+            'make': '', # Missing Make
+            'model': 'Camry',
+            'trim': 'LE',
+            'miles2': '10000',
+        }
+        response = self.app.post('/price_prediction', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Error: Failed to retrieve prediction.', response.data)  # Replace with error message content
+
+    def test_invalid_price_prediction_vin_missing_data(self):
+        # Test the /price_prediction endpoint with invalid data
+        data = {
+            'vin': '1FTEW1EP4JKE30880',
+            'miles1': '', # Missing miles
+            'year': '',  
+            'make': '',
+            'model': '',
+            'trim': '',
+            'miles2': '',
         }
         response = self.app.post('/price_prediction', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
