@@ -22,10 +22,26 @@
         background-color: #f2f2f2;
         font-weight: bold;
     }
+
+    .resetbtn
+    {
+        background-color: #615b5b;
+        margin-top: 10px;
+        color: white; padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        margin:auto;
+        width: 15%;
+    }
+
+    .resetbtn:hover, .dropbtn:focus
+    {
+        background-color: rgba(77, 121, 204);
+    }
 </style>
 
 <html>
-
 <body>
 <!--Row of Dropdown Menus for Car Search-->
 <div class="header">
@@ -265,8 +281,9 @@
             <a href="#">60000</a>
         </div>
     </div>
-        </div>
-        </div>
+    <div onclick="resetFilters()" class = "resetbtn">Reset Filters</div>
+    </div>
+    </div>
 </div>
 
 <!--<script src="../../static/CSS_Files/javafile.js"></script>-->
@@ -486,32 +503,49 @@ function filterTable()
     renderPagination();
 }
 
-
-function myFunction(dropdownId) {
+//----------------------------------------------------------------
+//Functions for filering the table once the dropdown buttons are selected
+function myFunction(dropdownId)
+{
     document.getElementById(dropdownId).classList.toggle("show");
 }
 
-function filterFunction(dropdownId, inputId) {
+//The following two functions are adopted from ChatGPT
+function filterFunction(dropdownId, inputId)
+{
     const input = document.getElementById(inputId).value.toUpperCase();
     const dropdown = document.getElementById(dropdownId);
     const links = dropdown.getElementsByTagName("a");
 
-    for (let i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i++)
+    {
         const text = links[i].textContent || links[i].innerText;
         links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
     }
 }
-
-function filterModels(make) {
+function filterModels(make)
+{
     const modelDropdown = document.getElementById('modelDrop');
     const models = modelDropdown.getElementsByTagName('a');
 
-    for (let i = 0; i < models.length; i++) {
+    for (let i = 0; i < models.length; i++)
+    {
         const modelMake = models[i].getAttribute('data-make');
         models[i].style.display = modelMake === make ? "" : "none";
     }
 }
+
+//Reset filters
+function resetFilters()
+{
+    document.querySelectorAll(".dropdown-content a").forEach(a => a.classList.remove("selected"));
+    buffer = [...originalData];
+    currentPage = 1;
+    totalPages = Math.ceil(buffer.length / rowsPerPage);
+    renderTable();
+    renderPagination();
+}
+
 </script>
-<!--Script for sold cars csv-->
 </html>
 {% endblock %}
