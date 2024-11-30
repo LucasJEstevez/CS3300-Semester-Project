@@ -218,7 +218,7 @@
         </div> 
     </div>  
     <br>
-    <h2 id="welcome_header" style="background-color: black;">Hello there</h2>
+    <h2 id="welcome_header" style="background-color: black;"></h2>
         </div>
         </div>
 </div>
@@ -229,6 +229,8 @@
 
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
+
+<!-- Check if user is logged in -->
 <script>
     window.onload = function() {
         const token = localStorage.getItem("access_token");
@@ -269,6 +271,41 @@
         } else {
             document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
         }
+    }
+</script>
+
+<!--Get id numbers of saved cars-->>
+<script>
+    const token = localStorage.getItem("access_token");
+    let loggedIn = false;
+    console.log("Token (if=false):",token);
+
+    if (token) {
+        console.log('Token (if=true):', token);
+        fetch('/getSavedCars', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ token: token }) // Convert body to JSON string
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            if (data.isValid) {
+                console.log("Data is valid!");
+            }
+        })
+        .catch(error => {
+            console.error('Error during request:', error);
+            document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+        });
     }
 </script>
 

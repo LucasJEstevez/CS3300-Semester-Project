@@ -9,7 +9,7 @@ import bcrypt
 import sqlite3
 import datetime
 import jwt
-
+import csv
 
 #Initialize the Flask application 
 app = Flask(__name__)
@@ -179,6 +179,13 @@ def getEmail(userId):
     conn.close()
     return email[0] if email else None
 
+def isUserIdValid(id):
+    conn = sqlite3.connect('User Data/users.db')    # Path to database file
+    cursor = conn.cursor()
+    cursor.execute("SELECT 1 FROM users WHERE id = ?", (id,))
+    exists = cursor.fetchone()
+    return True if exists else False
+
 # Validate Email Address
 def is_valid_email(email):
     try:
@@ -252,6 +259,25 @@ def addUserToDB(username,email,password):
     # Commit the change to users.db
     conn.commit()
     conn.close()
+
+# Parse string of ids and return array
+def parseCarArray(idString):
+    if idString.startswith('[') and idString.endswith(']'):
+        cleanedStr = idString.strip("[]")
+        if cleanedStr:
+            return list(map(int, cleanedStr.split(",")))
+    return []
+
+# Gets ids of saved cars for user
+def getCarIDArray(user_id):
+    try: 
+        with open('User Data/saved_cars.csv', mode='r') as file:
+            csvReader = csv.DictReader(file)
+
+            for row in csvReader:
+                if int(row['User_ID']) == user_id:
+                    carIds = parseCarArray(row['Car_IDs'])
+                    return carIds
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
@@ -341,7 +367,26 @@ def isValidToken():
             return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
-    
+
+@app.route('/getSavedCars', methods=['GET'])
+def getSavedCars():
+    # Get token from request
+    data = request.get_json()
+    token = data.get('token')
+    if(token):
+
+        # Decrypt token
+        decoded = decode_token(token)
+        id = decoded.get('sub')
+        if isUserIdValid(id):
+            carArray = getCarIDArray(id)
+            return jsonify({"isValid":True, "carIdArray": carArray})
+        else:
+            return jsonify({"isValid":False})
+    else:
+        return jsonify({"isValid":False})
+
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
