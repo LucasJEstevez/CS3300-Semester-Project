@@ -284,7 +284,7 @@ function getSavedCars() {
 
     if (token) {
         console.log("if token true")
-        fetch('/isValidToken', {
+        fetch('/getSavedCars', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
