@@ -217,6 +217,54 @@
               <a href="#" data-make="Dodge">Durango</a>
         </div> 
     </div>  
+    <div class="dropdown">
+        <div onclick="myFunction('minPriceDrop')" class="dropbtn">Min Price</div>
+        <div id="minPriceDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="minPriceInput" onkeyup="filterFunction('minPriceDrop', 'minPriceInput')">
+            <a href="#">5000</a>
+            <a href="#">10000</a>
+            <a href="#">15000</a>
+            <a href="#">20000</a>
+            <a href="#">25000</a>
+            <a href="#">30000</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div onclick="myFunction('maxPriceDrop')" class="dropbtn">Max Price</div>
+        <div id="maxPriceDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="maxPriceInput" onkeyup="filterFunction('maxPriceDrop', 'maxPriceInput')">
+            <a href="#">5000</a>
+            <a href="#">10000</a>
+            <a href="#">15000</a>
+            <a href="#">20000</a>
+            <a href="#">25000</a>
+            <a href="#">30000</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div onclick="myFunction('minMilesDrop')" class="dropbtn">Min Miles</div>
+        <div id="minMilesDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="minMilesInput" onkeyup="filterFunction('minMilesDrop', 'minMilesInput')">
+            <a href="#">0</a>
+            <a href="#">10000</a>
+            <a href="#">20000</a>
+            <a href="#">30000</a>
+            <a href="#">40000</a>
+            <a href="#">50000</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div onclick="myFunction('maxMilesDrop')" class="dropbtn">Max Miles</div>
+        <div id="maxMilesDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="maxMilesInput" onkeyup="filterFunction('maxMilesDrop', 'maxMilesInput')">
+            <a href="#">10000</a>
+            <a href="#">20000</a>
+            <a href="#">30000</a>
+            <a href="#">40000</a>
+            <a href="#">50000</a>
+            <a href="#">60000</a>
+        </div>
+    </div>
         </div>
         </div>
 </div>
@@ -233,17 +281,13 @@
 <script>
     const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
 
-    //Setting variables for displaying the table with pagination
     let originalData = [];
     let buffer = []; // Stores loaded rows
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
 
-    //Papa Parse function, from https://www.papaparse.com/docs#config
-    //Defines how to parse the data 
-    window.addEventListener("load", function()
-    {
+    window.addEventListener("load", function() {
     fetch(csvUrl)
         .then(response =>
         {
@@ -268,7 +312,6 @@
             },
             complete: function()
             {
-                //Once parsing is complete
                 console.log("CSV parsing complete.");
                 totalPages = Math.ceil(buffer.length / rowsPerPage);
                 renderTable();
@@ -284,12 +327,9 @@
     });
 
 // Add event listeners to dropdown items
-document.addEventListener("DOMContentLoaded", function()
-{
-    document.querySelectorAll(".dropdown-content a").forEach(item =>
-    {
-        item.addEventListener("click", function()
-        {
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".dropdown-content a").forEach(item => {
+        item.addEventListener("click", function() {
             console.log("event listener reached for item:", item.textContent); //For the sake of testing
             const parentDropdown = this.closest(".dropdown-content");
             parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
@@ -302,21 +342,18 @@ document.addEventListener("DOMContentLoaded", function()
 
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
 // Render table rows for the current page
-function renderTable()
-{
+function renderTable() {
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
 
     // Create table if it doesn't exist
-    if (!table)
-    {
+    if (!table) {
         table = document.createElement("table");
         tableContainer.appendChild(table);
         // Add headers
         const headers = Object.keys(buffer[0]);
         const headerRow = document.createElement("tr");
-        headers.forEach(header =>
-        {
+        headers.forEach(header => {
             const th = document.createElement("th");
             th.textContent = header;
             headerRow.appendChild(th);
@@ -333,36 +370,29 @@ function renderTable()
     const endIdx = startIdx + rowsPerPage;
     const rows = buffer.slice(startIdx, endIdx);
 
-    rows.forEach(rowData =>
-    {
+    rows.forEach(rowData => {
         const row = document.createElement("tr");
-        Object.values(rowData).forEach(cellData =>
-        {
+        Object.values(rowData).forEach(cellData => {
             const cell = document.createElement("td");
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
         });
         table.appendChild(row);
     });
-    console.log("Rendering page:", currentPage);
 }
 
 //-----------------------------------------------------------------
-//Pagination Functions
+//Pagination
 //Add pagination controls
-function renderPagination()
-{
-    //Find paginationContainer or create it if it doesn't exist
+function renderPagination() {
     const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
     paginationContainer.id = "paginationContainer";
     paginationContainer.innerHTML = ""; // Clear existing buttons
 
-    //Define style
     paginationContainer.style.marginTop = "20px";
     paginationContainer.style.marginBottom = "20px"
     paginationContainer.style.textAlign = "center";
 
-    //Define previous button
     const prevButton = document.createElement("button");
     prevButton.id = "prevButton";
     prevButton.textContent = "Previous";
@@ -374,14 +404,12 @@ function renderPagination()
     }
     paginationContainer.appendChild(prevButton);
 
-    //Define page number display
     const pageInfo = document.createElement("span");
     pageInfo.id = "pageInfo";
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
     pageInfo.style.margin = "0 10px";
     paginationContainer.appendChild(pageInfo);
 
-    //Define next button
     const nextButton = document.createElement("button");
     nextButton.id = "nextButton";
     nextButton.textContent = "Next";
@@ -404,7 +432,7 @@ function changePage(offset)
 
 //------------------------------------------------------------
 //Filtering Functions
-//Filter table based on dropdown selections
+// Filter table based on dropdown selections
 function filterTable()
 {
     console.log("filterTable called");
@@ -412,6 +440,10 @@ function filterTable()
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
+    const minPriceFilter = Number(document.querySelector("#minPriceDrop a.selected")?.textContent || "0");
+    const maxPriceFilter = Number(document.querySelector("#maxPriceDrop a.selected")?.textContent || "Infinity");
+    const minMilesFilter = Number(document.querySelector("#minMilesDrop a.selected")?.textContent || "0");
+    const maxMilesFilter = Number(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
 
     console.log("Year Filter:", yearFilter);
     console.log("Make Filter:", makeFilter);
@@ -423,13 +455,23 @@ function filterTable()
         const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
+        const price = Number(row['Sale Price'] || "0");
+        const miles = Number(row['Miles'] || "0");
         // console.log(year);
         // console.log(make);
         // console.log(model);
+        console.log(price);
+        console.log(miles);
+        console.log("Min Price:", minPriceFilter);
+        console.log("Max Price:", maxPriceFilter);
+        console.log("Min Miles:", minMilesFilter);
+        console.log("Max Miles:", maxMilesFilter);
 
         return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
-               (modelFilter === "" || model === modelFilter);
+               (modelFilter === "" || model === modelFilter) &&
+               (price >= minPriceFilter && price <= maxPriceFilter) &&
+               (miles >= minMilesFilter && miles <= maxMilesFilter);
     });
 
     console.log("Filtered rows:", filteredRows); //Check the filtered results
@@ -443,33 +485,27 @@ function filterTable()
     renderPagination();
 }
 
-//-----------------------------------------------------
-//More Filter functions
-function myFunction(dropdownId)
-{
+
+function myFunction(dropdownId) {
     document.getElementById(dropdownId).classList.toggle("show");
 }
 
-function filterFunction(dropdownId, inputId)
-{
+function filterFunction(dropdownId, inputId) {
     const input = document.getElementById(inputId).value.toUpperCase();
     const dropdown = document.getElementById(dropdownId);
     const links = dropdown.getElementsByTagName("a");
 
-    for (let i = 0; i < links.length; i++)
-    {
+    for (let i = 0; i < links.length; i++) {
         const text = links[i].textContent || links[i].innerText;
         links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
     }
 }
 
-function filterModels(make)
-{
+function filterModels(make) {
     const modelDropdown = document.getElementById('modelDrop');
     const models = modelDropdown.getElementsByTagName('a');
 
-    for (let i = 0; i < models.length; i++)
-    {
+    for (let i = 0; i < models.length; i++) {
         const modelMake = models[i].getAttribute('data-make');
         models[i].style.display = modelMake === make ? "" : "none";
     }
