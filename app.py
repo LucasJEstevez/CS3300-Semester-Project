@@ -310,7 +310,7 @@ def login():
     # Successful login, return token and success message
     token = create_access_token(
         identity=str(user_id),
-        expires_delta=datetime.timedelta(minutes=5)
+        expires_delta=datetime.timedelta(hours=2)
     )
     return jsonify(access_token=token,message="Login successful!"), 200
 
@@ -345,7 +345,7 @@ def register():
     # Create token to send to browser
     token = create_access_token(
         identity=str(user_id),
-        expires_delta=datetime.timedelta(minutes=5)
+        expires_delta=datetime.timedelta(hours=2)
     )
     jwt_key = os.environ.get('JWT_KEY')
     
@@ -385,7 +385,7 @@ def getSavedCars():
             carArray = getCarIDArray(id)
             return jsonify({"isValid":True, "carIdArray": carArray})
         else:
-            return jsonify({"isValid":False})
+            return jsonify({"isValid":False, "message":"userIdInvalid"})
     else:
         return jsonify({"isValid":False})
 
