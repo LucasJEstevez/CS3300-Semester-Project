@@ -265,8 +265,8 @@
             <a href="#">60000</a>
         </div>
     </div>
+    <button onclick="resetFilters()" style="background-color: #000000; color: white; padding: 16px; font-size: 16px; border: none;">Reset Filters</button>
     </div>
-    <button onclick="resetFilters()">Reset Filters</button>
     </div>
 </div>
 
@@ -525,6 +525,7 @@ function resetFilters()
     document.querySelectorAll(".dropdown-content a").forEach(a => a.classList.remove("selected"));
     buffer = [...originalData];
     currentPage = 1;
+    totalPages = Math.ceil(buffer.length / rowsPerPage);
     renderTable();
     renderPagination();
 }
