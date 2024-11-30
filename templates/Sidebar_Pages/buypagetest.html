@@ -440,10 +440,10 @@ function filterTable()
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
-    const minPriceFilter = parseInt(document.querySelector("#minPriceDrop a.selected")?.textContent || "0");
-    const maxPriceFilter = parseInt(document.querySelector("#maxPriceDrop a.selected")?.textContent || "Infinity");
-    const minMilesFilter = parseInt(document.querySelector("#minMilesDrop a.selected")?.textContent || "0");
-    const maxMilesFilter = parseInt(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
+    const minPriceFilter = Number(document.querySelector("#minPriceDrop a.selected")?.textContent || "0");
+    const maxPriceFilter = Number(document.querySelector("#maxPriceDrop a.selected")?.textContent || "Infinity");
+    const minMilesFilter = Number(document.querySelector("#minMilesDrop a.selected")?.textContent || "0");
+    const maxMilesFilter = Number(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
 
     console.log("Year Filter:", yearFilter);
     console.log("Make Filter:", makeFilter);
@@ -455,8 +455,8 @@ function filterTable()
         const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
-        const price = parseInt(row['Sale Price'] || "0");
-        const miles = parseInt(row['Miles'] || "0");
+        const price = Number(row['Sale Price'] || "0");
+        const miles = Number(row['Miles'] || "0");
         // console.log(year);
         // console.log(make);
         // console.log(model);
