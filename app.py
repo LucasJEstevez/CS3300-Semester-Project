@@ -334,8 +334,6 @@ def isValidToken():
         # Decrypt token
         decoded = decode_token(token)
         id = decoded.get('sub')
-        if not isinstance(id, int):
-            return jsonify({"isValid":False})
         username = getUsername(id)
         if username:
             return jsonify({"isValid":True, "username": username})
