@@ -277,10 +277,13 @@ def getCarIDArray(user_id):
             for row in csvReader:
                 if int(row['User_ID']) == user_id:
                     carIds = parseCarArray(row['Car_IDs'])
+                    print(f"Car IDs for user {user_id}: {carIds}")  # Debugging log
                     return carIds
     except FileNotFoundError:
+        print("CSV file not found")
         return []
     except Exception as e:
+        print(f"Error: {str(e)}")
         return []
 
 # Handles POST request for login
@@ -374,7 +377,7 @@ def isValidToken():
 
 @app.route('/getSavedCars', methods=['POST'])
 def getSavedCars():
-    
+
     # Get token from request
     data = request.get_json()
     token = data.get('token')
