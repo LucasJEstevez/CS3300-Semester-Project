@@ -100,6 +100,8 @@ git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
 8. To suspend the service, navigate to the Settings section on the left-hand side of the Render menu, and scroll until you see “Suspend Web Service” in red text (which you simply click once).
 ![Suspend](Documentation/Images/suspend.png "Suspend")
 
+From there, feel free to add to, delete, and create any files in the repository (though some files like render.yaml and index.html are necessary for Render hosting)!
+
 <br><br>
 # User Usage
 
