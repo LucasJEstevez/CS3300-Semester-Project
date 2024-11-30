@@ -278,6 +278,10 @@ def getCarIDArray(user_id):
                 if int(row['User_ID']) == user_id:
                     carIds = parseCarArray(row['Car_IDs'])
                     return carIds
+    except FileNotFoundError:
+        return jsonify({"error": "CSV file not found"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
