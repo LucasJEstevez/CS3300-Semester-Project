@@ -137,9 +137,10 @@ def saved_cars_page():
 USERNAME_NOT_IN_DATA = -1
 INCORRECT_PASSWORD = -2
 
+# Ensure login credentials are valid
 def getUserId(tryUsername, tryPassword):
     # Opens database file
-    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Path to database file
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, username, password, email FROM users")
@@ -160,23 +161,25 @@ def getUserId(tryUsername, tryPassword):
 
     return USERNAME_NOT_IN_DATA
 
+# Return username associated with user ID
 def getUsername(userId):
-    conn = sqlite3.connect('User Data/users.db')
+    conn = sqlite3.connect('User Data/users.db')    # Path to database file
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM users WHERE id = ?", (userId,))
     username = cursor.fetchone()
     conn.close()
     return username[0] if username else None
 
+# Return username associated with user ID
 def getEmail(userId):
-    conn = sqlite3.connect('User Data/users.db')
+    conn = sqlite3.connect('User Data/users.db')    # Path to database file
     cursor = conn.cursor()
     cursor.execute("SELECT email FROM users WHERE id = ?", (userId,))
     email = cursor.fetchone()
     conn.close()
     return email[0] if email else None
 
-# Function to validate email
+# Validate Email Address
 def is_valid_email(email):
     try:
         validate_email(email)
@@ -184,9 +187,10 @@ def is_valid_email(email):
     except EmailNotValidError as e:
         return False
 
+# Check if username already exists in database
 def usernameTaken(newUser):
     # Opens database file
-    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
+    conn = sqlite3.connect('User Data/users.db')  # Path to database file
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
@@ -200,14 +204,17 @@ def usernameTaken(newUser):
     
     return False
 
+# Check if email already exists in database
 def emailTaken(newEmail):
-    # Opens database file
-    conn = sqlite3.connect('User Data/users.db')  # Ensure this path is correct
+
+    # Open database file
+    conn = sqlite3.connect('User Data/users.db')  # Path to database file
     cursor = conn.cursor()
     cursor.execute("SELECT id, username, password, email FROM users")
     rows = cursor.fetchall()
     conn.close()
     
+    # For each user in database
     for row in rows:
         id, username, password, email = row
 
@@ -229,7 +236,7 @@ def hash_password(password: str) -> str:
 
 # Adds user to database
 def addUserToDB(username,email,password):
-    conn = sqlite3.connect('User Data/users.db')
+    conn = sqlite3.connect('User Data/users.db')    # Path to database file
 
     cursor=conn.cursor()
 
@@ -271,12 +278,10 @@ def login():
         return jsonify({"message": "Error: Incorrect password"}), 401
 
     # Successful login, return token and success message
-    #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
     token = create_access_token(
         identity=str(user_id),
         expires_delta=datetime.timedelta(minutes=5)
     )
-    # token = user_id
     return jsonify(access_token=token,message="Login successful!"), 200
 
 @app.route('/register_account', methods=['POST'])
@@ -284,7 +289,7 @@ def register():
     # Get JSON data from the request
     data = request.get_json()
 
-    #Validate the request data (should already be validated by client, but just in case)
+    # Validate the request data (should already be validated by client, but just in case)
     if not data or 'username' not in data or 'email' not in data or 'password' not in data:
         return jsonify({"message": "Error: Username or Email or Password is missing"}), 400
     
@@ -293,6 +298,7 @@ def register():
     email = data.get('email')
     password = data.get('password')
 
+    # Errors
     if not is_valid_email(email):
        return jsonify({"message": "Error: Invalid email"}), 400
 
@@ -301,43 +307,43 @@ def register():
     elif emailTaken(email):
         return jsonify({"message":"Error: Email already taken"}), 409
 
+    # Add user to database
     hashed_password = hash_password(password)
-
     addUserToDB(username,email,hashed_password)
     user_id = getUserId(username,password)
 
-    #token = create_access_token(identity={'userID': user_id}, expires_delta=datetime.timedelta(days=1))
+    # Create token to send to browser
     token = create_access_token(
         identity=str(user_id),
         expires_delta=datetime.timedelta(minutes=5)
     )
-    # This is for testing
     jwt_key = os.environ.get('JWT_KEY')
     
-    return jsonify(access_token=token,message="Registration successful!",key=jwt_key), 200
+    # Send valid response to frontend
+    return jsonify(access_token=token,message="Registration successful!"), 200
 
-
+# Check if browser token is valid
 @app.route('/isValidToken', methods=['POST'])
 def isValidToken():
-    print("started isValidToken")
+
+    # Get token from request
     data = request.get_json()
-    print("data: ",data)
     token = data.get('token')
     if(token):
-        print("Received token: ",token)
+
+        # Decrypt token
         decoded = decode_token(token)
         id = decoded.get('sub')
+        if not isinstance(id, int):
+            return jsonify({"isValid":False})
         username = getUsername(id)
-        if(username):
-            print("username valid")
-            print("username: ",username)
+        if username:
             return jsonify({"isValid":True, "username": username})
         else:
             return jsonify({"isValid":False})
     else:
         return jsonify({"isValid":False})
     
-# User data handling
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use the PORT environment variable
