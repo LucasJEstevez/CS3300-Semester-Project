@@ -387,7 +387,7 @@ def getSavedCars():
         else:
             return jsonify({"isValid":False, "message":"userIdInvalid"})
     else:
-        return jsonify({"isValid":False})
+        return jsonify({"isValid":False, "message":"no token"})
 
 
 
