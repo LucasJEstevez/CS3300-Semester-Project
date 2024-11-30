@@ -22,6 +22,20 @@
         background-color: #f2f2f2;
         font-weight: bold;
     }
+
+    .resetbtn
+    {
+        background-color: #000000;
+        color: white; padding: 16px;
+        font-size: 16px;
+        border: none;
+        display: block; 
+    }
+
+    .resetbutton:hover
+    {
+        background-color: rgba(77, 121, 204);
+    }
 </style>
 
 <html>
@@ -265,7 +279,7 @@
             <a href="#">60000</a>
         </div>
     </div>
-    <button onclick="resetFilters()" style="background-color: #000000; color: white; padding: 16px; font-size: 16px; border: none;">Reset Filters</button>
+    <div onclick="resetFilters()" class = "resetbtn">Reset Filters</div>
     </div>
     </div>
 </div>
