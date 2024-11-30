@@ -41,5 +41,5 @@ if (token) {
 
 function signOut(){
     localStorage.removeItem("access_token");
-    location.reload();
+    window.location.href = "/";
 }
