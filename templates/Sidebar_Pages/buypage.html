@@ -445,35 +445,35 @@ function filterTable()
 
 //-----------------------------------------------------
 //More Filter functions
-// function myFunction(dropdownId)
-// {
-//     document.getElementById(dropdownId).classList.toggle("show");
-// }
+function myFunction(dropdownId)
+{
+    document.getElementById(dropdownId).classList.toggle("show");
+}
 
-// function filterFunction(dropdownId, inputId)
-// {
-//     const input = document.getElementById(inputId).value.toUpperCase();
-//     const dropdown = document.getElementById(dropdownId);
-//     const links = dropdown.getElementsByTagName("a");
+function filterFunction(dropdownId, inputId)
+{
+    const input = document.getElementById(inputId).value.toUpperCase();
+    const dropdown = document.getElementById(dropdownId);
+    const links = dropdown.getElementsByTagName("a");
 
-//     for (let i = 0; i < links.length; i++)
-//     {
-//         const text = links[i].textContent || links[i].innerText;
-//         links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
-//     }
-// }
+    for (let i = 0; i < links.length; i++)
+    {
+        const text = links[i].textContent || links[i].innerText;
+        links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
+    }
+}
 
-// function filterModels(make)
-// {
-//     const modelDropdown = document.getElementById('modelDrop');
-//     const models = modelDropdown.getElementsByTagName('a');
+function filterModels(make)
+{
+    const modelDropdown = document.getElementById('modelDrop');
+    const models = modelDropdown.getElementsByTagName('a');
 
-//     for (let i = 0; i < models.length; i++)
-//     {
-//         const modelMake = models[i].getAttribute('data-make');
-//         models[i].style.display = modelMake === make ? "" : "none";
-//     }
-// }
+    for (let i = 0; i < models.length; i++)
+    {
+        const modelMake = models[i].getAttribute('data-make');
+        models[i].style.display = modelMake === make ? "" : "none";
+    }
+}
 </script>
 </html>
 {% endblock %}
