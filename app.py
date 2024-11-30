@@ -279,9 +279,9 @@ def getCarIDArray(user_id):
                     carIds = parseCarArray(row['Car_IDs'])
                     return carIds
     except FileNotFoundError:
-        return jsonify({"error": "CSV file not found"}), 500
+        return []
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return []
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
@@ -375,8 +375,7 @@ def isValidToken():
 @app.route('/getSavedCars', methods=['GET'])
 def getSavedCars():
     # Get token from request
-    data = request.get_json()
-    token = data.get('token')
+    token = request.args.get('token')
     if(token):
 
         # Decrypt token

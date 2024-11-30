@@ -235,10 +235,8 @@
     window.onload = function() {
         const token = localStorage.getItem("access_token");
         let loggedIn = false;
-        console.log("Token (if=false):", token);
 
         if (token) {
-            console.log('Token (if=true):', token);
             fetch('/isValidToken', {
                 method: "POST",
                 headers: {
@@ -278,17 +276,14 @@
 <script>
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
-    console.log("Token (if=false):",token);
 
     if (token) {
-        console.log('Token (if=true):', token);
-        fetch('/getSavedCars', {
-            method: "POST",
+        fetch('/getSavedCars?token=#${token}', {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ token: token }) // Convert body to JSON string
         })
         .then(response => {
             if (!response.ok) {
@@ -300,6 +295,7 @@
             console.log(data);
             if (data.isValid) {
                 console.log("Data is valid!");
+                console.log(data.carIdArray);
             }
         })
         .catch(error => {
