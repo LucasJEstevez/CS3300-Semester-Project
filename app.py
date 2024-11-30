@@ -372,10 +372,12 @@ def isValidToken():
     else:
         return jsonify({"isValid":False})
 
-@app.route('/getSavedCars', methods=['GET'])
+@app.route('/getSavedCars', methods=['POST'])
 def getSavedCars():
+    
     # Get token from request
-    token = request.args.get('token')
+    data = request.get_json()
+    token = data.get('token')
     if(token):
 
         # Decrypt token

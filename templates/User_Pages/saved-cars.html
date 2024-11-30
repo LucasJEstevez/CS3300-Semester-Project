@@ -284,12 +284,12 @@ function getSavedCars() {
 
     if (token) {
         console.log("if token true")
-        fetch('/getSavedCars?token=#${token}', {
-            method: "GET",
+        fetch('/isValidToken', {
+            method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Content-Type": "application/json"
             },
+            body: JSON.stringify({ token: token })
         })
         .then(response => {
             if (!response.ok) {
