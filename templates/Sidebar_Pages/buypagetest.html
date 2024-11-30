@@ -217,6 +217,70 @@
               <a href="#" data-make="Dodge">Durango</a>
         </div> 
     </div>  
+    <div class="dropdown">
+        <div onclick="myFunction('minPriceDrop')" class="dropbtn">Min Price</div>
+        <div id="minPriceDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="minPriceInput" onkeyup="filterFunction('minPriceDrop', 'minPriceInput')">
+            <a href="#">0</a>
+            <a href="#">2500</a>
+            <a href="#">5000</a>
+            <a href="#">10000</a>
+            <a href="#">15000</a>
+            <a href="#">20000</a>
+            <a href="#">25000</a>
+            <a href="#">30000</a>
+        </div>
+    </div>
+    
+    <div class="dropdown">
+        <div onclick="myFunction('maxPriceDrop')" class="dropbtn">Max Price</div>
+        <div id="maxPriceDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="maxPriceInput" onkeyup="filterFunction('maxPriceDrop', 'maxPriceInput')">
+            <a href="#">5000</a>
+            <a href="#">10000</a>
+            <a href="#">15000</a>
+            <a href="#">20000</a>
+            <a href="#">25000</a>
+            <a href="#">30000</a>
+            <a href="#">40000</a>
+            <a href="#">50000</a>
+        </div>
+    </div>
+    
+    <div class="dropdown">
+        <div onclick="myFunction('minMilesDrop')" class="dropbtn">Min Miles</div>
+        <div id="minMilesDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="minMilesInput" onkeyup="filterFunction('minMilesDrop', 'minMilesInput')">
+            <a href="#">0</a>
+            <a href="#">10000</a>
+            <a href="#">20000</a>
+            <a href="#">30000</a>
+            <a href="#">40000</a>
+            <a href="#">50000</a>
+            <a href="#">60000</a>
+            <a href="#">70000</a>
+            <a href="#">80000</a>
+        </div>
+    </div>
+    
+    <div class="dropdown">
+        <div onclick="myFunction('maxMilesDrop')" class="dropbtn">Max Miles</div>
+        <div id="maxMilesDrop" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="maxMilesInput" onkeyup="filterFunction('maxMilesDrop', 'maxMilesInput')">
+            <a href="#">10000</a>
+            <a href="#">20000</a>
+            <a href="#">30000</a>
+            <a href="#">40000</a>
+            <a href="#">50000</a>
+            <a href="#">60000</a>
+            <a href="#">70000</a>
+            <a href="#">80000</a>
+            <a href="#">90000</a>
+            <a href="#">100000</a>
+            <a href="#">110000</a>
+            <a href="#">120000</a>
+        </div>
+    </div>
         </div>
         </div>
 </div>
@@ -413,9 +477,18 @@ function filterTable()
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
 
-    console.log("Year Filter:", yearFilter);
-    console.log("Make Filter:", makeFilter);
-    console.log("Model Filter:", modelFilter);
+    const minPriceFilter = parseInt(document.querySelector("#minPriceDrop a.selected")?.textContent || "0");
+    const maxPriceFilter = parseInt(document.querySelector("#maxPriceDrop a.selected")?.textContent || "Infinity");
+    const minMilesFilter = parseInt(document.querySelector("#minMilesDrop a.selected")?.textContent || "0");
+    const maxMilesFilter = parseInt(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
+
+    // console.log("Year Filter:", yearFilter);
+    // console.log("Make Filter:", makeFilter);
+    // console.log("Model Filter:", modelFilter);
+    // console.log("Min Price:", minPriceFilter);
+    // console.log("Max Price:", maxPriceFilter);
+    // console.log("Min Miles:", minMilesFilter);
+    // console.log("Max Miles:", maxMilesFilter);
 
     // Apply filters to the originalData
     console.log(originalData);
@@ -423,13 +496,18 @@ function filterTable()
         const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
+        //Convert miles and price to int
+        const price = parseInt(row['Price'] || "0");
+        const miles = parseInt(row['Miles'] || "0");
         // console.log(year);
         // console.log(make);
         // console.log(model);
 
-        return (yearFilter === "" || year.toString() === yearFilter) &&
-               (makeFilter === "" || make === makeFilter) &&
-               (modelFilter === "" || model === modelFilter);
+        return  (yearFilter === "" || year.toString() === yearFilter) &&
+                (makeFilter === "" || make === makeFilter) &&
+                (modelFilter === "" || model === modelFilter) &&
+                (price >= minPriceFilter && price <= maxPriceFilter) &&
+                (miles >= minMilesFilter && miles <= maxMilesFilter);
     });
 
     console.log("Filtered rows:", filteredRows); //Check the filtered results
@@ -445,35 +523,35 @@ function filterTable()
 
 //-----------------------------------------------------
 //More Filter functions
-function myFunction(dropdownId)
-{
-    document.getElementById(dropdownId).classList.toggle("show");
-}
+// function myFunction(dropdownId)
+// {
+//     document.getElementById(dropdownId).classList.toggle("show");
+// }
 
-function filterFunction(dropdownId, inputId)
-{
-    const input = document.getElementById(inputId).value.toUpperCase();
-    const dropdown = document.getElementById(dropdownId);
-    const links = dropdown.getElementsByTagName("a");
+// function filterFunction(dropdownId, inputId)
+// {
+//     const input = document.getElementById(inputId).value.toUpperCase();
+//     const dropdown = document.getElementById(dropdownId);
+//     const links = dropdown.getElementsByTagName("a");
 
-    for (let i = 0; i < links.length; i++)
-    {
-        const text = links[i].textContent || links[i].innerText;
-        links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
-    }
-}
+//     for (let i = 0; i < links.length; i++)
+//     {
+//         const text = links[i].textContent || links[i].innerText;
+//         links[i].style.display = text.toUpperCase().includes(input) ? "" : "none";
+//     }
+// }
 
-function filterModels(make)
-{
-    const modelDropdown = document.getElementById('modelDrop');
-    const models = modelDropdown.getElementsByTagName('a');
+// function filterModels(make)
+// {
+//     const modelDropdown = document.getElementById('modelDrop');
+//     const models = modelDropdown.getElementsByTagName('a');
 
-    for (let i = 0; i < models.length; i++)
-    {
-        const modelMake = models[i].getAttribute('data-make');
-        models[i].style.display = modelMake === make ? "" : "none";
-    }
-}
+//     for (let i = 0; i < models.length; i++)
+//     {
+//         const modelMake = models[i].getAttribute('data-make');
+//         models[i].style.display = modelMake === make ? "" : "none";
+//     }
+// }
 </script>
 </html>
 {% endblock %}
