@@ -390,7 +390,7 @@ def getSavedCars():
         id = decoded.get('sub')
         if isUserIdValid(id):
             carArray = getCarIDArray(id)
-            return jsonify({"isValid":True, "carIdArray": carArray})
+            return jsonify({"isValid":True, "carIdArray": carArray, "id":id})
         else:
             return jsonify({"isValid":False, "message":"userIdInvalid"})
     else:

@@ -269,6 +269,8 @@
                     register_button.innerHTML = 'Sign Out';
                     register_button.removeAttribute('href');
                     register_button.onclick = signOut;
+
+                    getSavedCars()
                 } else {
                     document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
                 }
@@ -282,7 +284,7 @@
             window.location.href = "/sign-in";
         }
     
-        getSavedCars()
+        
     }
 
     function signOut(){
