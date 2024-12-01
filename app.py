@@ -281,6 +281,7 @@ def getCarIDArray(user_id):
                     return [1,1]
                     carIds = parseCarArray(row['Car_IDs'])
                     return carIds
+            return [1,4]
     except FileNotFoundError:
         print("CSV file not found")
         return [1,2]
