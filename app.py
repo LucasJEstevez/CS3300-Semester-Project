@@ -278,7 +278,7 @@ def getCarIDArray(user_id):
             for row in csvReader:
                 if int(row['User_ID']) == user_id:
                     carIds = parseCarArray(row['Car_IDs'])
-                    return [0]
+                    return row['Car_IDs']
                     return carIds
     except FileNotFoundError:
         print("CSV file not found")
