@@ -237,6 +237,7 @@
         <div onclick="myFunction('minPriceDrop')" class="dropbtn">Min Price</div>
         <div id="minPriceDrop" class="dropdown-content">
             <input type="text" placeholder="Search.." id="minPriceInput" onkeyup="filterFunction('minPriceDrop', 'minPriceInput')">
+            <a href="#">0</a>
             <a href="#">5000</a>
             <a href="#">10000</a>
             <a href="#">15000</a>
@@ -255,6 +256,10 @@
             <a href="#">20000</a>
             <a href="#">25000</a>
             <a href="#">30000</a>
+            <a href="#">35000</a>
+            <a href="#">40000</a>
+            <a href="#">45000</a>
+            <a href="#">50000</a>
         </div>
     </div>
     <div class="dropdown">
@@ -453,8 +458,6 @@ function changePage(offset)
 // Filter table based on dropdown selections
 function filterTable()
 {
-    console.log("filterTable called");
-
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
@@ -463,19 +466,16 @@ function filterTable()
     const minMilesFilter = Number(document.querySelector("#minMilesDrop a.selected")?.textContent || "0");
     const maxMilesFilter = Number(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
 
-    console.log("Year Filter:", yearFilter);
-    console.log("Make Filter:", makeFilter);
-    console.log("Model Filter:", modelFilter);
-
     // Apply filters to the originalData
     console.log(originalData);
     const filteredRows = originalData.filter(row => {
-        const year = row['Year'] || ""; //Match keys to your CSV headers
+        const year = row['Year'] || ""; 
         const make = row['Make'] || "";
         const model = row['Model'] || "";
         const price = Number(row['Sale Price'] || "0");
         const miles = Number(row['Miles'] || "0");
 
+        //Return the rows that match the filters.
         return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
                (modelFilter === "" || model === modelFilter) &&
