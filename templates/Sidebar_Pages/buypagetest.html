@@ -22,7 +22,20 @@
         background-color: #f2f2f2;
         font-weight: bold;
     }
-
+    /*CSS for the save button to the right of the table*/
+    .save-button
+    {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+    }
+    .save-button:hover
+    {
+        background-color: #45a049;
+    }
+    /*CSS for the reset button that resets any filters*/
     .resetbtn
     {
         background-color: #615b5b;
@@ -395,6 +408,22 @@ function renderTable() {
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
         });
+
+        // Add a Save button cell to add cars to a list
+        const newColumn = document.createElement('td');
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save';
+        saveButton.className = 'save-button';
+
+        // Attach an event listener to the button, call function to save to user
+        saveButton.addEventListener('click', () =>
+        {
+            console.log('Save clicked for row:', row);
+        });
+
+        actionCell.appendChild(saveButton);
+        tableRow.appendChild(actionCell);
+
         table.appendChild(row);
     });
 }
