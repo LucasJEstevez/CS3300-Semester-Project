@@ -400,7 +400,7 @@ def getSavedCars():
 def compare_csv_on_startup():
     compare_and_merge_csv(
         file1 = url_for('static', filename='cars/site_available_cars.csv'),
-        file2 = url_for('static', filename='cars/site_available_cars.csv')
+        file2 = url_for('static', filename='cars/site_sold_cars.csv'),
         match_columns=[1, 2, 3], #Match year, make, and model
         additional_column=6, #Sell price of the car
         output_file = url_for('static', filename='cars/compared_available_cars.csv')
