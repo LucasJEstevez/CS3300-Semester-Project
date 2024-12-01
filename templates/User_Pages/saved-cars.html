@@ -335,7 +335,8 @@ function getSavedCars() {
 
 <script>
   const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
-  const allowedVehicleIDs = getSavedCars();
+  allowedVehicleIDs = getSavedCars();
+  console.log(allowedVehicleIDs);
 
   window.addEventListener("load", function() {
   fetch(csvUrl)
