@@ -3,7 +3,7 @@ Functional Requirements
   - Users able to create an account on the website (but optional)
   - After account creation, the account holder shall be able to save/add cars to a list
   - Update car price estimation data daily (done by MarketCheck automatically)
-  - Site displays recently sold price for specifically searched car (if applicable/possible)
+  - Site displays recently sold price for specifically searched car (if applicable according to sold car data)
   - Separate user options (and access to saved cars) based on logged-in status
   - Must not save user vehicle information when getting prices checked (per API licensing), rather be outputted on the webpage itself
   - Vehicle data must only be of .csv format, system programs (such as data creation and analysis) as .py (or Python based); user data (minimally passwords) to be hashed with BCrypt
