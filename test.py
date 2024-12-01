@@ -1,7 +1,7 @@
 import csv
 import ast
 
-arr = "[]"
+arr = [660,816,951,1066,1078]
 
 arr2 = ast.literal_eval(arr)
 

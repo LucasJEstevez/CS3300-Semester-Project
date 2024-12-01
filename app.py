@@ -270,8 +270,7 @@ def getCarIDArray(user_id):
 
             for row in csvReader:
                 if int(row['User_ID']) == int(user_id):
-                    carIds = ast.literal_eval(row['Car_IDs'])
-                    return carIds
+                    return row['Car_IDs']
             return [-1]
     except FileNotFoundError:
         print("CSV file not found")
