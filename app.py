@@ -346,12 +346,17 @@ def register():
     addUserToDB(username,email,hashed_password)
     user_id = getUserId(username,password)
 
+    # Add user to csv file for saved cars
+    new_row = str(user_id)+"\",[]\""
+    with open('User Data/saved_cars.csv', mode='a', newline='') as file:
+        csvWriter = csv.writer(file)
+        csvWriter.writerow(new_row)
+
     # Create token to send to browser
     token = create_access_token(
         identity=str(user_id),
         expires_delta=datetime.timedelta(hours=2)
     )
-    jwt_key = os.environ.get('JWT_KEY')
     
     # Send valid response to frontend
     return jsonify(access_token=token,message="Registration successful!"), 200
