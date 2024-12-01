@@ -413,11 +413,11 @@ def run_startup_task():
     global startup_ran
     if not startup_ran:
         compare_and_merge_csv(
-            file1=url_for('static', filename='cars/site_available_cars.csv'),
-            file2=url_for('static', filename='cars/site_sold_cars.csv'),
+            file1=os.path.join(app.root_path, 'static/cars/site_available_cars.csv'),
+            file2=os.path.join(app.root_path, 'static/cars/site_sold_cars.csv'),
             match_columns=[1, 2, 3],
             additional_column=6,
-            output_file=url_for('static', filename='cars/compared_available_cars.csv')
+            output_file=os.path.join(app.root_path, 'static/cars/compared_available_cars.csv')
         )
         startup_ran = True
 
