@@ -266,7 +266,6 @@ def parseCarArray(idString):
     if idString.startswith('[') and idString.endswith(']'):
         cleanedStr = idString.strip("[]").strip()
         if cleanedStr:
-            return [2,1]
             return list(map(int, cleanedStr.split(",")))
     return [2,2]
 
