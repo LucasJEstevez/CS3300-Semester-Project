@@ -475,15 +475,6 @@ function filterTable()
         const model = row['Model'] || "";
         const price = Number(row['Sale Price'] || "0");
         const miles = Number(row['Miles'] || "0");
-        // console.log(year);
-        // console.log(make);
-        // console.log(model);
-        console.log(price);
-        console.log(miles);
-        console.log("Min Price:", minPriceFilter);
-        console.log("Max Price:", maxPriceFilter);
-        console.log("Min Miles:", minMilesFilter);
-        console.log("Max Miles:", maxMilesFilter);
 
         return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
