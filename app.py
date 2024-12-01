@@ -395,8 +395,8 @@ def getSavedCars():
 
     
 #Comparing available cars to sold cars
-#@app.before_first_request
-@app.route('/compare_csv_on_startup', methods=['POST'])
+@app.before_first_request
+#@app.route('/compare_csv_on_startup', methods=['POST'])
 def compare_csv_on_startup():
     compare_and_merge_csv(
         file1 = url_for('static', filename='cars/site_available_cars.csv'),
@@ -405,6 +405,13 @@ def compare_csv_on_startup():
         additional_column=6, #Sell price of the car
         output_file = url_for('static', filename='cars/compared_available_cars.csv')
     )
+
+#Test to see if the compared_available_cars.csv actually exists
+@app.route('/give_me_test')
+def give_me_test():
+    # Generate the URL for the static CSV file
+    csv_url = url_for('static', filename='cars/compared_available_cars.csv')
+    return f"CSV file available at: <a href='{csv_url}'>{csv_url}</a>"
 
 
 if __name__ == '__main__':
