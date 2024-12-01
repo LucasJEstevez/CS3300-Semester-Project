@@ -267,7 +267,7 @@ def parseCarArray(idString):
         cleanedStr = idString.strip("[]").strip()
         if cleanedStr:
             return list(map(int, cleanedStr.split(",")))
-    return []
+    return [4]
 
 # Gets ids of saved cars for user
 def getCarIDArray(user_id):
