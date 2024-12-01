@@ -317,7 +317,7 @@ function getSavedCars() {
                 if(!data.error){
                     //This is a placeholder
                     //console.log(data.carIdArray);
-                    console.log(data.carIdArray);
+                    console.log("Array in getSavedCars:", data.carIdArray);
                     return data.carIdArray;
                 }
                 else{
@@ -357,10 +357,10 @@ function getSavedCars() {
           step: function(row)
           {
             const vehicleId = row.data.Vehicle_ID;
-            console.log(allowedVehicleIDs);
-            
+            console.log("Array in papa parse:", allowedVehicleIDs);
+
             // Check if the Vehicle_ID is in the allowed list
-            for (let i = 0; i < allowedVehicleIDs.length; i++)
+            for (let i = 0; i < allowedVehicleIDs.length(); i++)
             {
                 if (allowedVehicleIDs[i] === vehicleId)
                 {
