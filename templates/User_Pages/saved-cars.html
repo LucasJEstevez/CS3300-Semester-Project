@@ -316,7 +316,8 @@ function getSavedCars() {
             if (data.isValid) {
                 if(!data.error){
                     //This is a placeholder
-                    console.log(data.carIdArray);
+                    //console.log(data.carIdArray);
+                    return data.carIdArray;
                 }
                 else{
                     alert("There was a problem. Please try again later.")
@@ -333,6 +334,7 @@ function getSavedCars() {
 
 <script>
   const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
+  const allowedVehicleIDs = getSavedCars();
 
   window.addEventListener("load", function() {
   fetch(csvUrl)
@@ -352,10 +354,19 @@ function getSavedCars() {
           dynamicTyping: true,    // Convert data types automatically
           worker: true,
           step: function(row)
-          {   // Process each row as it's parsed
-          delete (row.data).Vehicle_ID; //Remove the vehicle_id column
-          appendRow(row.data);
-          },
+          {
+            const vehicleId = row.data.Vehicle_ID;
+
+            // Check if the Vehicle_ID is in the allowed list
+            if (allowedVehicleIDs.includes(vehicleId)) {
+                originalData.push(row.data);
+
+                const displayRow = { ...row.data };
+                delete displayRow.Vehicle_ID;
+                buffer.push(displayRow);
+            }
+        },
+
           complete: function()
           {
           console.log("CSV parsing complete.");
