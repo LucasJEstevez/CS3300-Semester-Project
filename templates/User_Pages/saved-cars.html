@@ -370,6 +370,8 @@ function getSavedCars() {
           complete: function()
           {
           console.log("CSV parsing complete.");
+          console.log(allowedVehicleIDs);
+          console.log(buffer);
           filterTable();
           }
       });
