@@ -277,7 +277,7 @@ def getCarIDArray(user_id):
             csvReader = csv.DictReader(file)
 
             for row in csvReader:
-                if int(row['User_ID']) == user_id:
+                if int(row['User_ID']) == int(user_id):
                     return [1,1]
                     carIds = parseCarArray(row['Car_IDs'])
                     return carIds
