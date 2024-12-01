@@ -22,7 +22,20 @@
         background-color: #f2f2f2;
         font-weight: bold;
     }
-
+    /*CSS for the save button to the right of the table*/
+    .save-button
+    {
+            background-color: #615b5b;
+            color: white;
+            border: none;
+            padding: 5px 5px;
+            cursor: pointer;
+    }
+    .save-button:hover
+    {
+        background-color: rgba(77, 121, 204);
+    }
+    /*CSS for the reset button that resets any filters*/
     .resetbtn
     {
         background-color: #615b5b;
@@ -237,7 +250,6 @@
         <div onclick="myFunction('minPriceDrop')" class="dropbtn">Min Price</div>
         <div id="minPriceDrop" class="dropdown-content">
             <input type="text" placeholder="Search.." id="minPriceInput" onkeyup="filterFunction('minPriceDrop', 'minPriceInput')">
-            <a href="#">0</a>
             <a href="#">5000</a>
             <a href="#">10000</a>
             <a href="#">15000</a>
@@ -256,10 +268,6 @@
             <a href="#">20000</a>
             <a href="#">25000</a>
             <a href="#">30000</a>
-            <a href="#">35000</a>
-            <a href="#">40000</a>
-            <a href="#">45000</a>
-            <a href="#">50000</a>
         </div>
     </div>
     <div class="dropdown">
@@ -310,7 +318,8 @@
     const rowsPerPage = 20;
     let totalPages = 0;
 
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function()
+    {
     fetch(csvUrl)
         .then(response =>
         {
@@ -400,6 +409,22 @@ function renderTable() {
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
         });
+
+        // Add a Save button cell to add cars to a list
+        const newColumn = document.createElement('td');
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save';
+        saveButton.className = 'save-button';
+
+        // Attach an event listener to the button, call function to save to user
+        saveButton.addEventListener('click', () =>
+        {
+            console.log('Save clicked for row:', row);
+        });
+
+        newColumn.appendChild(saveButton);
+        row.appendChild(newColumn);
+
         table.appendChild(row);
     });
 }
@@ -458,6 +483,8 @@ function changePage(offset)
 // Filter table based on dropdown selections
 function filterTable()
 {
+    console.log("filterTable called");
+
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
@@ -466,16 +493,28 @@ function filterTable()
     const minMilesFilter = Number(document.querySelector("#minMilesDrop a.selected")?.textContent || "0");
     const maxMilesFilter = Number(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
 
+    console.log("Year Filter:", yearFilter);
+    console.log("Make Filter:", makeFilter);
+    console.log("Model Filter:", modelFilter);
+
     // Apply filters to the originalData
     console.log(originalData);
     const filteredRows = originalData.filter(row => {
-        const year = row['Year'] || ""; 
+        const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
         const model = row['Model'] || "";
         const price = Number(row['Sale Price'] || "0");
         const miles = Number(row['Miles'] || "0");
+        // console.log(year);
+        // console.log(make);
+        // console.log(model);
+        console.log(price);
+        console.log(miles);
+        console.log("Min Price:", minPriceFilter);
+        console.log("Max Price:", maxPriceFilter);
+        console.log("Min Miles:", minMilesFilter);
+        console.log("Max Miles:", maxMilesFilter);
 
-        //Return the rows that match the filters.
         return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
                (modelFilter === "" || model === modelFilter) &&

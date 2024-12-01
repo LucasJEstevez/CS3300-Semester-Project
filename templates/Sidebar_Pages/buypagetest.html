@@ -308,6 +308,84 @@
 <script src="../../static/CSS_Files/changeloginbuttons.js"></script>
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
+<!--User stuff-->
+<script>
+window.onload = async function () {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
+        window.location.href = "/sign-in";
+        return;
+    }
+
+    try {
+        const validationResponse = await fetch('/isValidToken', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: token })
+        });
+
+        if (!validationResponse.ok) {
+            const errorText = await validationResponse.text();
+            throw new Error(`HTTP error! status: ${validationResponse.status} - ${errorText}`);
+        }
+
+        const validationData = await validationResponse.json();
+        if (!validationData.isValid) {
+            document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
+            return;
+        }
+
+        document.getElementById("welcome_header").innerHTML = `Welcome, ${validationData.username}!`;
+        setupButtons();
+        const allowedVehicleIds = await getSavedCars();
+        loadCsvAndFilter(allowedVehicleIds);
+    } catch (error) {
+        console.error('Error during initialization:', error);
+        document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+    }
+};
+
+function setupButtons() {
+    const signinButton = document.getElementById("sign-in_button");
+    signinButton.innerHTML = 'Saved Cars';
+    signinButton.href = "/saved-cars";
+
+    const registerButton = document.getElementById("register_button");
+    registerButton.innerHTML = 'Sign Out';
+    registerButton.removeAttribute('href');
+    registerButton.onclick = () => {
+        localStorage.removeItem("access_token");
+        window.location.href = "/";
+    };
+}
+
+function signOut(){
+    localStorage.removeItem("access_token");
+    window.location.href = "/";
+}
+
+//Get id numbers of saved cars
+function getSavedCars() {
+    const token = localStorage.getItem("access_token");
+    if (!token) return Promise.resolve([]);
+
+    return fetch('/getSavedCars', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: token })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+    })
+    .then(data => data.isValid ? data.carIdArray : [])
+    .catch(error => {
+        console.error('Error during getSavedCars:', error);
+        return [];
+    });
+}
+</script>
 <!--Script for available cars csv-->
 <script>
     const csvUrl = "{{url_for('static', filename='cars/compared_available_cars.csv')}}"; // Replace with your fixed CSV URL
@@ -318,45 +396,41 @@
     const rowsPerPage = 20;
     let totalPages = 0;
 
-    window.addEventListener("load", function()
-    {
+    function loadCsvAndFilter(allowedVehicleIds) {
+
     fetch(csvUrl)
-        .then(response =>
-        {
-        if (!response.ok)
-        {
-            throw new Error("Network response was not ok");
-        }
-        return response.text();
+        .then(response => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.text();
         })
-        .then(csvText =>
-        {
-        Papa.parse(csvText,
-        {
-            header: true,           // Use the first row as header
-            dynamicTyping: true,    // Convert data types automatically
-            worker: true,
-            step: function(row)
-            {   // Process each row as it's parsed
-                delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
-                originalData.push(row.data);
-                buffer.push(row.data);
-            },
-            complete: function()
-            {
-                console.log("CSV parsing complete.");
-                totalPages = Math.ceil(buffer.length / rowsPerPage);
-                renderTable();
-                renderPagination();
-            }
-        });
+        .then(csvText => {
+            Papa.parse(csvText, {
+                header: true,
+                dynamicTyping: true,
+                worker: true,
+                step: function (row) {
+                    const vehicleId = row.data.Vehicle_ID;
+
+                    // Only add rows to buffer if the ID is in allowedVehicleIds
+                    if (allowedVehicleIds.includes(vehicleId)) {
+                        delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                        originalData.push(row.data);
+                        buffer.push(row.data);
+                    }
+                },
+                complete: function () {
+                    console.log("CSV parsing complete.");
+                    totalPages = Math.ceil(buffer.length / rowsPerPage);
+                    renderTable();
+                    renderPagination();
+                }
+            });
         })
-        .catch(error =>
-        {
-        console.error("Error fetching the CSV file:", error);
-        document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
+        .catch(error => {
+            console.error("Error fetching the CSV file:", error);
+            document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
         });
-    });
+}
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
