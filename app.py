@@ -264,7 +264,7 @@ def addUserToDB(username,email,password):
 # Parse string of ids and return array
 def parseCarArray(idString):
     if idString.startswith('[') and idString.endswith(']'):
-        cleanedStr = idString.strip("[]")
+        cleanedStr = idString.strip("[]").strip()
         if cleanedStr:
             return list(map(int, cleanedStr.split(",")))
     return []
@@ -278,11 +278,12 @@ def getCarIDArray(user_id):
             for row in csvReader:
                 if int(row['User_ID']) == user_id:
                     carIds = parseCarArray(row['Car_IDs'])
-                    return [0]
                     return carIds
     except FileNotFoundError:
-        return [1]
+        print("CSV file not found")
+        return []
     except Exception as e:
+        print(f"Unexpected error in getCarIDArray: {e}")
         return [2]
 
 # Handles POST request for login
