@@ -1,7 +1,7 @@
 import csv
 
 def compare_and_merge_csv(file1, file2, match_columns, additional_column):
-    output_file = '../../static/cars/compared_available_cars'
+    output_file = '../../static/cars/compared_available_cars.csv'
     file2_data = {}
     with open(file2, mode='r') as f2:
         reader2 = csv.reader(f2)
