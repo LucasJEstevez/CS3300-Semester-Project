@@ -347,7 +347,7 @@ def register():
     user_id = getUserId(username,password)
 
     # Add user to csv file for saved cars
-    new_row = str(user_id)+"\",[]\""
+    new_row = [user_id, []]
     with open('User Data/saved_cars.csv', mode='a', newline='') as file:
         csvWriter = csv.writer(file)
         csvWriter.writerow(new_row)
