@@ -120,7 +120,7 @@ From there, feel free to add to, delete, and create any files in the repository 
 <br><br>
 # Features
 
-### Functional
+### Functional Requirements
 
 - Ability to estimate a car’s value based on make, model, miles, year, or VIN
 - Users able to create an account on the website (but optional)
@@ -128,7 +128,7 @@ From there, feel free to add to, delete, and create any files in the repository 
 - When browsing available vehicles, the user should be able to filter cars by certain criteria (make, miles, year, etc.) to look at individual listings
 - All vehicle data to be in .csv or .xlsx, to be processed with JS (PapaParse)
 
-### Non-Functional
+### Non-Functional Requirements
 
 - Easy to use website interface
 - Quick price estimation feedback (<5 seconds)
