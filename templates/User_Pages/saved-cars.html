@@ -336,7 +336,6 @@ function getSavedCars() {
 <script>
   const csvUrl = "{{url_for('static', filename='cars/site_available_cars(testing).csv')}}"; // Replace with your fixed CSV URL
   const allowedVehicleIDs = getSavedCars();
-  console.log(allowedVehicleIDs);
 
   window.addEventListener("load", function() {
   fetch(csvUrl)
@@ -358,7 +357,8 @@ function getSavedCars() {
           step: function(row)
           {
             const vehicleId = row.data.Vehicle_ID;
-
+            console.log(allowedVehicleIDs);
+            
             // Check if the Vehicle_ID is in the allowed list
             for (let i = 0; i < allowedVehicleIDs.length; i++)
             {
