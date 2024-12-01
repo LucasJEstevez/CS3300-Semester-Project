@@ -296,12 +296,10 @@
 <!--Get id numbers of saved cars-->>
 <script>
 function getSavedCars() {
-    console.log("The function you want is running")
     const token = localStorage.getItem("access_token");
     let loggedIn = false;
 
     if (token) {
-        console.log("if token true")
         fetch('/getSavedCars', {
             method: "POST",
             headers: {
@@ -319,8 +317,13 @@ function getSavedCars() {
             console.log("data from getSavedCars request");
             console.log(data);
             if (data.isValid) {
-                console.log("Data is valid!");
-                console.log(data.carIdArray);
+                if(!data.error){
+                    console.log("Data is valid!");
+                    console.log(data.carIdArray);
+                }
+                else{
+                    alert("There was a problem. Please try again later.")
+                }
             }
         })
         .catch(error => {

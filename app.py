@@ -267,7 +267,7 @@ def parseCarArray(idString):
         cleanedStr = idString.strip("[]").strip()
         if cleanedStr:
             return list(map(int, cleanedStr.split(",")))
-    return [2,2]
+    return []
 
 # Gets ids of saved cars for user
 def getCarIDArray(user_id):
@@ -279,13 +279,13 @@ def getCarIDArray(user_id):
                 if int(row['User_ID']) == int(user_id):
                     carIds = parseCarArray(row['Car_IDs'])
                     return carIds
-            return [1,4]
+            return [-1]
     except FileNotFoundError:
         print("CSV file not found")
-        return [1,2]
+        return [-1]
     except Exception as e:
         print(f"Unexpected error in getCarIDArray: {e}")
-        return [1,3]
+        return [-1]
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
@@ -389,7 +389,10 @@ def getSavedCars():
         id = decoded.get('sub')
         if isUserIdValid(id):
             carArray = getCarIDArray(id)
-            return jsonify({"isValid":True, "carIdArray": carArray, "id":id})
+            if carArray != [-1]:
+                return jsonify({"isValid":True, "error":False, "carIdArray": carArray})
+            else:
+                return jsonify({"isValid":True, "error":True})
         else:
             return jsonify({"isValid":False, "message":"userIdInvalid"})
     else:
