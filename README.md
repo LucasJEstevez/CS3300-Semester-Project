@@ -123,10 +123,12 @@ From there, feel free to add to, delete, and create any files in the repository 
 ### Functional Requirements
 
 - Ability to estimate a car’s value based on make, model, miles, year, or VIN
+- Must not save user vehicle information when getting prices checked (per API licensing), rather be outputted on the webpage itself
 - Users able to create an account on the website (but optional)
 - After account creation, the account holder shall be able to save/add cars to an expandable list
 - When browsing available vehicles, the user should be able to filter cars by certain criteria (make, miles, year, etc.) to look at individual listings
-- All vehicle data to be in .csv or .xlsx, to be processed with JS (PapaParse)
+- Vehicle data must only be of .csv format (processed with PapaParse), system programs (such as data creation and back end) as .py (or Python-based); user data (minimally passwords) to be hashed with BCrypt
+
 
 ### Non-Functional Requirements
 
