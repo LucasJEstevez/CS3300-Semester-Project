@@ -7,10 +7,13 @@ Functional Requirements
   - Separate user options (and access to saved cars) based on logged-in status
   - Must not save user vehicle information when getting prices checked (per API licensing), rather be outputted on the webpage itself
   - Vehicle data must only be of .csv format, system programs (such as data creation and analysis) as .py (or Python based); user data (minimally passwords) to be hashed with BCrypt
-  
-Non-Functional Requirements
-  - Ease of use
-  - Clean UI
-  - Quick feedback when price-checking
   - Display (limited) vehicle information without having to look at a car specifically
   - Multiple landing pages (homepage, buy page, sell page, login, terms/about)
+  
+Non-Functional Requirements
+  - Easy-to-use website interface
+  - Clean UI
+  - Quick price estimation feedback (<5 seconds)
+  - Zero access to API key
+  - The user’s login and save data must be private and secure
+
