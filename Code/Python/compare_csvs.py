@@ -15,7 +15,7 @@ def compare_and_merge_csv(file1, file2, match_columns, additional_column, output
         writer = csv.writer(out_file)
 
         headers1 = next(reader1)
-        writer.writerow(headers1 + [headers2[additional_column]])
+        writer.writerow(headers1 + "Last" + [headers2[additional_column]])
 
         for row in reader1:
             key = tuple(row[i] for i in match_columns)

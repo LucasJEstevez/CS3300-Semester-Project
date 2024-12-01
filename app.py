@@ -393,21 +393,9 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
-    
-# #Comparing available cars to sold cars
-# @app.before_first_request
-# #@app.route('/compare_csv_on_startup', methods=['POST'])
-# def compare_csv_on_startup():
-#     compare_and_merge_csv(
-#         file1 = url_for('static', filename='cars/site_available_cars.csv'),
-#         file2 = url_for('static', filename='cars/site_sold_cars.csv'),
-#         match_columns=[1, 2, 3], #Match year, make, and model
-#         additional_column=6, #Sell price of the car
-#         output_file = url_for('static', filename='cars/compared_available_cars.csv')
-#     )
 
+#
 startup_ran = False
-
 @app.before_request
 def run_startup_task():
     global startup_ran
@@ -420,13 +408,6 @@ def run_startup_task():
             output_file=os.path.join(app.root_path, 'static/cars/compared_available_cars.csv')
         )
         startup_ran = True
-
-#Test to see if the compared_available_cars.csv actually exists
-@app.route('/give_me_test')
-def give_me_test():
-    # Generate the URL for the static CSV file
-    csv_url = url_for('static', filename='cars/compared_available_cars.csv')
-    return f"CSV file available at: <a href='{csv_url}'>{csv_url}</a>"
 
 
 if __name__ == '__main__':
