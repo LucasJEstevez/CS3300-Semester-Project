@@ -421,8 +421,8 @@ function renderTable() {
             console.log('Save clicked for row:', row);
         });
 
-        actionCell.appendChild(saveButton);
-        tableRow.appendChild(actionCell);
+        newColumn.appendChild(saveButton);
+        row.appendChild(actionCell);
 
         table.appendChild(row);
     });
