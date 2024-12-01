@@ -1,4 +1,4 @@
-Vehicle_ID,Year,Make,Model,Trim,Miles,Sold For,Status,Sold By,Zip Code Sold
+Vehicle_ID,Year,Make,Model,Trim,Miles,Recently Sold For,Status,Sold By,Zip Code Sold
 1,2004,Mazda,CX-90,N/A,59934,23172,Used,Individual Seller,16584
 2,2003,BMW,5 Series,N/A,23492,36793,Used,Dealership,39281
 3,2020,Hyundai,Sonata,luxury,23736,17297,Certified,Dealership,33003
