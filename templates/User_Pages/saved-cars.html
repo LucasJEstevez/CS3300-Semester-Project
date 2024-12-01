@@ -254,7 +254,6 @@
                 return response.json(); // Parse the JSON if response is ok
             })
             .then(data => {
-                console.log(data);
                 if (data.isValid) {
                     loggedIn = true;
                     document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
@@ -314,11 +313,9 @@ function getSavedCars() {
             return response.json();
         })
         .then(data => {
-            console.log("data from getSavedCars request");
-            console.log(data);
             if (data.isValid) {
                 if(!data.error){
-                    console.log("Data is valid!");
+                    //This is a placeholder
                     console.log(data.carIdArray);
                 }
                 else{
