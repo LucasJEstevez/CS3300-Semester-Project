@@ -394,7 +394,8 @@ def getSavedCars():
         return jsonify({"isValid":False, "message":"no token"})
 
 
-#
+#Compares the available cars to sold cars in order to add a column to the buy page displaying it
+#Uses startup_ran to only execute once, since flask discontinued start_before_request
 startup_ran = False
 @app.before_request
 def run_startup_task():
