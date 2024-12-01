@@ -359,12 +359,16 @@ function getSavedCars() {
             const vehicleId = row.data.Vehicle_ID;
 
             // Check if the Vehicle_ID is in the allowed list
-            if (allowedVehicleIDs.includes(vehicleId)) {
-                originalData.push(row.data);
+            for (let i = 0; i < allowedVehicleIDs.length; i++)
+            {
+                if (allowedVehicleIDs[i] === vehicleId)
+                {
+                    originalData.push(row.data);
 
-                const displayRow = { ...row.data };
-                delete displayRow.Vehicle_ID;
-                buffer.push(displayRow);
+                    const displayRow = { ...row.data };
+                    delete displayRow.Vehicle_ID;
+                    buffer.push(displayRow);
+                }
             }
         },
 
