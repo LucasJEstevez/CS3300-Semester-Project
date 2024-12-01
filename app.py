@@ -11,6 +11,7 @@ import sqlite3
 import datetime
 import jwt
 import csv
+import ast
 
 #Initialize the Flask application 
 app = Flask(__name__)
@@ -261,14 +262,6 @@ def addUserToDB(username,email,password):
     conn.commit()
     conn.close()
 
-# Parse string of ids and return array
-def parseCarArray(idString):
-    if idString.startswith('[') and idString.endswith(']'):
-        cleanedStr = idString.strip("[]").strip()
-        if cleanedStr:
-            return list(map(int, cleanedStr.split(",")))
-    return []
-
 # Gets ids of saved cars for user
 def getCarIDArray(user_id):
     try: 
@@ -277,7 +270,7 @@ def getCarIDArray(user_id):
 
             for row in csvReader:
                 if int(row['User_ID']) == int(user_id):
-                    carIds = parseCarArray(row['Car_IDs'])
+                    carIds = ast.literal_eval(row['Car_IDs'])
                     return carIds
             return [-1]
     except FileNotFoundError:
