@@ -278,7 +278,6 @@ def getCarIDArray(user_id):
 
             for row in csvReader:
                 if int(row['User_ID']) == int(user_id):
-                    return [1,1]
                     carIds = parseCarArray(row['Car_IDs'])
                     return carIds
             return [1,4]
