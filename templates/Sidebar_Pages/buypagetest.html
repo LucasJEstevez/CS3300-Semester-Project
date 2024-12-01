@@ -376,13 +376,23 @@ function getSavedCars() {
         body: JSON.stringify({ token: token })
     })
     .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         return response.json();
     })
-    .then(data => data.isValid ? data.carIdArray : [])
+    .then(data => {
+        if (data.isValid) {
+            console.log("Array in getSavedCars:", data.carIdArray);
+            return data.carIdArray; // Explicitly return the carIdArray
+        } else {
+            console.error("getSavedCars: Invalid data returned from server.");
+            return []; // Return an empty array for invalid responses
+        }
+    })
     .catch(error => {
         console.error('Error during getSavedCars:', error);
-        return [];
+        return []; // Return an empty array if there’s an error
     });
 }
 </script>
@@ -396,40 +406,48 @@ function getSavedCars() {
     const rowsPerPage = 20;
     let totalPages = 0;
 
-    function loadCsvAndFilter(allowedVehicleIds) {
+    async function loadCsvAndFilter() {
+    let allowedVehicleIds = [];
 
-    fetch(csvUrl)
-        .then(response => {
-            if (!response.ok) throw new Error("Network response was not ok");
-            return response.text();
-        })
-        .then(csvText => {
-            Papa.parse(csvText, {
-                header: true,
-                dynamicTyping: true,
-                worker: true,
-                step: function (row) {
-                    const vehicleId = row.data.Vehicle_ID;
+    try {
+        allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
+        console.log("Allowed Vehicle IDs:", allowedVehicleIds); // Debugging to confirm array
 
-                    // Only add rows to buffer if the ID is in allowedVehicleIds
-                    if (allowedVehicleIds.includes(vehicleId)) {
-                        delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
-                        originalData.push(row.data);
-                        buffer.push(row.data);
+        fetch(csvUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("Network response was not ok");
+                return response.text();
+            })
+            .then(csvText => {
+                Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    worker: true,
+                    step: function (row) {
+                        const vehicleId = row.data.Vehicle_ID;
+
+                        // Only add rows to buffer if the ID is in allowedVehicleIds
+                        if (allowedVehicleIds.includes(vehicleId)) {
+                            delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                            originalData.push(row.data);
+                            buffer.push(row.data);
+                        }
+                    },
+                    complete: function () {
+                        console.log("CSV parsing complete.");
+                        totalPages = Math.ceil(buffer.length / rowsPerPage);
+                        renderTable();
+                        renderPagination();
                     }
-                },
-                complete: function () {
-                    console.log("CSV parsing complete.");
-                    totalPages = Math.ceil(buffer.length / rowsPerPage);
-                    renderTable();
-                    renderPagination();
-                }
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching the CSV file:", error);
+                document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
             });
-        })
-        .catch(error => {
-            console.error("Error fetching the CSV file:", error);
-            document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
-        });
+    } catch (error) {
+        console.error("Error in loadCsvAndFilter:", error);
+    }
 }
 
 // Add event listeners to dropdown items
