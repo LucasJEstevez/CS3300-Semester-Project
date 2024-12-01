@@ -278,14 +278,13 @@ def getCarIDArray(user_id):
             for row in csvReader:
                 if int(row['User_ID']) == user_id:
                     carIds = parseCarArray(row['Car_IDs'])
-                    return row['Car_IDs']
                     return carIds
     except FileNotFoundError:
         print("CSV file not found")
         return [1]
     except Exception as e:
         print(f"Unexpected error in getCarIDArray: {e}")
-        return e
+        return [2]
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
@@ -389,7 +388,6 @@ def getSavedCars():
         id = decoded.get('sub')
         if isUserIdValid(id):
             carArray = getCarIDArray(id)
-            carArray = "[2,3,4]"
             return jsonify({"isValid":True, "carIdArray": carArray})
         else:
             return jsonify({"isValid":False, "message":"userIdInvalid"})
