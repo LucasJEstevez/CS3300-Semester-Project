@@ -1,12 +1,9 @@
 import csv
-import ast
+user_id = 4
 
-arr = [660,816,951,1066,1078]
+# Data to be added
+new_row_str = str(user_id)+',"[]"'
 
-arr2 = ast.literal_eval(arr)
-
-for elem in arr2:
-    print(elem)
-
-print(arr2)
-
+# Open the file in append mode with newline='' to control line breaks
+with open('User Data/saved_cars.csv', mode='a', newline='') as file:
+    file.write(new_row_str + '\n')

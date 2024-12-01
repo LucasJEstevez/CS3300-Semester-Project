@@ -348,10 +348,11 @@ def register():
     user_id = getUserId(username,password)
 
     # Add user to csv file for saved cars
-    new_row = [user_id, []]
+    new_row_str = str(user_id)+',"[]"'
+
+    # Open the file in append mode with newline='' to control line breaks
     with open('User Data/saved_cars.csv', mode='a', newline='') as file:
-        csvWriter = csv.writer(file)
-        csvWriter.writerow(new_row)
+        file.write(new_row_str + '\n')
 
     # Create token to send to browser
     token = create_access_token(
