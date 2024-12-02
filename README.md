@@ -105,17 +105,17 @@ From there, feel free to add to, delete, and create any files in the repository 
 <br><br>
 # User Usage
 
-1. Once the web service is deployed, all the user needs to access the service is a link to the website (which if you are a developer, you can find on your Render Dashboard)
-2. Visit <https://cs3300-semester-project-ekbv.onrender.com>
+1. Once the web service is deployed, all the user needs to access the service is a link to the website (which if you are a developer, you can find on your Render Dashboard).
+2. Users visit <https://cs3300-semester-project-ekbv.onrender.com>.
 3. Unregistered users can browse available cars and navigate to all pages except for the sell page and saved cars page.
     - If a user is trying to access the sell page without being logged in, it will re-direct to the login/register pages.
-    - Users can login/register using a username and/or valid email and password (which is hashed with BCrypt)
+    - Users can login/register using a username and/or valid email and password (which is hashed with BCrypt).
 
 4. The user logo in the top right corner of each page will link to the necessary pages.<br>
-5. Any user may navigate to the Buy page, where they can filter through a large list of cars using intuitive buttons which are reactive and filter as you press<br>
-6. Any user may navigate to the About page, which explains what the service is and why it exists<br>
+5. Any user may navigate to the Buy page, where they can filter through a large list of cars using intuitive buttons that are reactive and filter as you press. They may save cars they are interested in if they log in or create an account.<br>
+6. Any user may navigate to the About page, which explains what the service is and why it exists; also includes links to more information on the service.<br>
 7. Any user may navigate to the Contact Us page, which has a link to our GitHub along with an email users may reach out to with questions<br>
-8. Any user may navigate to the Terms page, which details the licenses used by the service and by MarketCheck (to use their API)<br>
+8. Any user may navigate to the Terms page, which details/links the licenses used by the service and by MarketCheck (to use their API)<br>
 
 <br><br>
 # Features
