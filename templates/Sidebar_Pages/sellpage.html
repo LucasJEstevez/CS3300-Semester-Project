@@ -101,7 +101,7 @@ function addCarToMarket(){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({token: token, "VIN":vin, "Make":make, "Model":model,"Year":year,"Miles":miles,"Trim":trim,"ZIP":zip})
+        body: JSON.stringify({token: token, "VIN":vin, "Make":make, "Model":model,"Year":year,"Miles":miles,"Trim":trim,"ZIP":zip_code})
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
