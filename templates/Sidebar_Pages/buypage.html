@@ -472,6 +472,8 @@ function renderTable() {
         console.log("savedVehicleIds: ",savedVehicleIds);
 
         console.log("saveButton.id: ",saveButton.id);
+        console.log("typeof saveButton.id: ",typeof saveButton.id);
+        console.log("typeof savedVehicleIDs[0]: ",typeof savedVehicleIds[0]);
         if(savedVehicleIds.includes(saveButton.id)) {
             console.log("Included");
             saveButton.textContent = 'Unsave';
