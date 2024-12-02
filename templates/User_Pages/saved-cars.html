@@ -487,7 +487,7 @@ function renderTable() {
         // Attach an event listener to the button, call function to remove from list
         unsaveButton.addEventListener('click', () =>
         {
-            unsaveButton.addEventListener('click', unsaveHandler(saveButton));
+            unsaveButton.addEventListener('click', unsaveHandler(unsaveButton));
         });
 
         newColumn.appendChild(unsaveButton);
