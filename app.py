@@ -426,7 +426,7 @@ def saveCar():
                 for row in rows:
                     if row['User_ID'] == id:  # Ensure 'id' matches as a string
                         car_ids = parseCarArray(row['Car_IDs'])
-                        car_ids.append(carId)  # Add the new car ID
+                        car_ids.append(int(carId))  # Add the new car ID
                         car_ids = list(sorted(set(car_ids)))
                         row['Car_IDs'] = str(car_ids)  # Update the Car_IDs field
 
