@@ -520,7 +520,7 @@ def add_car():
             writer = csv.DictWriter(file, fieldnames=['id', 'year', 'make', 'model', 'trim', 'miles', 'sale_price', 'status', 'mode_of_purchase', 'zip_code'])
             writer.writerow(row)
 
-        return jsonify({"success": True, "message": "Car added successfully!" + row})
+        return jsonify({"success": True, "message": "Car added successfully!"})
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 

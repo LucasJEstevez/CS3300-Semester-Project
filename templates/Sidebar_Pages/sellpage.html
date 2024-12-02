@@ -101,7 +101,6 @@ function addCarToMarket(){
         headers: {
             "Content-Type": "application/json"
         },
-        //Combine the user responses
         body: JSON.stringify({token: token, year:carData.year, make:carData.make, model:carData.model, miles:carData.miles, trim:carData.trim, zip_code:carData.zip_code})
     })
         .then(response => {
