@@ -1,6 +1,6 @@
 Functional Requirements
   - Ability to look at individual listings (based on filtered criteria)
-  - Users able to create an account on the website (but optional)
+  - Users able to create an account on the website (but optional depending on desired function)
   - After account creation, the account holder shall be able to save/add cars to a list
   - Site displays recently sold price for specifically searched car (if applicable according to sold car data)
   - Separate user options (and access to saved cars) based on logged-in status
