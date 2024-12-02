@@ -510,7 +510,7 @@ function renderTable() {
         unsaveButton.className = 'unsave-button';
 
         // Attach an event listener to the button, call function to remove from list
-        saveButton.addEventListener('click', () =>
+        unsaveButton.addEventListener('click', () =>
         {
             console.log('Unsave clicked for row:', row);
         });
