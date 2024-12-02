@@ -338,8 +338,8 @@
             worker: true,
             step: function(row)
             {   // Process each row as it's parsed
+                originalData.push(row.data);    
                 delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
-                originalData.push(row.data);
                 buffer.push(row.data);
             },
             complete: function()
@@ -401,6 +401,7 @@ function renderTable() {
     const startIdx = (currentPage - 1) * rowsPerPage;
     const endIdx = startIdx + rowsPerPage;
     const rows = buffer.slice(startIdx, endIdx);
+    const originalDataRows = originalData.slice(startIdx,endIdx)
 
     i=0;
 
@@ -419,12 +420,12 @@ function renderTable() {
         const saveButton = document.createElement('button');
         saveButton.textContent = 'Save';
         saveButton.className = 'save-button';
-        saveButton.id = i;
+        saveButton.id = originalDataRows[i-1].Vehicle_ID;
 
         // Attach an event listener to the button, call function to save to user
         saveButton.addEventListener('click', () =>
         {
-            console.log('Save clicked for row:', saveButton.id);
+            console.log('Save clicked for id:', saveButton.id);
         });
 
         newColumn.appendChild(saveButton);

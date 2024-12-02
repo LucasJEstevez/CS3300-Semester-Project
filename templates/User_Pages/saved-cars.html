@@ -429,8 +429,8 @@ function getSavedCars() {
 
                         // Only add rows to buffer if the ID is in allowedVehicleIds
                         if (allowedVehicleIds.includes(vehicleId)) {
-                            delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
                             originalData.push(row.data);
+                            delete row.data.Vehicle_ID; // Remove the Vehicle_ID column from the buffer table
                             buffer.push(row.data);
                         }
                     },
