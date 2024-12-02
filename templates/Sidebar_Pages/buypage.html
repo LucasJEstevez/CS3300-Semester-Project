@@ -397,13 +397,12 @@ function displayData(){
                 {
                     console.log("CSV parsing complete.");
                     totalPages = Math.ceil(buffer.length / rowsPerPage);
-                    resolve();
                 }
             });
         })
         .catch(error =>
         {
-            reject(new Error("Error fetching the CSV file: " + error));
+            console.error("Error fetching the csv file");
         });
 }
 
