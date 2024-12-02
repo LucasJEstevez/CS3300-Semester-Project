@@ -331,99 +331,81 @@
         let loggedIn = false;
         let savedVehicleIds = [];
 
-        function checkLogin(){
-            return new Promise((resolve, reject) => {
-                if (token) {
-                    console.log('Token (if=true):', token);
-                    fetch('/isValidToken', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`
-                        },
-                        body: JSON.stringify({ token: token }) // Convert body to JSON string
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log(data);
-                        if (data.isValid) {
-                            console.log("Logged In");
-                            loggedIn = true;
-                            getSavedCars()
-                                .then(savedVehicleIds =>{
-                                    console.log("Saved Vehicle ID's: ",savedVehicleIds)
-                                })
-                                .catch(error => {
-                                    console.error("Error loading saved vehicle IDs: ",error);
-                                });
-                            resolve();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error during request:', error);
-                        document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
-                        resolve();
-                    });
+        if (token) {
+            console.log('Token (if=true):', token);
+            fetch('/isValidToken', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ token: token }) // Convert body to JSON string
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            });
-        }
-
-        function fetchCsvData(){
-            return new Promise((resolve, reject) => {
-                fetch(csvUrl)
-                    .then(response =>
-                    {
-                    if (!response.ok)
-                    {
-                        throw new Error("Network response was not ok");
-                    }
-                    return response.text();
-                    })
-                    .then(csvText =>
-                    {
-                    Papa.parse(csvText,
-                    {
-                        header: true,           // Use the first row as header
-                        dynamicTyping: true,    // Convert data types automatically
-                        worker: true,
-                        step: function(row)
-                        {   // Process each row as it's parsed
-                            originalData.push({ ...row.data });    
-                            delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
-                            buffer.push(row.data);
-                        },
-                        complete: function()
-                        {
-                            console.log("CSV parsing complete.");
-                            totalPages = Math.ceil(buffer.length / rowsPerPage);
-                            resolve();
-                        }
-                    });
-                    })
-                    .catch(error =>
-                    {
-                        reject(new Error("Error fetching the CSV file: " + error));
-                    });
-            });
-        }
-
-        checkLogin()
-            .then(() => fetchCsvData())
-            .then(() => {
-                renderTable();
-                renderPagination();
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                if (data.isValid) {
+                    console.log("Logged In");
+                    loggedIn = true;
+                    getSavedCars()
+                        .then(savedVehicleIds =>{
+                            console.log("Saved Vehicle ID's: ",savedVehicleIds)
+                        })
+                        .catch(error => {
+                            console.error("Error loading saved vehicle IDs: ",error);
+                        });
+                }
             })
             .catch(error => {
-                console.error('Initialization failed: ',error);
-                document.getElementById("tableContainer").innerHTML = "<p>Failed to load data.</p>";
+                console.error('Error during request:', error);
+                document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
             });
+        }
+
+        displayData();
     });
     
+function displayData(){
+    fetch(csvUrl)
+        .then(response =>
+        {
+            if (!response.ok)
+            {
+                throw new Error("Network response was not ok");
+            }
+            return response.text();
+        })
+        .then(csvText =>
+        {
+            Papa.parse(csvText,
+            {
+                header: true,           // Use the first row as header
+                dynamicTyping: true,    // Convert data types automatically
+                worker: true,
+                step: function(row)
+                {   // Process each row as it's parsed
+                    originalData.push({ ...row.data });    
+                    delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                    buffer.push(row.data);
+                },
+                complete: function()
+                {
+                    console.log("CSV parsing complete.");
+                    totalPages = Math.ceil(buffer.length / rowsPerPage);
+                    resolve();
+                }
+            });
+        })
+        .catch(error =>
+        {
+            reject(new Error("Error fetching the CSV file: " + error));
+        });
+}
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
