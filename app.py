@@ -427,6 +427,7 @@ def saveCar():
                     if row['User_ID'] == id:  # Ensure 'id' matches as a string
                         car_ids = parseCarArray(row['Car_IDs'])
                         car_ids.append(carId)  # Add the new car ID
+                        car_ids = list(sorted(set(car_ids)))
                         row['Car_IDs'] = str(car_ids)  # Update the Car_IDs field
 
                 # Write the updated data back to the file
@@ -434,6 +435,8 @@ def saveCar():
                     writer = csv.DictWriter(file, fieldnames=rows[0].keys())
                     writer.writeheader()
                     writer.writerows(rows)
+                
+
 
             except FileNotFoundError:
                 return jsonify({"success":False, "message": "file not found"})
