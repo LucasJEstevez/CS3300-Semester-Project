@@ -1,5 +1,5 @@
 //Get id numbers of saved cars
-function getSavedCars() {
+async function getSavedCars() {
     const token = localStorage.getItem("access_token");
     if (!token) return Promise.resolve([]);
 

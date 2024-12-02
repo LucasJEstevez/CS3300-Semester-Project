@@ -334,9 +334,11 @@
                 document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
                 return;
             }
-
+            
+            console.log("Logged In");
             loggedIn = true;
             savedVehicleIds = await getSavedCars();
+            console.log("Saved Vehicle ID's: ",savedVehicleIds);
         } catch (error) {
             console.error('Error during initialization:', error);
             document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
