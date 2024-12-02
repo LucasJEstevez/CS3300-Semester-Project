@@ -110,6 +110,7 @@ function addCarToMarket(){
     });
 }
 function getSaleCars(){
+    token = localStorage.getItem("access_token");
     fetch ('getSaleCars', {
         method: "POST",
         headers: {
