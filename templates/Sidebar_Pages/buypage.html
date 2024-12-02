@@ -469,6 +469,8 @@ function renderTable() {
         saveButton.className = 'save-button';
         saveButton.id = originalDataRows[i-1].Vehicle_ID;
 
+        console.log("savedVehicleIds: ",savedVehicleIds);
+
         console.log("saveButton.id: ",saveButton.id);
         if(savedVehicleIds.includes(saveButton.id)) {
             console.log("Included");
