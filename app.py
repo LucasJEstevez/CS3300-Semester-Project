@@ -405,7 +405,7 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
-@app.route('/saveCar', method=['POST'])
+@app.route('/saveCar', methods=['POST'])
 def saveCar():
     data = request.get_json()
     token = data.get('token')
