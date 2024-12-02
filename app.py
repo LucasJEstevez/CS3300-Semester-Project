@@ -436,7 +436,7 @@ def saveCar():
                     writer.writeheader()
                     writer.writerows(rows)
                 
-
+                return jsonify({"success":True})
 
             except FileNotFoundError:
                 return jsonify({"success":False, "message": "file not found"})
