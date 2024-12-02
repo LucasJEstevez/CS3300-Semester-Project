@@ -83,7 +83,7 @@ def price_prediction():
 
     # Retrieve API key from environment variable 
     # When testing price predictor, ensure you replace os.environ.get('API_KEY') with the actual key you were given for tests to run
-    key = os.environ.get('API_KEY')  # Ensure your API key is set as an environment variable
+    key = 'lUtIJdzuVMCIcxh4DlGneYNZHIBb7sVS'  # Ensure your API key is set as an environment variable
 
     # Construct the URL for the API request 
     url = construct_url(car_info, key)
