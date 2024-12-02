@@ -471,10 +471,12 @@ function renderTable() {
 
         console.log("saveButton.id: ",saveButton.id);
         if(savedVehicleIds.includes(saveButton.id)) {
+            console.log("Included");
             saveButton.textContent = 'Unsave';
             saveButton.addEventListener('click', unsaveHandler(saveButton)); // Correctly pass the handler
         } 
         else{
+            console.log("Not included");
             saveButton.textContent = 'Save';
             saveButton.addEventListener('click', saveHandler(saveButton)); // Correctly pass the handler
         }
