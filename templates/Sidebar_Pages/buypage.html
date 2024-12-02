@@ -315,6 +315,19 @@
 
 <!--Script for available cars csv-->
 <script>
+    
+
+    const csvUrl = "{{url_for('static', filename='cars/compared_available_cars.csv')}}"; // Replace with your fixed CSV URL
+
+    let originalData = [];
+    let buffer = []; // Stores loaded rows
+    let currentPage = 1;
+    const rowsPerPage = 20;
+    let totalPages = 0;
+
+    window.addEventListener("load", function()
+    {
+    
     loggedIn = false;
     let savedVehicleIds = [];
     if (token) {
@@ -353,17 +366,6 @@
         });
     }
 
-
-    const csvUrl = "{{url_for('static', filename='cars/compared_available_cars.csv')}}"; // Replace with your fixed CSV URL
-
-    let originalData = [];
-    let buffer = []; // Stores loaded rows
-    let currentPage = 1;
-    const rowsPerPage = 20;
-    let totalPages = 0;
-
-    window.addEventListener("load", function()
-    {
     fetch(csvUrl)
         .then(response =>
         {
@@ -421,6 +423,11 @@ document.addEventListener("DOMContentLoaded", function() {
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
 // Render table rows for the current page
 function renderTable() {
+
+    if(savedVehicleIds.length === 0){
+        renderTable();
+    }
+
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
 
