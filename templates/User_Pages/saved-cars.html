@@ -313,6 +313,9 @@
 <!--Get Saved Cars-->
 <script src="../../static/CSS_Files/getSavedCars.js"></script>
 
+<!--Save/Unsave Buttons-->
+<script src="../../static/CSS_Files/savebutton.js"></script>
+
 <!--User stuff-->
 <script>
 window.onload = async function () {
@@ -484,7 +487,7 @@ function renderTable() {
         // Attach an event listener to the button, call function to remove from list
         unsaveButton.addEventListener('click', () =>
         {
-            console.log('Unsave clicked for row:', row);
+            unsaveButton.addEventListener('click', unsaveHandler(saveButton));
         });
 
         newColumn.appendChild(unsaveButton);
