@@ -324,13 +324,12 @@
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
+    let loggedIn = false;
+    let savedVehicleIds = [];
 
     window.addEventListener("load", function()
     {
     
-        let loggedIn = false;
-        let savedVehicleIds = [];
-
         if (token) {
             console.log('Token (if=true):', token);
             fetch('/isValidToken', {
@@ -355,9 +354,11 @@
                     getSavedCars()
                         .then(savedVehicleIds =>{
                             console.log("Saved Vehicle ID's: ",savedVehicleIds)
+                            displayData();
                         })
                         .catch(error => {
                             console.error("Error loading saved vehicle IDs: ",error);
+                            displayData();
                         });
                 }
             })
@@ -365,13 +366,16 @@
                 console.error('Error during request:', error);
             });
         }
+        else{
+            console.log("No token, showing data with no saved vehicles");
+            displayData();
+        }
 
         console.log("before displayData call, savedVehicleIds: ",savedVehicleIds);
-        displayData(savedVehicleIds);
     });
     
-function displayData(savedVehicleIds){
-    console.log("begin displayData, savedVehicleIds: ",savedVehicleIds);
+function displayData(){
+    console.log("begin displayData, savedVehicleIds: ",);
     fetch(csvUrl)
         .then(response =>
         {
@@ -400,7 +404,7 @@ function displayData(savedVehicleIds){
                     totalPages = Math.ceil(buffer.length / rowsPerPage);
 
                     console.log("before renderTable call, savedVehicleIds: ",savedVehicleIds);
-                    renderTable(savedVehicleIds);
+                    renderTable();
                     renderPagination();
                 }
             });
@@ -427,7 +431,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
 // Render table rows for the current page
-function renderTable(savedVehicleIds) {
+function renderTable() {
 
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
