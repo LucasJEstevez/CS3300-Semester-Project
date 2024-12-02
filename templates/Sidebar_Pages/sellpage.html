@@ -8,7 +8,7 @@
 
     <h2>Sell Your Car!</h2>
     <h2 id="welcome_header"></h2>
-    <p>Input your *used* car's information into the boxes below to add your car to the list of available cars!</p>
+    <p id="info">Input your *used* car's information into the boxes below to add your car to the list of available cars!</p>
     <br><br><br>
 <div class = "fakeimg" style = "height:150px; background-color: rgba(17, 62, 145, 0.6); text-align: center;">
     <form method="post" id="carForm">
@@ -112,7 +112,7 @@ function addCarToMarket(){
         .then(data => {
             console.log(data);
             if (data.success) {
-                document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
+                document.getElementById("info").innerHTML = 'Your car was successfully added!';
             } else {
                 document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
             }
