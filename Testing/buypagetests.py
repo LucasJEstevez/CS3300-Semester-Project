@@ -4,6 +4,7 @@
 
 from playwright.sync_api import sync_playwright
 
+#Label the choices for year and make to test.
 year_choice = "2022"
 make_choice = "Toyota"
 
