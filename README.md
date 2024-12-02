@@ -91,7 +91,7 @@ This web service was created from scratch mainly as a team-based class project f
 5. Next, after naming the project, you can leave most sections blank/with their default values, but scroll to Build Command and Start Command, and input: pip install -r requirements.txt and ./start_app.sh respectively. Also ensure you are using the “Free” Instance Type (can use others if you’d like, unnecessary).
 ![Building Service](Documentation/Images/creatingservice.png "Building Service")
 
-6. Finally, before deploying the web service, scroll to Environment Variables and enter API_KEY as an environment variable (inputting the key string given to you by MarketCheck to the “value” space) and JWT_KEY as an environment variable (can be a randomly generated string; input the key string to the “value” space); hit “+ Add Environment Variable”. Set up complete! Hit “Deploy Web Service” and wait a few minutes for the web service to spin up.
+6. Finally, before deploying the web service, scroll to Environment Variables and enter API_KEY as an environment variable (inputting the key string given to you by MarketCheck to the “value” space) and JWT_KEY as an environment variable (can be a randomly generated string of numbers and letters; input the key string to the “value” space); hit “+ Add Environment Variable”. Set up complete! Hit “Deploy Web Service” and wait a few minutes for the web service to spin up.
 ![API Key](Documentation/Images/apijwtkeydeploy.png "Connect")
 
 7. To go to the website for the service, follow the link provided by Render towards the top of the page. As long as the service is not suspended, this link is sharable and can be used by others.
