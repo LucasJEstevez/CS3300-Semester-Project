@@ -287,6 +287,23 @@ def getCarIDArray(user_id):
     except Exception as e:
         print(f"Unexpected error in getCarIDArray: {e}")
         return [-1]
+    
+def getSaleIDArray(user_id):
+    try: 
+        with open('User Data/saved_cars.csv', mode='r') as file:
+            csvReader = csv.DictReader(file)
+
+            for row in csvReader:
+                if int(row['User_ID']) == int(user_id):
+                    carIds = parseCarArray(row['Sell_IDs'])
+                    return carIds
+            return [-1]
+    except FileNotFoundError:
+        print("CSV file not found")
+        return [-1]
+    except Exception as e:
+        print(f"Unexpected error in getCarIDArray: {e}")
+        return [-1]
 
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
@@ -404,6 +421,29 @@ def getSavedCars():
             return jsonify({"isValid":False, "message":"userIdInvalid"})
     else:
         return jsonify({"isValid":False, "message":"no token"})
+
+@app.route('getSaleCars', method=['POST'])
+def getSaleCars():
+
+    # Get token from request
+    data = request.get_json()
+    token = data.get('token')
+    if(token):
+
+        # Decrypt token
+        decoded = decode_token(token)
+        id = decoded.get('sub')
+        if isUserIdValid(id):
+            carArray = getSaleIDArray(id)
+            if carArray != [-1]:
+                return jsonify({"isValid":True, "error":False, "carIdArray": carArray})
+            else:
+                return jsonify({"isValid":True, "error":True})
+        else:
+            return jsonify({"isValid":False, "message":"userIdInvalid"})
+    else:
+        return jsonify({"isValid":False, "message":"no token"})
+            
 
 @app.route('/saveCar', methods=['POST'])
 def saveCar():
