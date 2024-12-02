@@ -1,4 +1,4 @@
-<!-- Commented sections were guided by the Best-README-Template GitHub Repository (which we did not use any templates from, just looked at for ideas/banners (https://github.com/othneildrew/Best-README-Template) -->
+<!-- Commented sections were guided by the Best-README-Template GitHub Repository (which we did not use any "templates" from, just looked at for ideas/banners (https://github.com/othneildrew/Best-README-Template) -->
 <!-- Converted README originally from .docx to .md using https://word2md.com/ -->
 
 <!-- Contributors and License banners -->
@@ -21,7 +21,7 @@
 
 Welcome to 1-Stop Car Shop! This free software combines “all present market listings” (simulated data) for new and used cars onto one website (by means of a large, constantly updating database of cars) with recently sold car prices included (if applicable) and provides a way to have your car’s price estimated instantly (with the help of MarketCheck’s Price Predictor API). Save time by using the functionalities of our web service, rather than finding each function of the service on a different site!
 
-This web service was created mainly as a team-based class project for CS3300 at the University of Colorado Colorado Springs by Computer Science students John Camargo, Jackson Seales, Kylie Sanchez, and Lucas Estevez
+This web service was created from scratch mainly as a team-based class project for CS3300 at the University of Colorado Colorado Springs by Computer Science students John Camargo, Jackson Seales, Kylie Sanchez, and Lucas Estevez
 
 <br><br>
 # Built With
@@ -132,7 +132,7 @@ From there, feel free to add to, delete, and create any files in the repository 
 
 ### Non-Functional Requirements
 
-- Easy to use website interface
+- Easy-to-use website interface
 - Quick price estimation feedback (<5 seconds)
 - Zero access to API key
 - The user’s login and save data must be private and secure
@@ -147,7 +147,7 @@ Render help and documentation, along with specifics/limits of what you can acces
 
 ### Flask
 
-We use Flask (with Python) as our backend, creating our dynamic webpages and landing pages. Mainly for API and user data/login requests.
+We use Flask (with Python) as our backend, creating our dynamic web pages and landing pages. Other than that, Flask is mainly used for API and user data/login requests and some testing aspects.
 
 Flask documentation: <https://flask.palletsprojects.com/en/stable/>
 
