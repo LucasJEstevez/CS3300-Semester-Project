@@ -95,6 +95,8 @@ function addCarToMarket(){
     // Convert form data to JSON
     const carData = Object.fromEntries(formData.entries());
     console.log("Car Data:", carData);
+    console.log(vin);
+    console.log(carData.vin);
 
     fetch ('/sellCar', {
         method: "POST",
@@ -102,6 +104,7 @@ function addCarToMarket(){
             "Content-Type": "application/json"
         },
         body: JSON.stringify({token: token, "VIN":vin, "Make":make, "Model":model,"Year":year,"Miles":miles,"Trim":trim,"ZIP":zip_code})
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
