@@ -308,6 +308,10 @@
 <script src="../../static/CSS_Files/changeloginbuttons.js"></script>
 <!-- Load PapaParse from local file -->
 <script src="../../static/PapaParse/papaparse.js"></script>
+
+<!--Get Saved Cars-->
+<script src="../../static/CSS_Files/getSavedCars.js"></script>
+
 <!--Script for available cars csv-->
 <script>
     const csvUrl = "{{url_for('static', filename='cars/compared_available_cars.csv')}}"; // Replace with your fixed CSV URL
@@ -357,6 +361,40 @@
         document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
         });
     });
+
+    loggedIn = false;
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        document.getElementById("welcome_header").innerHTML = 'No token found. Must be logged in to sell your car.';
+        window.location.href = "/sign-in";
+        return;
+    
+
+        try {
+            const validationResponse = await fetch('/isValidToken', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: token })
+            });
+
+            if (!validationResponse.ok) {
+                const errorText = await validationResponse.text();
+                throw new Error(`HTTP error! status: ${validationResponse.status} - ${errorText}`);
+            }
+
+            const validationData = await validationResponse.json();
+            if (!validationData.isValid) {
+                document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
+                return;
+            }
+
+            loggedIn = true;
+            savedVehicleIds = await getSavedCars();
+        } catch (error) {
+            console.error('Error during initialization:', error);
+            document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+        }
+    }
 
 // Add event listeners to dropdown items
 document.addEventListener("DOMContentLoaded", function() {
@@ -422,11 +460,23 @@ function renderTable() {
         saveButton.className = 'save-button';
         saveButton.id = originalDataRows[i-1].Vehicle_ID;
 
+        if (loggedIn){
+            if(savedVehicleIds.includes(saveButton.id)){
+                saveButton.textContent = 'Unsave';
+                saveButton.addEventListener('click', unsaveCar(saveButton));
+            }
+        }
+        else{
+            saveButton.textContent = 'Save';
+            saveButton.addEventListener('click', saveCar(saveButton));
+        }
+
+        /*
         // Attach an event listener to the button, call function to save to user
         saveButton.addEventListener('click', () =>
         {
             console.log('Save clicked for id:', saveButton.id);
-        });
+        });*/
 
         newColumn.appendChild(saveButton);
         row.appendChild(newColumn);
@@ -434,6 +484,56 @@ function renderTable() {
         table.appendChild(row);
     });
 }
+
+// Named function to handle saving a car
+function saveCar(button) {
+    console.log("saveCar function called");
+    button.textContent = 'Unsave';
+    
+    // You need to pass the same reference for removeEventListener
+    button.removeEventListener('click', saveHandler);
+    
+    // Add the new event listener for "Unsave"
+    button.addEventListener('click', unsaveHandler(button));
+}
+
+// Function that acts as a handler for the "Save" button
+function saveHandler(button) {
+    return function () {
+        saveCar(button);
+    };
+}
+
+// Named function to handle unsaving a car
+function unsaveCar(button) {
+    console.log("unsaveCar function called");
+    button.textContent = 'Save';
+    
+    // You need to pass the same reference for removeEventListener
+    button.removeEventListener('click', unsaveHandler);
+    
+    // Add the new event listener for "Save"
+    button.addEventListener('click', saveHandler(button));
+}
+
+// Function that acts as a handler for the "Unsave" button
+function unsaveHandler(button) {
+    return function () {
+        unsaveCar(button);
+    };
+}
+
+// Logic to set up the button listener depending on logged in state
+if (loggedIn) {
+    if (savedVehicleIds.includes(saveButton.id)) {
+        saveButton.textContent = 'Unsave';
+        saveButton.addEventListener('click', unsaveHandler(saveButton));
+    }
+} else {
+    saveButton.textContent = 'Save';
+    saveButton.addEventListener('click', saveHandler(saveButton));
+}
+
 
 //-----------------------------------------------------------------
 //Pagination
