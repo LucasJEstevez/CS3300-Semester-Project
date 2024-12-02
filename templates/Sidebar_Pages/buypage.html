@@ -324,12 +324,12 @@
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
+    let savedVehicleIds = [];
 
     window.addEventListener("load", function()
     {
     
     loggedIn = false;
-    let savedVehicleIds = [];
     if (token) {
         console.log('Token (if=true):', token);
         fetch('/isValidToken', {
