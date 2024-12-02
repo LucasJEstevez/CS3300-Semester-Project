@@ -316,6 +316,7 @@
 <!--Script for available cars csv-->
 <script>
     loggedIn = false;
+    savedVehicleIds = [];
     if (token) {
         console.log('Token (if=true):', token);
         fetch('/isValidToken', {
@@ -468,11 +469,9 @@ function renderTable() {
         saveButton.className = 'save-button';
         saveButton.id = originalDataRows[i-1].Vehicle_ID;
 
-        if (loggedIn){
-            if(savedVehicleIds.includes(saveButton.id)){
-                saveButton.textContent = 'Unsave';
-                saveButton.addEventListener('click', unsaveCar(saveButton));
-            }
+        if(savedVehicleIds.includes(saveButton.id)){
+            saveButton.textContent = 'Unsave';
+            saveButton.addEventListener('click', unsaveCar(saveButton));
         }
         else{
             saveButton.textContent = 'Save';
@@ -529,17 +528,6 @@ function unsaveHandler(button) {
     return function () {
         unsaveCar(button);
     };
-}
-
-// Logic to set up the button listener depending on logged in state
-if (loggedIn) {
-    if (savedVehicleIds.includes(saveButton.id)) {
-        saveButton.textContent = 'Unsave';
-        saveButton.addEventListener('click', unsaveHandler(saveButton));
-    }
-} else {
-    saveButton.textContent = 'Save';
-    saveButton.addEventListener('click', saveHandler(saveButton));
 }
 
 
