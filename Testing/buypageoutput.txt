@@ -1,4 +1,9 @@
 --- Year Test Initiated ---
 Found Year dropdown menu.
-Found 2023
+Found 2022
+20 Rows Checked!
+--- Test Passed! ---
+Found Make dropdown menu.
+Found Toyota
+20 Rows Checked!
 --- Test Passed! ---
