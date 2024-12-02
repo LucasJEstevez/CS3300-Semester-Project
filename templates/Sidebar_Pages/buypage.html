@@ -470,8 +470,9 @@ function renderTable() {
         console.log("for each:",i);
 
         const row = document.createElement("tr");
+        const desiredRowData = Object.values(rowData);
 
-        (Object.values(rowData)).slice(1).forEach(cellData => {
+        ((desiredRowData).slice(1)).forEach(cellData => {
             const cell = document.createElement("td");
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
