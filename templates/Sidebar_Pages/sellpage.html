@@ -68,7 +68,7 @@ window.onload = function() {
             if (data.isValid) {
                 loggedIn = true;
                 document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
-                getSaleCars();
+                //getSaleCars();
             } else {
                 document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
             }
@@ -116,34 +116,34 @@ function addCarToMarket(){
         })
     });
 }
-function getSaleCars(){
-    token = localStorage.getItem("access_token");
-    fetch ('getSaleCars', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({"token":token})})
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            if (data.success) {
-                return data.carList;
-            } else {
-                console.error("Unable to get sold cars");
-                return null;
-            }
-        })
-        .catch(error => {
-            console.error('Error during request:', error);
-            return null;
-        });
-}
+// function getSaleCars(){
+//     token = localStorage.getItem("access_token");
+//     fetch ('getSaleCars', {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({"token":token})})
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             console.log(data);
+//             if (data.success) {
+//                 return data.carList;
+//             } else {
+//                 console.error("Unable to get sold cars");
+//                 return null;
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error during request:', error);
+//             return null;
+//         });
+// }
 </script>
 </body>
 </html>
