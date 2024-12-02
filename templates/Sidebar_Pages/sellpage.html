@@ -8,7 +8,7 @@
 
     <h2>Sell Your Car!</h2>
     <h2 id="welcome_header"></h2>
-    <p>Input your car's information into the boxes below to add your car to the list of available cars!</p>
+    <p>Input your *used* car's information into the boxes below to add your car to the list of available cars!</p>
     <br><br><br>
 <div class = "fakeimg" style = "height:150px; background-color: rgba(17, 62, 145, 0.6); text-align: center;">
     <form method="post">
@@ -30,7 +30,12 @@
         <input type="number" id="miles2" name="miles2" >
 
         <label for="Trim">Trim:</label>
-        <input type="text" id="trim" name="trim" ><br>
+        <input type="text" id="trim" name="trim" >
+        
+        <label for="zip_code">Zip Code:</label>
+        <input type="number" id="zip_code" name="zip_code" ><br>
+
+
     </form>
     <br><br>
   <button type="submit" onclick="login()">Submit</button>
