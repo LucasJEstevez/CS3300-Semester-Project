@@ -363,14 +363,15 @@
             })
             .catch(error => {
                 console.error('Error during request:', error);
-                document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
             });
         }
 
+        console.log("before displayData call, savedVehicleIds: ",savedVehicleIds);
         displayData(savedVehicleIds);
     });
     
 function displayData(savedVehicleIds){
+    console.log("begin displayData, savedVehicleIds: ",savedVehicleIds);
     fetch(csvUrl)
         .then(response =>
         {
@@ -397,6 +398,8 @@ function displayData(savedVehicleIds){
                 {
                     console.log("CSV parsing complete.");
                     totalPages = Math.ceil(buffer.length / rowsPerPage);
+
+                    console.log("before renderTable call, savedVehicleIds: ",savedVehicleIds);
                     renderTable(savedVehicleIds);
                     renderPagination();
                 }
