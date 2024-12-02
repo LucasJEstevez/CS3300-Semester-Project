@@ -367,10 +367,10 @@
             });
         }
 
-        displayData();
+        displayData(savedVehicleIds);
     });
     
-function displayData(){
+function displayData(savedVehicleIds){
     fetch(csvUrl)
         .then(response =>
         {
