@@ -116,7 +116,7 @@ function getSaleCars(){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({"token":token})
+        body: JSON.stringify({"token":token}))
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -135,8 +135,7 @@ function getSaleCars(){
         .catch(error => {
             console.error('Error during request:', error);
             return null;
-        })
-    })
+        });
 }
 </script>
 </body>
