@@ -484,21 +484,6 @@ function renderTable() {
             headerRow.appendChild(th);
         });
 
-        // Add a Save button cell to add cars to a list
-        const newColumn = document.createElement('td');
-        const unsaveButton = document.createElement('button');
-        saveButton.textContent = 'Unsave';
-        saveButton.className = 'unsave-button';
-
-        // Attach an event listener to the button, call function to remove from list
-        saveButton.addEventListener('click', () =>
-        {
-            console.log('Unsave clicked for row:', row);
-        });
-
-        newColumn.appendChild(saveButton);
-        row.appendChild(newColumn);
-
         table.appendChild(headerRow);
     }
 
@@ -518,6 +503,20 @@ function renderTable() {
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
         });
+        // Add an unsave button cell to remove cars from a list
+        const newColumn = document.createElement('td');
+        const unsaveButton = document.createElement('button');
+        saveButton.textContent = 'Unsave';
+        saveButton.className = 'unsave-button';
+
+        // Attach an event listener to the button, call function to remove from list
+        saveButton.addEventListener('click', () =>
+        {
+            console.log('Unsave clicked for row:', row);
+        });
+
+        newColumn.appendChild(saveButton);
+        row.appendChild(newColumn);
 
         table.appendChild(row);
     });
