@@ -361,11 +361,13 @@
                                 .catch(error => {
                                     console.error("Error loading saved vehicle IDs: ",error);
                                 });
+                            resolve();
                         }
                     })
                     .catch(error => {
                         console.error('Error during request:', error);
                         document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+                        resolve();
                     });
                 }
             });
