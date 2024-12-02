@@ -469,14 +469,13 @@ function renderTable() {
         saveButton.className = 'save-button';
         saveButton.id = originalDataRows[i-1].Vehicle_ID;
 
+        console.log("saveButton.id: ",saveButton.id);
         if(savedVehicleIds.includes(saveButton.id)) {
             saveButton.textContent = 'Unsave';
-            saveButton.removeEventListener('click', saveHandler(saveButton)); // Remove the previous saveHandler
             saveButton.addEventListener('click', unsaveHandler(saveButton)); // Correctly pass the handler
         } 
         else{
             saveButton.textContent = 'Save';
-            saveButton.removeEventListener('click', unsaveHandler(saveButton)); // Remove the previous unsaveHandler
             saveButton.addEventListener('click', saveHandler(saveButton)); // Correctly pass the handler
         }
 
