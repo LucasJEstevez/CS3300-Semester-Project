@@ -76,9 +76,9 @@ This web service was created mainly as a team-based class project for CS3300 at 
 
 ### Installation and Hosting/Execution
 
-1. Create an account and get a free Car Price Predictor API key at [https://www.marketcheck.com/apis/](https://www.marketcheck.com/apis/%20)
+1. Create an account with MarketCheck and get a free Car Price Predictor API key at [https://www.marketcheck.com/apis/](https://www.marketcheck.com/apis/%20)
 
-2. Clone the repo (this step is optional as you may also just provide a URL to this repo instead):
+2. Clone the repo (this step is optional as you may also just provide a URL to this repo instead); more info can be found at <https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository>:
 git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
 
 3. Create a Render account (Get Started for Free) and link to your Github account at <https://render.com/>. You can also find more information on Render Hosting here!
