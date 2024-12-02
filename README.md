@@ -116,6 +116,8 @@ From there, feel free to add to, delete, and create any files in the repository 
 6. Any user may navigate to the About page, which explains what the service is and why it exists; also includes links to more information on the service.<br>
 7. Any user may navigate to the Contact Us page, which has a link to our GitHub along with an email users may reach out to with questions<br>
 8. Any user may navigate to the Terms page, which details/links the licenses used by the service and by MarketCheck (to use their API)<br>
+9. Logged-in users may navigate to the Sell page, which allows users with accounts to input a car's information for it to become an available car on the Buy page of the site.<br>
+10. Logged-in users may navigate to the Saved Cars page, which displays a list of cars the logged user's saved cars (which they saved from the Buy page)<br>
 
 <br><br>
 # Features
