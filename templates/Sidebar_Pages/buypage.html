@@ -324,7 +324,7 @@
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
-    let loggedIn = false;
+    let loggedIntoSite = false;
     let savedVehicleIds = [];
 
     window.addEventListener("load", function()
@@ -350,7 +350,7 @@
                 console.log(data);
                 if (data.isValid) {
                     console.log("Logged In");
-                    loggedIn = true;
+                    loggedIntoSite = true;
                     getSavedCars()
                         .then(savedVehicleIds =>{
                             console.log("Saved Vehicle ID's: ",savedVehicleIds)
