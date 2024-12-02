@@ -68,7 +68,7 @@ window.onload = function() {
             if (data.isValid) {
                 loggedIn = true;
                 document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
-                getSaleCars()
+                getSaleCars();
             } else {
                 document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
             }

@@ -386,7 +386,7 @@ def isValidToken():
 
     # Get token from request
     data = request.get_json()
-    token = data.get('token')
+    token = data.get('access_token')
     if(token):
 
         # Decrypt token
@@ -405,7 +405,7 @@ def getSavedCars():
 
     # Get token from request
     data = request.get_json()
-    token = data.get('token')
+    token = data.get('access_token')
     if(token):
 
         # Decrypt token
