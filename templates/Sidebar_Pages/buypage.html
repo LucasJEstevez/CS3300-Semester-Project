@@ -306,43 +306,51 @@
 </body>
 
 <script src="../../static/CSS_Files/changeloginbuttons.js"></script>
-<!-- Load PapaParse from local file -->
-<script src="../../static/PapaParse/papaparse.js"></script>
 
 <!--Get Saved Cars-->
 <script src="../../static/CSS_Files/getSavedCars.js"></script>
+
+<!-- Load PapaParse from local file -->
+<script src="../../static/PapaParse/papaparse.js"></script>
 
 <!--Script for available cars csv-->
 <script>
     loggedIn = false;
     const token = localStorage.getItem("access_token");
     if (token) {
-        try {
-            const validationResponse = await fetch('/isValidToken', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: token })
-            });
-
-            if (!validationResponse.ok) {
-                const errorText = await validationResponse.text();
-                throw new Error(`HTTP error! status: ${validationResponse.status} - ${errorText}`);
+        console.log('Token (if=true):', token);
+        fetch('/isValidToken', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ token: token }) // Convert body to JSON string
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-
-            const validationData = await validationResponse.json();
-            if (!validationData.isValid) {
-                document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
-                return;
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            if (data.isValid) {
+                console.log("Logged In");
+                loggedIn = true;
+                getSavedCars()
+                    .then(savedVehicleIds =>{
+                        console.log("Saved Vehicle ID's: ",savedVehicleIds)
+                    })
+                    .catch(error => {
+                        console.error("Error loading saved vehicle IDs: ",error);
+                    });
             }
-            
-            console.log("Logged In");
-            loggedIn = true;
-            savedVehicleIds = await getSavedCars();
-            console.log("Saved Vehicle ID's: ",savedVehicleIds);
-        } catch (error) {
-            console.error('Error during initialization:', error);
+        })
+        .catch(error => {
+            console.error('Error during request:', error);
             document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
-        }
+        });
     }
 
 
