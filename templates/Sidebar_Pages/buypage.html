@@ -397,7 +397,7 @@ function displayData(){
                 step: function(row)
                 {   // Process each row as it's parsed
                     originalData.push({ ...row.data });    
-                    delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                    //delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
                     buffer.push(row.data);
                 },
                 complete: function()
