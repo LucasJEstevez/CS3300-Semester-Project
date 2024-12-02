@@ -316,7 +316,6 @@
 <!--Script for available cars csv-->
 <script>
     loggedIn = false;
-    const token = localStorage.getItem("access_token");
     if (token) {
         console.log('Token (if=true):', token);
         fetch('/isValidToken', {
