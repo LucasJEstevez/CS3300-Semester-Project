@@ -338,7 +338,7 @@
             worker: true,
             step: function(row)
             {   // Process each row as it's parsed
-                originalData.push(row.data);    
+                originalData.push({ ...row.data });    
                 delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
                 buffer.push(row.data);
             },
