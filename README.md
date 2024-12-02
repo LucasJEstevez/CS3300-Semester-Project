@@ -78,13 +78,13 @@ This web service was created mainly as a team-based class project for CS3300 at 
 
 1. Create an account and get a free Car Price Predictor API key at [https://www.marketcheck.com/apis/](https://www.marketcheck.com/apis/%20)
 
-2. Clone the repo:
+2. Clone the repo (this step is optional as you may also just provide a URL to this repo instead):
 git clone <https://github.com/LucasJEstevez/CS3300-Semester-Project>
 
-3. Create a Render account (Get Started for Free) and link to your Github account at <https://render.com/>. Can also find more information on Render Hosting here!
+3. Create a Render account (Get Started for Free) and link to your Github account at <https://render.com/>. You can also find more information on Render Hosting here!
 ![Getting Started](Documentation/Images/getstarted.png "Getting Started")
 
-4. Once you have an account with Render which is attached to your GitHub account, in the Dashboard, click the “+ New” tab next to your current workspace in the top-left of the page. Select Web Service. You should see the GitHub repository you just cloned as one of the first options under ”Git Provider”. Alternatively, you can paste the link to the GitHub repository directly into the “Public Git Repository” section.
+4. Once you have an account with Render which is attached to your GitHub account, in the Dashboard, click the “+ New” tab next to your current workspace in the top-left of the page. Select Web Service. You should see the GitHub repository you just cloned as one of the first options under ”Git Provider”. Alternatively, if you chose not to clone the repo, you can paste the link to this GitHub repository directly into the “Public Git Repository” section.
 ![New Service](Documentation/Images/newservice2.png "New Service")
 ![Connect](Documentation/Images/newserviceconnect.png "Connect")
 
