@@ -402,7 +402,11 @@ function renderTable() {
     const endIdx = startIdx + rowsPerPage;
     const rows = buffer.slice(startIdx, endIdx);
 
+    i=0;
+
     rows.forEach(rowData => {
+        i++;
+
         const row = document.createElement("tr");
         Object.values(rowData).forEach(cellData => {
             const cell = document.createElement("td");
@@ -419,7 +423,7 @@ function renderTable() {
         // Attach an event listener to the button, call function to save to user
         saveButton.addEventListener('click', () =>
         {
-            console.log('Save clicked for row:', row);
+            console.log('Save clicked for row:', i);
         });
 
         newColumn.appendChild(saveButton);
