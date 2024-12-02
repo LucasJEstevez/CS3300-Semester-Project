@@ -483,6 +483,27 @@ def saveCar():
             except Exception as e:
                 return jsonify({"success":False, "message": e})
 
+@app.route('/sellCar', methods=['POST'])
+def add_car():
+    try:
+        # Get data from the request
+        car_data = request.json
+
+        # Define the CSV file path
+        csv_file = 'cars.csv'
+
+        # Append the data to the CSV
+        with open(csv_file, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=['vin', 'make', 'model', 'year', 'miles', 'trim', 'zip_code'])
+            # Write the header if the file is new
+            if file.tell() == 0:
+                writer.writeheader()
+            writer.writerow(car_data)
+
+        return jsonify({"success": True, "message": "Car added successfully!"})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+
 #Compares the available cars to sold cars in order to add a column to the buy page displaying it
 #Uses startup_ran to only execute once, since flask discontinued start_before_request
 startup_ran = False

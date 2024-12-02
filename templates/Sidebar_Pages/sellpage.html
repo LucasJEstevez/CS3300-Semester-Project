@@ -83,6 +83,13 @@ window.onload = function() {
     }
 }
 function addCarToMarket(){
+    const carForm = document.getElementById("carForm");
+    const formData = new FormData(carForm);
+
+    // Convert form data to JSON
+    const carData = Object.fromEntries(formData.entries());
+    console.log("Car Data:", carData);
+
     fetch ('/sellCar', {
         method: "POST",
         headers: {
