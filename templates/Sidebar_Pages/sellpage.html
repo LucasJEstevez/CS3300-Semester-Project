@@ -83,6 +83,12 @@ window.onload = function() {
     }
 }
 function addCarToMarket(){
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        alert("You must be logged in to sell a car.");
+        return;
+    }
+
     const carForm = document.getElementById("carForm");
     const formData = new FormData(carForm);
 
