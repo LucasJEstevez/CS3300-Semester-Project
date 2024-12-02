@@ -38,7 +38,7 @@
 
     </form>
     <br><br>
-  <button type="submit" onclick="login()">Submit</button>
+  <button type="submit" onclick="addCarToMarket()">Submit</button>
 </div>
 
 <script>
@@ -81,9 +81,33 @@ window.onload = function() {
         window.location.href = "/sign-in";
     }
 }
-function sell(){
-    console.log("Hello");
-}
+function addCarToMarket(){
+    fetch ('/sellCar', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({token: token, "VIN":vin, "Make":make, "Model":model,"Year":year,"Miles":miles,"Trim":trim,"ZIP":zip})
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+                document.getElementById("welcome_header").innerHTML = `Welcome, ${data.username}!`;
+            } else {
+                document.getElementById("welcome_header").innerHTML = 'Invalid token or user not found.';
+            }
+        })
+        .catch(error => {
+            console.error('Error during request:', error);
+            document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+        })
+    });
+    }
 </script>
 </body>
 </html>
