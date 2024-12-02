@@ -94,7 +94,7 @@ class TestApp(unittest.TestCase):
         # print(response.data.decode())
 
         response = self.app.post('/price_prediction', data=data, follow_redirects=True)
-        print(response.data.decode())
+        # print(response.data.decode())
 
         # Validate that the predicted price section is present
         self.assertIn(b'<h4>Predicted Price: $', response.data)
