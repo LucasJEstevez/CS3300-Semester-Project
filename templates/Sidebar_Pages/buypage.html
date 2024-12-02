@@ -469,13 +469,15 @@ function renderTable() {
         saveButton.className = 'save-button';
         saveButton.id = originalDataRows[i-1].Vehicle_ID;
 
-        if(savedVehicleIds.includes(saveButton.id)){
+        if(savedVehicleIds.includes(saveButton.id)) {
             saveButton.textContent = 'Unsave';
-            saveButton.addEventListener('click', unsaveCar(saveButton));
-        }
+            saveButton.removeEventListener('click', saveHandler(saveButton)); // Remove the previous saveHandler
+            saveButton.addEventListener('click', unsaveHandler(saveButton)); // Correctly pass the handler
+        } 
         else{
             saveButton.textContent = 'Save';
-            saveButton.addEventListener('click', saveCar(saveButton));
+            saveButton.removeEventListener('click', unsaveHandler(saveButton)); // Remove the previous unsaveHandler
+            saveButton.addEventListener('click', saveHandler(saveButton)); // Correctly pass the handler
         }
 
         /*
@@ -496,9 +498,9 @@ function renderTable() {
 function saveCar(button) {
     console.log("saveCar function called");
     button.textContent = 'Unsave';
-    
+
     // You need to pass the same reference for removeEventListener
-    button.removeEventListener('click', saveHandler);
+    button.removeEventListener('click', saveHandler(button));
     
     // Add the new event listener for "Unsave"
     button.addEventListener('click', unsaveHandler(button));
@@ -515,10 +517,10 @@ function saveHandler(button) {
 function unsaveCar(button) {
     console.log("unsaveCar function called");
     button.textContent = 'Save';
-    
+
     // You need to pass the same reference for removeEventListener
-    button.removeEventListener('click', unsaveHandler);
-    
+    button.removeEventListener('click', unsaveHandler(button));
+
     // Add the new event listener for "Save"
     button.addEventListener('click', saveHandler(button));
 }
