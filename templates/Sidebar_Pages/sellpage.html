@@ -95,13 +95,13 @@ function addCarToMarket(){
     // Convert form data to JSON
     const carData = Object.fromEntries(formData.entries());
     console.log("Car Data:", carData);
-    console.log(carData.vin);
 
     fetch ('/sellCar', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
+        //Combine the user responses
         body: JSON.stringify({token: token, year:carData.year, make:carData.make, model:carData.model, miles:carData.miles, trim:carData.trim, zip_code:carData.zip_code})
     })
         .then(response => {
