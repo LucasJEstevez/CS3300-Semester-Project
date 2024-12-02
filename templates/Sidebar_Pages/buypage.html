@@ -324,12 +324,11 @@
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
-    let loggedIn;
 
     window.addEventListener("load", function()
     {
     
-        loggedIn = false;
+        let loggedIn = false;
         let savedVehicleIds = [];
 
         function checkLogin(){
