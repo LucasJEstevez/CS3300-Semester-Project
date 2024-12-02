@@ -489,20 +489,39 @@ def add_car():
         # Get data from the request
         car_data = request.json
 
-        # Define the CSV file path
-        csv_file = 'cars.csv'
+        csv_file = '/static/cars/site_available_cars.csv'
+
+        #Count the number of rows to make an accurate vehicle id
+        try:
+            with open(csv_file, mode='r') as file:
+                reader = csv.reader(file)
+                row_count = sum(1 for _ in reader)
+        except FileNotFoundError:
+            row_count = 0
+
+        # Get the fields from the recieved data.
+        row = {
+            'id': row_count + 1,
+            'year': car_data.get('year'),
+            'make': car_data.get('make'),
+            'model': car_data.get('model'),
+            'trim': car_data.get('trim'),
+            'miles': car_data.get('miles2'),
+            'sale_price': car_data.get('sale_price', '010'),  # Test value
+            'status': car_data.get('status', 'Used'),
+            'mode_of_purchase': car_data.get('mode_of_purchase', 'Individual Seller'),
+            'zip_code': car_data.get('zip_code')
+        }
 
         # Append the data to the CSV
         with open(csv_file, mode='a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=['vin', 'make', 'model', 'year', 'miles', 'trim', 'zip_code'])
-            # Write the header if the file is new
-            if file.tell() == 0:
-                writer.writeheader()
-            writer.writerow(car_data)
+            writer = csv.DictWriter(file, fieldnames=['id', 'year', 'make', 'model', 'trim', 'miles', 'sale_price', 'status', 'zip_code'])
+            writer.writerow(row)
 
         return jsonify({"success": True, "message": "Car added successfully!"})
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
+
 
 #Compares the available cars to sold cars in order to add a column to the buy page displaying it
 #Uses startup_ran to only execute once, since flask discontinued start_before_request
