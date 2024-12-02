@@ -316,7 +316,7 @@
 <!--Script for available cars csv-->
 <script>
     loggedIn = false;
-    savedVehicleIds = [];
+    let savedVehicleIds = [];
     if (token) {
         console.log('Token (if=true):', token);
         fetch('/isValidToken', {
@@ -474,7 +474,7 @@ function renderTable() {
         console.log("saveButton.id: ",saveButton.id);
         console.log("typeof saveButton.id: ",typeof saveButton.id);
         console.log("typeof savedVehicleIDs[0]: ",typeof savedVehicleIds[0]);
-        if(savedVehicleIds.includes(saveButton.id)) {
+        if(savedVehicleIds.includes(parseInt(saveButton.id))) {
             console.log("Included");
             saveButton.textContent = 'Unsave';
             saveButton.addEventListener('click', unsaveHandler(saveButton)); // Correctly pass the handler
