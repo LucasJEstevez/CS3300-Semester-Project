@@ -443,7 +443,7 @@ function renderTable() {
         table = document.createElement("table");
         tableContainer.appendChild(table);
         // Add headers
-        const headers = Object.keys(buffer[0]);
+        const headers = Object.keys(buffer[0].slice(1));
         const headerRow = document.createElement("tr");
         headers.forEach(header => {
             const th = document.createElement("th");
@@ -470,7 +470,8 @@ function renderTable() {
         console.log("for each:",i);
 
         const row = document.createElement("tr");
-        Object.values(rowData).forEach(cellData => {
+
+        Object.values(rowData).slice(1).forEach(cellData => {
             const cell = document.createElement("td");
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
