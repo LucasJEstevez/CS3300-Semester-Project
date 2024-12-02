@@ -405,6 +405,40 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
+@app.route('/saveCar', method=['POST'])
+def saveCar():
+    data = request.get_json()
+    token = data.get('token')
+    carId = data.get('id')
+    if(token):
+
+        decoded = decode_token(token)
+        id = decoded.get('sub')
+
+        if isUserIdValid(id):
+            try: 
+                # Read the file
+                with open('User Data/saved_cars.csv', mode='r') as file:
+                    reader = csv.DictReader(file)
+                    rows = list(reader)
+
+                # Modify the rows
+                for row in rows:
+                    if row['User_ID'] == id:  # Ensure 'id' matches as a string
+                        car_ids = parseCarArray(row['Car_IDs'])
+                        car_ids.append(carId)  # Add the new car ID
+                        row['Car_IDs'] = str(car_ids)  # Update the Car_IDs field
+
+                # Write the updated data back to the file
+                with open('User Data/saved_cars.csv', mode='w', newline='') as file:
+                    writer = csv.DictWriter(file, fieldnames=rows[0].keys())
+                    writer.writeheader()
+                    writer.writerows(rows)
+
+            except FileNotFoundError:
+                return jsonify({"success":False, "message": "file not found"})
+            except Exception as e:
+                return jsonify({"success":False, "message": e})
 
 #Compares the available cars to sold cars in order to add a column to the buy page displaying it
 #Uses startup_ran to only execute once, since flask discontinued start_before_request
