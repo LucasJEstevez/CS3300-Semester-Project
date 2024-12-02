@@ -419,11 +419,12 @@ function renderTable() {
         const saveButton = document.createElement('button');
         saveButton.textContent = 'Save';
         saveButton.className = 'save-button';
+        saveButton.id = i;
 
         // Attach an event listener to the button, call function to save to user
         saveButton.addEventListener('click', () =>
         {
-            console.log('Save clicked for row:', i);
+            console.log('Save clicked for row:', saveButton.id);
         });
 
         newColumn.appendChild(saveButton);
