@@ -445,6 +445,7 @@ function renderTable() {
 
     rows.forEach(rowData => {
         i++;
+        console.log("for each:",i);
 
         const row = document.createElement("tr");
         Object.values(rowData).forEach(cellData => {
