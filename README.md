@@ -9,6 +9,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/LucasJEstevez/CS3300-Semester-Project">
+    <!-- Logo created by design.com at: https://www.design.com/ -->
     <img src="static/Images/logo.webp" alt="Logo" width="300" height="300">
   </a>
 </div>
