@@ -513,6 +513,13 @@ function renderTable() {
         saveButton.id = rowData.Vehicle_ID;
         console.log("saveButton.id=",saveButton.id);
 
+        // Create handler functions and store them on the button
+        button.saveHandler = () => saveCar(button);
+        button.unsaveHandler = () => unsaveCar(button);
+
+        // Initialize the button with the save handler
+        button.addEventListener('click', button.saveHandler);
+
         console.log("savedVehicleIds: ",savedVehicleIds);
 
         console.log("saveButton.id: ",saveButton.id);
