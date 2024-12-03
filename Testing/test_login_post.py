@@ -1,6 +1,6 @@
 """
 This test case was created mostly by using a template from ChatGPT, which was then modified to work with this specific feature case. In this case, we are testing the login POST request to see if the login 
-actually works. Test will run with "OK" output if the POST request is handled and login works.
+actually works. Test will run with "OK" as output if the POST request is handled and login works.
 Before running any test, open a terminal and change the working directory to the project root (CS3300-Semester-Project) and run: pip install -r requirements.txt
 Then, run the test by running (in the same open terminal): python -m unittest -v  Testing.test_login_post
 """
