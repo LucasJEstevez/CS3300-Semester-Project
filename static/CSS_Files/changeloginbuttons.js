@@ -1,3 +1,4 @@
+//If login is valid, change user buttons from Sign-in/Register to Saved Cars/Sign Out
 const token = localStorage.getItem("access_token");
 let loggedIn = false;
 
@@ -37,6 +38,7 @@ if (token) {
     });
 }
 
+//Signs user out of site
 function signOut(){
     localStorage.removeItem("access_token");
     window.location.href = "/";

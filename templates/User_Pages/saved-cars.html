@@ -360,6 +360,7 @@ window.onload = async function () {
     }
 };
 
+//Change buttons to user buttins instead of login buttons
 function setupButtons() {
     const signinButton = document.getElementById("sign-in_button");
     signinButton.innerHTML = 'Saved Cars';
@@ -374,6 +375,7 @@ function setupButtons() {
     };
 }
 
+//Sign user out of site
 function signOut(){
     localStorage.removeItem("access_token");
     window.location.href = "/";
@@ -440,8 +442,6 @@ function getSavedCars() {
                     step: function (row) {
                         const vehicleId = row.data.Vehicle_ID;
 
-                        // Only add rows to buffer if the ID is in allowedVehicleIds
-                        console.log("array right before includes stmt: ",savedVehicleIds);
                         if (savedVehicleIds.includes(vehicleId)) {
                             originalData.push(row.data);
                             buffer.push(row.data);
