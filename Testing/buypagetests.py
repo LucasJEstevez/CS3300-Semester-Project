@@ -1,6 +1,7 @@
 #This test was acquired from ChatGPT, playwright was decided on for its simplicity and lack of requirements compared to selenium and web drivers.
 #This test searches the buypage on the website and finds a certain dropdown menu and criteria, and returns with an error mismatch if the filtering failed
 #One problem encountered was that only the first page of rows is checked, this could be improved later with work but is confirmable by inspection right now
+#Open your terminal and open the folder that contains the app.py file, then the Testing folder. Then, run 'python buypagetests.py > buypageoutput.txt' to run and examine results
 
 from playwright.sync_api import sync_playwright
 
