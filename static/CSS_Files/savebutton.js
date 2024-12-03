@@ -1,9 +1,9 @@
 // Named function to handle saving a car
-function saveCar(button) {
+function saveCar(button, ids) {
     console.log("saveCar called");
     console.log("id being sent: ",button.id);
     
-    console.log("In saveCar, savedVehicleIds:",savedVehicleIds);
+    console.log("In saveCar, savedVehicleIds:",ids);
     fetch('/saveCar', {
         method: "POST",
         headers: {

@@ -473,44 +473,52 @@ def saveCar():
         return jsonify({"success": False, "message": "User not logged in"})
     
 @app.route('/unsaveCar', methods=['POST'])
-def unsaveCar():
+def saveCar():
     data = request.get_json()
     token = data.get('token')
     carId = data.get('id')
-    if(token):
 
+    if token:
         decoded = decode_token(token)
         id = decoded.get('sub')
 
         if isUserIdValid(id):
-            try: 
+            try:
                 # Read the file
                 with open('User Data/saved_cars.csv', mode='r') as file:
                     reader = csv.DictReader(file)
                     rows = list(reader)
 
-                # Modify the rows
+                # Define the desired fieldnames
+                fieldnames = ['User_ID', 'Car_IDs']  # Only include fields you want
+
+                # Rebuild rows with only desired fields
+                updated_rows = []
                 for row in rows:
                     if row['User_ID'] == id:  # Ensure 'id' matches as a string
                         car_ids = parseCarArray(row['Car_IDs'])
                         car_ids.remove(int(carId))  # Add the new car ID
                         car_ids = list(sorted(set(car_ids)))
                         row['Car_IDs'] = str(car_ids)  # Update the Car_IDs field
+                    
+                    # Build a new row with only the desired fields
+                    updated_row = {key: row[key] for key in fieldnames if key in row}
+                    updated_rows.append(updated_row)
 
                 # Write the updated data back to the file
                 with open('User Data/saved_cars.csv', mode='w', newline='') as file:
-                    writer = csv.DictWriter(file, fieldnames=rows[0].keys())
+                    writer = csv.DictWriter(file, fieldnames=fieldnames)
                     writer.writeheader()
-                    writer.writerows(rows)
-                
-                return jsonify({"success":True})
+                    writer.writerows(updated_rows)
+
+                return jsonify({"success": True})
 
             except FileNotFoundError:
-                return jsonify({"success":False, "message": "file not found"})
+                return jsonify({"success": False, "message": "file not found"})
             except Exception as e:
-                return jsonify({"success":False, "message": e})
+                return jsonify({"success": False, "message": str(e)})
     else:
-        return jsonify({"success":False,"message":"User not logged in"})
+        return jsonify({"success": False, "message": "User not logged in"})
 
 @app.route('/sellCar', methods=['POST'])
 def add_car():
