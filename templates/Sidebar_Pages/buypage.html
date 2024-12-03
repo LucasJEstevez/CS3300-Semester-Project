@@ -318,15 +318,15 @@
 
 <!--Script for available cars csv-->
 <script>
-    
-
     const csvUrl = "{{url_for('static', filename='cars/compared_available_cars.csv')}}"; // Replace with your fixed CSV URL
-
+    
+    //Variables for use in car data filtering and display
     let originalData = [];
     let buffer = []; // Stores loaded rows
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
+    //Variables for use in saving cars and user related functions
     let loggedIntoSite = false;
     let savedVehicleIds = [];
 
@@ -377,6 +377,7 @@
         console.log("before displayData call, savedVehicleIds: ",savedVehicleIds);
     });
     
+//Function to serve as the 'hub' for displaying and parsing the csv data.
 function displayData(){
     console.log("begin displayData, savedVehicleIds: ",);
     fetch(csvUrl)
@@ -390,18 +391,18 @@ function displayData(){
         })
         .then(csvText =>
         {
+            //Papa Parse function, made using documentation from https://www.papaparse.com/docs#
             Papa.parse(csvText,
             {
                 header: true,           // Use the first row as header
                 dynamicTyping: true,    // Convert data types automatically
                 worker: true,
-                step: function(row)
+                step: function(row) //Executes with each row
                 {   // Process each row as it's parsed
-                    originalData.push({ ...row.data });    
-                    //delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
+                    originalData.push({ ...row.data });
                     buffer.push(row.data);
                 },
-                complete: function()
+                complete: function() //Executes after parsing for the displayed page is complete
                 {
                     console.log("CSV parsing complete.");
                     totalPages = Math.ceil(buffer.length / rowsPerPage);
@@ -419,14 +420,13 @@ function displayData(){
 }
 
 // Add event listeners to dropdown items
+//Opening dropdown menus and calling function to filtering table when items are selected
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".dropdown-content a").forEach(item => {
         item.addEventListener("click", function() {
-            console.log("event listener reached for item:", item.textContent); //For the sake of testing
             const parentDropdown = this.closest(".dropdown-content");
             parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
-            this.classList.add("selected")
-            console.log("Selected item: ", this.textContent); //Testing that the correct item is logged
+            this.classList.add("selected");
             filterTable();
         });
     });
@@ -435,7 +435,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
 // Render table rows for the current page
 function renderTable() {
-
+    //Find the html container for the table
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
 
@@ -519,14 +519,16 @@ function renderTable() {
 //Pagination
 //Add pagination controls
 function renderPagination() {
+    //Create / find element for page numbers and traversal buttons
     const paginationContainer = document.getElementById("paginationContainer") || document.createElement("div");
     paginationContainer.id = "paginationContainer";
-    paginationContainer.innerHTML = ""; // Clear existing buttons
+    paginationContainer.innerHTML = ""; // Clear existing buttons to be remade for new page
 
     paginationContainer.style.marginTop = "20px";
     paginationContainer.style.marginBottom = "20px"
     paginationContainer.style.textAlign = "center";
 
+    //Creating previous button
     const prevButton = document.createElement("button");
     prevButton.id = "prevButton";
     prevButton.textContent = "Previous";
@@ -538,12 +540,14 @@ function renderPagination() {
     }
     paginationContainer.appendChild(prevButton);
 
+    //Creating info on current page and range
     const pageInfo = document.createElement("span");
     pageInfo.id = "pageInfo";
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
     pageInfo.style.margin = "0 10px";
     paginationContainer.appendChild(pageInfo);
 
+    //Creating next button
     const nextButton = document.createElement("button");
     nextButton.id = "nextButton";
     nextButton.textContent = "Next";
@@ -557,6 +561,7 @@ function renderPagination() {
 }
 
 // Function to change the page
+//Update the variable and call the render functions
 function changePage(offset)
 {
     currentPage += offset;
@@ -571,6 +576,7 @@ function filterTable()
 {
     console.log("filterTable called");
 
+    //Gather filter values from selections in dropdowns
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
@@ -588,6 +594,7 @@ function filterTable()
         const price = Number(row['Sale Price'] || "0");
         const miles = Number(row['Miles'] || "0");
 
+        //Return the matching rows
         return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
                (modelFilter === "" || model === modelFilter) &&
@@ -595,11 +602,9 @@ function filterTable()
                (miles >= minMilesFilter && miles <= maxMilesFilter);
     });
 
-    console.log("Filtered rows:", filteredRows); //Check the filtered results
-
     // Update buffer and reset pagination
     buffer = filteredRows.length > 0 ? filteredRows : [...originalData];
-    console.log("buffer:", buffer);
+
     currentPage = 1;
     totalPages = Math.ceil(filteredRows.length / rowsPerPage);
     renderTable();
