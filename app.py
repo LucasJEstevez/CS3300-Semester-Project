@@ -424,30 +424,6 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
-# Get cars a user is trying to sell
-@app.route('/getSaleCars', methods=['POST'])
-def getSaleCars():
-
-    # Get token from request
-    data = request.get_json()
-    token = data.get('token')
-    if(token):
-
-        # Decrypt token
-        decoded = decode_token(token)
-        id = decoded.get('sub')
-        if isUserIdValid(id):
-            carArray = getSaleIDArray(id)
-            if carArray != [-1]:
-                return jsonify({"isValid":True, "error":False, "carIdArray": carArray})
-            else:
-                return jsonify({"isValid":True, "error":True})
-        else:
-            return jsonify({"isValid":False, "message":"userIdInvalid"})
-    else:
-        return jsonify({"isValid":False, "message":"no token"})
-            
-
 @app.route('/saveCar', methods=['POST'])
 def saveCar():
     data = request.get_json()
