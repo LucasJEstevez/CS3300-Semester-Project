@@ -18,7 +18,8 @@
 }
 
 /*Change behavior/interaction with button*/
-/*Effects when hovering over button*/
+/*Effects when hovering over button
+NOTE - Stopped working after adding CSS extending. Kept in case a fix was found*/
 .user-button a:hover
 {
   background-color: #6d5f5f;
