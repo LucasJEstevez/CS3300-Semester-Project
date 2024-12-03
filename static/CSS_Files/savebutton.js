@@ -3,43 +3,72 @@ function saveCar(button, ids) {
     console.log("saveCar called");
     console.log("id being sent: ",button.id);
     
-    console.log("In saveCar, savedVehicleIds:",ids);
-    fetch('/saveCar', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({token: token,"id":button.id})
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        if (data.success) {
-
-            button.textContent = 'Unsave';
-            button.style.backgroundColor = 'lightgreen';
-
-            // You need to pass the same reference for removeEventListener
-            button.removeEventListener('click', button.saveHandler);
-            
-            // Add the new event listener for "Unsave"
-            button.addEventListener('click', button.unsaveHandler);
-        }
-        else{
-            if (data.message == "User not logged in") {
-                window.location.href = "/sign-in";
+    if (ids.includes(button.id)){
+        fetch('/saveCar', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({token: token,"id":button.id})
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        }
-    })
-    .catch(error => {
-        console.error('Error during request:', error);
-        console.error('Request failed: ' + error.message);
-    });
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+
+                button.textContent = 'Unsave';
+                button.style.backgroundColor = 'lightgreen';
+            }
+            else{
+                if (data.message == "User not logged in") {
+                    window.location.href = "/sign-in";
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error during request:', error);
+            console.error('Request failed: ' + error.message);
+        });
+    }
+
+    else {
+        fetch('/unsaveCar', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({token: token,"id":button.id})
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+
+                button.textContent = 'Save';
+                button.style.backgroundColor = '#615b5b';
+            }
+            else{
+                if (data.message == "User not logged in") {
+                    window.location.href = "/sign-in";
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error during request:', error);
+            console.error('Request failed: ' + error.message);
+        });
+    }
+
 }
 
 // Named function to handle unsaving a car
