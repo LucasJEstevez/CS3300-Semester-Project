@@ -1,9 +1,7 @@
 const token = localStorage.getItem("access_token");
 let loggedIn = false;
-console.log("Token (if=false):",token);
 
 if (token) {
-    console.log('Token (if=true):', token);
     fetch('/isValidToken', {
         method: "POST",
         headers: {
