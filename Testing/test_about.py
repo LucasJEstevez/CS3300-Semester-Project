@@ -1,8 +1,10 @@
 """
-This test case was created mostly by using a template from ChatGPT, which was then modified to work with this specific feature case
+This test case was created mostly by using a template from ChatGPT, which was then modified to work with this specific feature case. In this case, we are testing the
+functionality of our about page by ensuring the "About" title is displayed on the page. Test will run with "OK" as output if the about page is rendered correctly.
 Before running any test, open a terminal and change the working directory to the project root (CS3300-Semester-Project) and run: pip install -r requirements.txt
-Then, run the test by running (in the same open terminal): python -m unittest -v  Testing.testing
+Then, run the test by running (in the same open terminal): python -m unittest -v  Testing.test_about
 """
+
 
 import unittest
 import sys
