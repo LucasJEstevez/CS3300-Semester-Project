@@ -349,13 +349,11 @@
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 if (data.isValid) {
                     console.log("Logged In");
                     loggedIntoSite = true;
                     getSavedCars()
                         .then(savedVehicleIds =>{
-                            console.log("Saved Vehicle ID's: ",savedVehicleIds)
                             displayData();
                         })
                         .catch(error => {
@@ -373,7 +371,6 @@
             displayData();
         }
 
-        console.log("before displayData call, savedVehicleIds: ",savedVehicleIds);
     });
     
 //Get id numbers of saved cars
@@ -394,7 +391,6 @@ function getSavedCars() {
     })
     .then(data => {
         if (data.isValid) {
-            console.log("Array in getSavedCars:", data.carIdArray);
             return data.carIdArray; // Explicitly return the carIdArray
         } else {
             console.error("getSavedCars: Invalid data returned from server.");
@@ -407,12 +403,11 @@ function getSavedCars() {
     });
 }
 //Function to serve as the 'hub' for displaying and parsing the csv data.
+//Asyncronous idea from ChatGPT to ensure savedVehicleIds are loaded properly
 async function displayData() {
-    console.log("begin displayData, savedVehicleIds: ", savedVehicleIds);
     try {
         // Fetch the savedVehicleIds
         const savedVehicleIds = await getSavedCars(); // This now correctly resolves the array
-        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", savedVehicleIds); // Debugging to confirm array
 
         // Fetch the CSV data
         const response = await fetch(csvUrl);
@@ -488,7 +483,7 @@ function renderTable(savedVehicleIds) {
     const rows = buffer.slice(startIdx, endIdx);
     const originalDataRows = originalData.slice(startIdx,endIdx)
 
-
+    //For each row, append the cell data and save button
     rows.forEach(rowData => {
 
         const row = document.createElement("tr");
@@ -506,16 +501,10 @@ function renderTable(savedVehicleIds) {
         saveButton.textContent = 'Save';
         saveButton.className = 'save-button';
         saveButton.id = rowData.Vehicle_ID;
-        console.log("saveButton.id=",saveButton.id);
 
         // Initialize the button with the save handler
         saveButton.addEventListener('click', () => saveCar(saveButton, savedVehicleIds));
 
-        console.log("savedVehicleIds: ",savedVehicleIds);
-
-        console.log("saveButton.id: ",saveButton.id);
-        console.log("typeof saveButton.id: ",typeof saveButton.id);
-        console.log("typeof savedVehicleIDs[0]: ",typeof savedVehicleIds[0]);
         if(savedVehicleIds.includes(parseInt(saveButton.id))) {
             console.log("Included");
             saveButton.textContent = 'Unsave';
@@ -523,13 +512,6 @@ function renderTable(savedVehicleIds) {
         else{
             console.log("Not included");
         }
-
-        /*
-        // Attach an event listener to the button, call function to save to user
-        saveButton.addEventListener('click', () =>
-        {
-            console.log('Save clicked for id:', saveButton.id);
-        });*/
 
         newColumn.appendChild(saveButton);
         row.appendChild(newColumn);
@@ -610,7 +592,6 @@ function filterTable()
     const maxMilesFilter = Number(document.querySelector("#maxMilesDrop a.selected")?.textContent || "Infinity");
 
     // Apply filters to the originalData
-    console.log(originalData);
     const filteredRows = originalData.filter(row => {
         const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
@@ -680,12 +661,10 @@ function resetFilters()
 
 </script>
 <script>
-    // Named function to handle saving a car
+// Named function to handle saving a car
+//Adopted and modified from ChatGPT
 function saveCar(button, ids) {
-    console.log("saveCar called");
-    console.log("id being sent: ",button.id);
-    console.log("array: ",ids);
-    
+    //If the array of ids does not include the id from the clicked button
     if (!ids.includes(Number(button.id))){
         console.log("save");
         fetch('/saveCar', {
@@ -702,13 +681,14 @@ function saveCar(button, ids) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            //If logged in, push car to array of ids
             if (data.success) {
                 ids.push(Number(button.id));
                 button.textContent = 'Unsave';
                 button.style.backgroundColor = 'lightgreen';
             }
             else{
+                //If not logged in, redirect
                 if (data.message == "User not logged in") {
                     window.location.href = "/sign-in";
                 }
@@ -719,7 +699,7 @@ function saveCar(button, ids) {
             console.error('Request failed: ' + error.message);
         });
     }
-
+    //If the id is in the array, remove it from the array
     else {
         console.log("unsave");
         fetch('/unsaveCar', {
@@ -736,12 +716,13 @@ function saveCar(button, ids) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            //Remove from the array
             if (data.success) {
                 ids = ids.filter(num => num !== button.id);
                 button.textContent = 'Save';
                 button.style.backgroundColor = '#615b5b';
             }
+            //Handle error for if user is not logged in
             else{
                 if (data.message == "User not logged in") {
                     window.location.href = "/sign-in";
@@ -758,7 +739,6 @@ function saveCar(button, ids) {
 
 // Named function to handle unsaving a car
 function unsaveCar(button) {
-    console.log("unsaveCar function called");
     button.textContent = 'Save';
 
     // Remove the unsave handler and add the save handler
