@@ -518,7 +518,7 @@ function renderTable() {
         saveButton.unsaveHandler = () => unsaveCar(button);
 
         // Initialize the button with the save handler
-        button.addEventListener('click', button.saveHandler);
+        saveButton.addEventListener('click', button.saveHandler);
 
         console.log("savedVehicleIds: ",savedVehicleIds);
 
