@@ -4,7 +4,7 @@ function saveCar(button, ids) {
     console.log("id being sent: ",button.id);
     console.log("array: ",ids);
     
-    if (!ids.includes(button.id)){
+    if (!ids.includes(Number(button.id))){
         console.log("save");
         fetch('/saveCar', {
             method: "POST",
