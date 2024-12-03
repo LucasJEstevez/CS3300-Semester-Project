@@ -486,7 +486,7 @@ def saveCar():
     else:
         return jsonify({"success":False,"message":"User not logged in"})
     
-@app.route('unsaveCar', methods=['POST'])
+@app.route('/unsaveCar', methods=['POST'])
 def unsaveCar():
     data = request.get_json()
     token = data.get('token')
