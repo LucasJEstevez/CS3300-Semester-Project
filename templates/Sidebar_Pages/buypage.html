@@ -484,8 +484,8 @@ function renderTable() {
         console.log("saveButton.id=",saveButton.id);
 
         // Create handler functions and store them on the button
-        button.saveHandler = () => saveCar(button);
-        button.unsaveHandler = () => unsaveCar(button);
+        saveButton.saveHandler = () => saveCar(button);
+        saveButton.unsaveHandler = () => unsaveCar(button);
 
         // Initialize the button with the save handler
         button.addEventListener('click', button.saveHandler);
