@@ -339,8 +339,8 @@ window.onload = async function () {
 
         document.getElementById("welcome_header").innerHTML = `Welcome, ${validationData.username}!`;
         setupButtons();
-        const allowedVehicleIds = await getSavedCars();
-        loadCsvAndFilter(allowedVehicleIds);
+        const savedVehicleIds = await getSavedCars();
+        loadCsvAndFilter(savedVehicleIds);
     } catch (error) {
         console.error('Error during initialization:', error);
         document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
@@ -408,11 +408,11 @@ function getSavedCars() {
     let totalPages = 0;
 
     async function loadCsvAndFilter() {
-    let allowedVehicleIds = [];
+    let savedVehicleIds = [];
 
     try {
-        allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
-        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", allowedVehicleIds); // Debugging to confirm array
+        savedVehicleIds = await getSavedCars(); // This now correctly resolves the array
+        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", savedVehicleIds); // Debugging to confirm array
 
         fetch(csvUrl)
             .then(response => {
@@ -428,7 +428,7 @@ function getSavedCars() {
                         const vehicleId = row.data.Vehicle_ID;
 
                         // Only add rows to buffer if the ID is in allowedVehicleIds
-                        if (allowedVehicleIds.includes(vehicleId)) {
+                        if (savedVehicleIds.includes(vehicleId)) {
                             originalData.push(row.data);
                             buffer.push(row.data);
                         }
