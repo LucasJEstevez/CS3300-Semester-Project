@@ -22,11 +22,7 @@ function saveCar(button, ids) {
         .then(data => {
             console.log(data);
             if (data.success) {
-<<<<<<< Updated upstream
-                ids.push(button.id);
-=======
                 ids.append(number(button.id));
->>>>>>> Stashed changes
                 button.textContent = 'Unsave';
                 button.style.backgroundColor = 'lightgreen';
             }
