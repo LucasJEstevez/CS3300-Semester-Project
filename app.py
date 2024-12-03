@@ -491,7 +491,7 @@ def add_car():
         car_data = request.json
 
         #csv_file = "{{url_for('static', filename='cars/site_available_cars.csv')}}"
-        csv_file = os.path.join(app.root_path, 'static', 'cars', 'site_available_cars.csv')
+        csv_file = os.path.join(app.root_path, 'static', 'cars', 'compared_available_cars.csv')
 
         #Count the number of rows to make an accurate vehicle id
         try:
@@ -512,12 +512,13 @@ def add_car():
             'sale_price': car_data.get('sale_price', 10), # Test value
             'status': 'Used',
             'mode_of_purchase': 'Individual Seller',
-            'zip_code': car_data.get('zip_code')
+            'zip_code': car_data.get('zip_code'),
+            'recently_sold': 'N/A'
         }
 
         # Append the data to the CSV
         with open(csv_file, mode='a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=['id', 'year', 'make', 'model', 'trim', 'miles', 'sale_price', 'status', 'mode_of_purchase', 'zip_code'])
+            writer = csv.DictWriter(file, fieldnames=['id', 'year', 'make', 'model', 'trim', 'miles', 'sale_price', 'status', 'mode_of_purchase', 'zip_code', 'recently_sold'])
             writer.writerow(row)
 
         return jsonify({"success": True, "message": "Car added successfully!", "row": row})
