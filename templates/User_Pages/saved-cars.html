@@ -406,9 +406,9 @@ function getSavedCars() {
     let currentPage = 1;
     const rowsPerPage = 20;
     let totalPages = 0;
+    let savedVehicleIds = [];
 
     async function loadCsvAndFilter() {
-    let savedVehicleIds = [];
 
     try {
         savedVehicleIds = await getSavedCars(); // This now correctly resolves the array
