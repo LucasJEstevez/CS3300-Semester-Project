@@ -27,10 +27,15 @@ function saveCar(button) {
             // Add the new event listener for "Unsave"
             button.addEventListener('click', unsaveHandler(button));
         }
+        else{
+            if (data.message == "User not logged in") {
+                window.location.href = "/sign-in";
+            }
+        }
     })
     .catch(error => {
         console.error('Error during request:', error);
-        document.getElementById("welcome_header").innerHTML = 'Request failed: ' + error.message;
+        console.error('Request failed: ' + error.message);
     });
 }
 

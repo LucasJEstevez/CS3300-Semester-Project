@@ -483,6 +483,8 @@ def saveCar():
                 return jsonify({"success":False, "message": "file not found"})
             except Exception as e:
                 return jsonify({"success":False, "message": e})
+    else:
+        return jsonify({"success":False,"message":"User not logged in"})
 
 @app.route('/sellCar', methods=['POST'])
 def add_car():
