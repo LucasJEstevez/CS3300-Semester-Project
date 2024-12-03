@@ -3,7 +3,8 @@ This test case was created mostly by using a template from ChatGPT, which was th
 not only the speed of our price predictor (test result output includes time to execute test, therefore testing non-functional req of <5 second prediction), but
 also the case of handling invalid input (missing data, specifically with vin method of estimation). Test will run with "OK" as output if the POST request is 
 handled and failure message is returned.
-Before running any test, open a terminal and change the working directory to the project root (CS3300-Semester-Project) and run: pip install -r requirements.txt
+Before running any test, add the API key you were given by MarketCheck into line 86 of app.py; this will allow you to run price predictor tests. Ensure you replace this with the original
+code when done testing. Next, open a terminal and change the working directory to the project root (CS3300-Semester-Project) and run: pip install -r requirements.txt
 Then, run the test by running (in the same open terminal): python -m unittest -v  Testing.test_pp_vin_missing_data
 """
 
