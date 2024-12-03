@@ -412,7 +412,7 @@ function getSavedCars() {
 
     try {
         allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
-        console.log("Allowed Vehicle IDs:", allowedVehicleIds); // Debugging to confirm array
+        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", allowedVehicleIds); // Debugging to confirm array
 
         fetch(csvUrl)
             .then(response => {
