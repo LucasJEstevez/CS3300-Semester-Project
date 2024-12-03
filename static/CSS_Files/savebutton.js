@@ -2,8 +2,10 @@
 function saveCar(button, ids) {
     console.log("saveCar called");
     console.log("id being sent: ",button.id);
+    console.log("array: ",ids);
     
     if (ids.includes(button.id)){
+        console.log("save");
         fetch('/saveCar', {
             method: "POST",
             headers: {
@@ -37,6 +39,7 @@ function saveCar(button, ids) {
     }
 
     else {
+        console.log("unsave");
         fetch('/unsaveCar', {
             method: "POST",
             headers: {
