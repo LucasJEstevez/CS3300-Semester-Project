@@ -94,6 +94,10 @@ window.onload = function() {
         window.location.href = "/sign-in";
     }
 }
+function signOut(){
+    localStorage.removeItem("access_token");
+    window.location.href = "/";
+}
 function addCarToMarket(){
     const token = localStorage.getItem("access_token");
     if (!token) {
