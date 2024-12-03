@@ -412,7 +412,7 @@ function getSavedCars() {
 
     try {
         allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
-        console.log("Allowed Vehicle IDs:", allowedVehicleIds); // Debugging to confirm array
+        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", allowedVehicleIds); // Debugging to confirm array
 
         fetch(csvUrl)
             .then(response => {
@@ -429,7 +429,6 @@ function getSavedCars() {
 
                         // Only add rows to buffer if the ID is in allowedVehicleIds
                         if (allowedVehicleIds.includes(vehicleId)) {
-                            delete row.data.Vehicle_ID; // Remove the Vehicle_ID column
                             originalData.push(row.data);
                             buffer.push(row.data);
                         }
