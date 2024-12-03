@@ -2,6 +2,7 @@
 function saveCar(button) {
     console.log("id being sent: ",button.id);
     
+    console.log("In saveCar, savedVehicleIds:",savedVehicleIds);
     fetch('/saveCar', {
         method: "POST",
         headers: {

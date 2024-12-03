@@ -410,9 +410,9 @@ function getSavedCars() {
 async function displayData() {
     console.log("begin displayData, savedVehicleIds: ", savedVehicleIds);
     try {
-        // Fetch the allowedVehicleIds
-        const allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
-        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", allowedVehicleIds); // Debugging to confirm array
+        // Fetch the savedVehicleIds
+        const savedVehicleIds = await getSavedCars(); // This now correctly resolves the array
+        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", savedVehicleIds); // Debugging to confirm array
 
         // Fetch the CSV data
         const response = await fetch(csvUrl);
@@ -429,8 +429,8 @@ async function displayData() {
             step: function(row) {
                 const vehicleId = row.data.Vehicle_ID;
 
-                // Only add rows to buffer if the ID is in allowedVehicleIds
-                if (allowedVehicleIds.includes(vehicleId)) {
+                // Only add rows to buffer if the ID is in savedVehicleIds
+                if (savedVehicleIds.includes(vehicleId)) {
                     originalData.push(row.data);
                     buffer.push(row.data);
                 }
@@ -513,12 +513,8 @@ function renderTable() {
         saveButton.id = rowData.Vehicle_ID;
         console.log("saveButton.id=",saveButton.id);
 
-        // Create handler functions and store them on the button
-        saveButton.saveHandler = () => saveCar(button);
-        saveButton.unsaveHandler = () => unsaveCar(button);
-
         // Initialize the button with the save handler
-        saveButton.addEventListener('click', saveButton.saveHandler);
+        saveButton.addEventListener('click', saveCar());
 
         console.log("savedVehicleIds: ",savedVehicleIds);
 
@@ -528,12 +524,9 @@ function renderTable() {
         if(savedVehicleIds.includes(parseInt(saveButton.id))) {
             console.log("Included");
             saveButton.textContent = 'Unsave';
-            saveButton.addEventListener('click', unsaveHandler(saveButton)); // Correctly pass the handler
         } 
         else{
             console.log("Not included");
-            saveButton.textContent = 'Save';
-            saveButton.addEventListener('click', saveHandler(saveButton)); // Correctly pass the handler
         }
 
         /*
