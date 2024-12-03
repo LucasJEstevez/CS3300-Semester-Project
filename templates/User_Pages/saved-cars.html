@@ -435,7 +435,7 @@ function getSavedCars() {
                     complete: function () {
                         console.log("CSV parsing complete.");
                         totalPages = Math.ceil(buffer.length / rowsPerPage);
-                        renderTable();
+                        renderTable(savedVehicleIds);
                         renderPagination();
                     }
                 });
@@ -465,7 +465,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
 // Render table rows for the current page
-function renderTable() {
+function renderTable(savedVehicleIds) {
+    //Find the html container for the table
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
 
@@ -474,14 +475,13 @@ function renderTable() {
         table = document.createElement("table");
         tableContainer.appendChild(table);
         // Add headers
-        const headers = Object.keys(buffer[0]);
+        const headers = Object.keys(buffer[0]).slice(1);
         const headerRow = document.createElement("tr");
         headers.forEach(header => {
             const th = document.createElement("th");
             th.textContent = header;
             headerRow.appendChild(th);
         });
-
         table.appendChild(headerRow);
     }
 
@@ -493,28 +493,52 @@ function renderTable() {
     const startIdx = (currentPage - 1) * rowsPerPage;
     const endIdx = startIdx + rowsPerPage;
     const rows = buffer.slice(startIdx, endIdx);
+    const originalDataRows = originalData.slice(startIdx,endIdx)
+
 
     rows.forEach(rowData => {
+
         const row = document.createElement("tr");
-        Object.values(rowData).forEach(cellData => {
+        const desiredRowData = Object.values(rowData);
+
+        ((desiredRowData).slice(1)).forEach(cellData => {
             const cell = document.createElement("td");
             cell.textContent = cellData !== undefined ? cellData : '';
             row.appendChild(cell);
         });
-        // Add an unsave button cell to remove cars from a list
+
+        // Add a Save button cell to add cars to a list
         const newColumn = document.createElement('td');
-        const unsaveButton = document.createElement('button');
-        unsaveButton.textContent = 'Unsave';
-        unsaveButton.className = 'unsave-button';
-        unsaveButton.id = rowData.Vehicle_ID;
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save';
+        saveButton.className = 'save-button';
+        saveButton.id = rowData.Vehicle_ID;
+        console.log("saveButton.id=",saveButton.id);
 
-        // Attach an event listener to the button, call function to remove from list
-        unsaveButton.addEventListener('click', () =>
+        // Initialize the button with the save handler
+        saveButton.addEventListener('click', () => saveCar(saveButton, savedVehicleIds));
+
+        console.log("savedVehicleIds: ",savedVehicleIds);
+
+        console.log("saveButton.id: ",saveButton.id);
+        console.log("typeof saveButton.id: ",typeof saveButton.id);
+        console.log("typeof savedVehicleIDs[0]: ",typeof savedVehicleIds[0]);
+        if(savedVehicleIds.includes(parseInt(saveButton.id))) {
+            console.log("Included");
+            saveButton.textContent = 'Unsave';
+        } 
+        else{
+            console.log("Not included");
+        }
+
+        /*
+        // Attach an event listener to the button, call function to save to user
+        saveButton.addEventListener('click', () =>
         {
-            console.log('Unsave clicked for id:', rowData.id);
-        });
+            console.log('Save clicked for id:', saveButton.id);
+        });*/
 
-        newColumn.appendChild(unsaveButton);
+        newColumn.appendChild(saveButton);
         row.appendChild(newColumn);
 
         table.appendChild(row);
@@ -566,7 +590,7 @@ function renderPagination() {
 function changePage(offset)
 {
     currentPage += offset;
-    renderTable();
+    renderTable(savedVehicleIds);
     renderPagination();
 }
 
@@ -607,7 +631,7 @@ function filterTable()
 
     currentPage = 1;
     totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-    renderTable();
+    renderTable(savedVehicleIds);
     renderPagination();
 }
 
@@ -650,7 +674,7 @@ function resetFilters()
     buffer = [...originalData];
     currentPage = 1;
     totalPages = Math.ceil(buffer.length / rowsPerPage);
-    renderTable();
+    renderTable(savedVehicleIds);
     renderPagination();
 }
 
