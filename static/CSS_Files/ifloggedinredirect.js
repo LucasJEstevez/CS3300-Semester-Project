@@ -1,3 +1,5 @@
+//If the user is not logged into a page that requires a login, they will be redirected to the sign-in page
+
 const token = localStorage.getItem("access_token");
 let loggedIn = false;
 console.log("Token (if=false):",token);

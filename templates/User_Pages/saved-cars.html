@@ -360,6 +360,7 @@ window.onload = async function () {
     }
 };
 
+//Change buttons to user buttins instead of login buttons
 function setupButtons() {
     const signinButton = document.getElementById("sign-in_button");
     signinButton.innerHTML = 'Saved Cars';
@@ -374,6 +375,7 @@ function setupButtons() {
     };
 }
 
+//Sign user out of site
 function signOut(){
     localStorage.removeItem("access_token");
     window.location.href = "/";
