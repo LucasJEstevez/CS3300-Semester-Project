@@ -514,7 +514,7 @@ function renderTable() {
         console.log("saveButton.id=",saveButton.id);
 
         // Initialize the button with the save handler
-        saveButton.addEventListener('click', saveCar());
+        saveButton.addEventListener('click', saveCar(saveButton));
 
         console.log("savedVehicleIds: ",savedVehicleIds);
 
