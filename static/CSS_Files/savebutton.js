@@ -49,13 +49,3 @@ function unsaveCar(button) {
     button.removeEventListener('click', button.unsaveHandler);
     button.addEventListener('click', button.saveHandler);
 }
-
-// Attach event handlers
-document.querySelectorAll('.button').forEach(button => {
-    // Create handler functions and store them on the button
-    button.saveHandler = () => saveCar(button);
-    button.unsaveHandler = () => unsaveCar(button);
-
-    // Initialize the button with the save handler
-    button.addEventListener('click', button.saveHandler);
-});
