@@ -21,6 +21,9 @@
         <label for="model">Model:</label>
         <input type="text" id="model" name="model" >
 
+        <label for="sale_price">Price:</label>
+        <input type="number" id="sale_price" name="sale_price" >
+
         <br><br>
 
         <label for="year">Year:</label>
@@ -101,7 +104,8 @@ function addCarToMarket(){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({token: token, year:carData.year, make:carData.make, model:carData.model, miles:carData.miles, trim:carData.trim, zip_code:carData.zip_code})
+        body: JSON.stringify({token: token, year:carData.year, make:carData.make, model:carData.model,
+            miles:carData.miles, sale_price:carData.sale_price, trim:carData.trim, zip_code:carData.zip_code})
     })
         .then(response => {
             if (!response.ok) {

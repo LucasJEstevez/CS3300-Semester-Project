@@ -509,7 +509,7 @@ def add_car():
             'model': car_data.get('model'),
             'trim': car_data.get('trim'),
             'miles': car_data.get('miles'),
-            'sale_price': car_data.get('sale_price', 10), # Test value
+            'sale_price': car_data.get('sale_price', 0), # Test value
             'status': 'Used',
             'mode_of_purchase': 'Individual Seller',
             'zip_code': car_data.get('zip_code'),
