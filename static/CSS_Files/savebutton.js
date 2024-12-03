@@ -20,12 +20,13 @@ function saveCar(button) {
         if (data.success) {
 
             button.textContent = 'Unsave';
+            button.style.backgroundColor = 'lightgreen';
 
             // You need to pass the same reference for removeEventListener
-            button.removeEventListener('click', saveHandler(button));
+            button.removeEventListener('click', button.saveHandler);
             
             // Add the new event listener for "Unsave"
-            button.addEventListener('click', unsaveHandler(button));
+            button.addEventListener('click', button.unsaveHandler);
         }
         else{
             if (data.message == "User not logged in") {
@@ -39,28 +40,22 @@ function saveCar(button) {
     });
 }
 
-// Function that acts as a handler for the "Save" button
-function saveHandler(button) {
-    return function () {
-        saveCar(button);
-    };
-}
-
 // Named function to handle unsaving a car
 function unsaveCar(button) {
     console.log("unsaveCar function called");
     button.textContent = 'Save';
 
-    // You need to pass the same reference for removeEventListener
-    button.removeEventListener('click', unsaveHandler(button));
-
-    // Add the new event listener for "Save"
-    button.addEventListener('click', saveHandler(button));
+    // Remove the unsave handler and add the save handler
+    button.removeEventListener('click', button.unsaveHandler);
+    button.addEventListener('click', button.saveHandler);
 }
 
-// Function that acts as a handler for the "Unsave" button
-function unsaveHandler(button) {
-    return function () {
-        unsaveCar(button);
-    };
-}
+// Attach event handlers
+document.querySelectorAll('.button').forEach(button => {
+    // Create handler functions and store them on the button
+    button.saveHandler = () => saveCar(button);
+    button.unsaveHandler = () => unsaveCar(button);
+
+    // Initialize the button with the save handler
+    button.addEventListener('click', button.saveHandler);
+});

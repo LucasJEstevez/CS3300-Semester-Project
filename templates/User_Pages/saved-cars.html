@@ -507,6 +507,7 @@ function renderTable() {
         const unsaveButton = document.createElement('button');
         unsaveButton.textContent = 'Unsave';
         unsaveButton.className = 'unsave-button';
+        unsaveButton.id = rowData.Vehicle_ID;
 
         // Attach an event listener to the button, call function to remove from list
         unsaveButton.addEventListener('click', () =>
