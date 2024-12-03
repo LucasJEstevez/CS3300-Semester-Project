@@ -433,7 +433,7 @@ async function displayData() {
             complete: function() {
                 console.log("CSV parsing complete.");
                 totalPages = Math.ceil(buffer.length / rowsPerPage);
-                renderTable();
+                renderTable(savedVehicleIds);
                 renderPagination();
             }
         });
@@ -458,7 +458,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //The following code's framework was adapted and expanded upon from an initial idea from ChatGPT
 // Render table rows for the current page
-function renderTable() {
+function renderTable(savedVehicleIds) {
     //Find the html container for the table
     const tableContainer = document.getElementById("tableContainer");
     let table = tableContainer.querySelector("table");
@@ -589,7 +589,7 @@ function renderPagination() {
 function changePage(offset)
 {
     currentPage += offset;
-    renderTable();
+    renderTable(savedVehicleIds);
     renderPagination();
 }
 
@@ -631,7 +631,7 @@ function filterTable()
 
     currentPage = 1;
     totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-    renderTable();
+    renderTable(savedVehicleIds);
     renderPagination();
 }
 
@@ -674,7 +674,7 @@ function resetFilters()
     buffer = [...originalData];
     currentPage = 1;
     totalPages = Math.ceil(buffer.length / rowsPerPage);
-    renderTable();
+    renderTable(savedVehicleIds);
     renderPagination();
 }
 
