@@ -427,13 +427,8 @@ async function displayData() {
             dynamicTyping: true,
             worker: true,
             step: function(row) {
-                const vehicleId = row.data.Vehicle_ID;
-
-                // Only add rows to buffer if the ID is in savedVehicleIds
-                if (savedVehicleIds.includes(vehicleId)) {
-                    originalData.push(row.data);
-                    buffer.push(row.data);
-                }
+                originalData.push(row.data);
+                buffer.push(row.data);
             },
             complete: function() {
                 console.log("CSV parsing complete.");
