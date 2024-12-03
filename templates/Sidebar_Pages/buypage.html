@@ -328,11 +328,10 @@
     let totalPages = 0;
     //Variables for use in saving cars and user related functions
     let loggedIntoSite = false;
-    let savedVehicleIds = [];
+    let savedVehicleIds = getSavedCars();
 
     window.addEventListener("load", function()
     {
-    
         if (token) {
             console.log('Token (if=true):', token);
             fetch('/isValidToken', {
