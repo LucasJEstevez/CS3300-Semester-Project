@@ -399,7 +399,6 @@ function getSavedCars() {
     })
     .then(data => {
         if (data.isValid) {
-            console.log("Array in getSavedCars:", data.carIdArray);
             return data.carIdArray; // Explicitly return the carIdArray
         } else {
             console.error("getSavedCars: Invalid data returned from server.");
@@ -427,7 +426,6 @@ function getSavedCars() {
 
     try {
         savedVehicleIds = await getSavedCars(); // This now correctly resolves the array
-        console.log("Allowed Vehicle IDs in loadCsvAndFilter:", savedVehicleIds); // Debugging to confirm array
 
         fetch(csvUrl)
             .then(response => {
@@ -468,11 +466,9 @@ function getSavedCars() {
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".dropdown-content a").forEach(item => {
         item.addEventListener("click", function() {
-            console.log("event listener reached for item:", item.textContent); //For the sake of testing
             const parentDropdown = this.closest(".dropdown-content");
             parentDropdown.querySelectorAll("a").forEach(a => a.classList.remove("selected"));
             this.classList.add("selected")
-            console.log("Selected item: ", this.textContent); //Testing that the correct item is logged
             filterTable();
         });
     });
@@ -528,30 +524,13 @@ function renderTable(savedVehicleIds) {
         saveButton.textContent = 'Save';
         saveButton.className = 'save-button';
         saveButton.id = rowData.Vehicle_ID;
-        console.log("saveButton.id=",saveButton.id);
 
         // Initialize the button with the save handler
         saveButton.addEventListener('click', () => saveCar(saveButton, savedVehicleIds));
-
-        console.log("savedVehicleIds: ",savedVehicleIds);
-
-        console.log("saveButton.id: ",saveButton.id);
-        console.log("typeof saveButton.id: ",typeof saveButton.id);
-        console.log("typeof savedVehicleIDs[0]: ",typeof savedVehicleIds[0]);
+        
         if(savedVehicleIds.includes(parseInt(saveButton.id))) {
-            console.log("Included");
             saveButton.textContent = 'Unsave';
         } 
-        else{
-            console.log("Not included");
-        }
-
-        /*
-        // Attach an event listener to the button, call function to save to user
-        saveButton.addEventListener('click', () =>
-        {
-            console.log('Save clicked for id:', saveButton.id);
-        });*/
 
         newColumn.appendChild(saveButton);
         row.appendChild(newColumn);
@@ -624,7 +603,6 @@ function filterTable()
 
 
     // Apply filters to the originalData
-    console.log(originalData);
     const filteredRows = originalData.filter(row => {
         const year = row['Year'] || ""; //Match keys to your CSV headers
         const make = row['Make'] || "";
@@ -638,8 +616,6 @@ function filterTable()
                (price >= minPriceFilter && price <= maxPriceFilter) &&
                (miles >= minMilesFilter && miles <= maxMilesFilter);
     });
-
-    console.log("Filtered rows:", filteredRows); //Check the filtered results
 
     // Update buffer and reset pagination
     buffer = filteredRows.length > 0 ? filteredRows : [...originalData];
@@ -697,12 +673,8 @@ function resetFilters()
 <script>  
     // Named function to handle saving a car
     function saveCar(button, ids) {
-    console.log("saveCar called");
-    console.log("id being sent: ",button.id);
-    console.log("array: ",ids);
     
     if (!ids.includes(Number(button.id))){
-        console.log("save");
         fetch('/saveCar', {
             method: "POST",
             headers: {
@@ -717,7 +689,6 @@ function resetFilters()
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.success) {
                 ids.push(Number(button.id));
                 button.textContent = 'Unsave';
@@ -736,7 +707,6 @@ function resetFilters()
     }
 
     else {
-        console.log("unsave");
         fetch('/unsaveCar', {
             method: "POST",
             headers: {
@@ -751,7 +721,6 @@ function resetFilters()
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (data.success) {
                 ids = ids.filter(num => num !== button.id);
                 button.textContent = 'Save';
