@@ -186,6 +186,10 @@ To help us validate user-inputted emails (when creating an account), we used the
 
 Email-Validator Documentation: <https://pypi.org/project/email-validator/>
 
+# Testing
+
+To test certain functionalities of the project, you may navigate to the Testing directory in the root of the repository, open up a .py file, follow the instructions detailed in the documentation of the file, and run the tests you desire! You may also add any tests you create/run to this directory.
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/LucasJEstevez/CS3300-Semester-Project.svg?style=for-the-badge
