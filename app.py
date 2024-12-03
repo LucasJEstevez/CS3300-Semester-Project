@@ -82,8 +82,8 @@ def price_prediction():
             return render_template('index.html', error=error)
 
     # Retrieve API key from environment variable 
-    # When testing price predictor, ensure you replace os.environ.get('API_KEY') with the actual key you were given for tests to run
-    key = 'lUtIJdzuVMCIcxh4DlGneYNZHIBb7sVS'  # Ensure your API key is set as an environment variable
+    # When testing price predictor, ensure you replace os.environ.get('API_KEY') with the actual key you were given for tests to run (in single quotes)
+    key = os.environ.get('API_KEY')  # Ensure your API key is set as an environment variable
 
     # Construct the URL for the API request 
     url = construct_url(car_info, key)
@@ -289,23 +289,6 @@ def getCarIDArray(user_id):
         print(f"Unexpected error in getCarIDArray: {e}")
         return [-1]
     
-def getSaleIDArray(user_id):
-    try: 
-        with open('User Data/saved_cars.csv', mode='r') as file:
-            csvReader = csv.DictReader(file)
-
-            for row in csvReader:
-                if int(row['User_ID']) == int(user_id):
-                    carIds = parseCarArray(row['Sell_IDs'])
-                    return carIds
-            return [-1]
-    except FileNotFoundError:
-        print("CSV file not found")
-        return [-1]
-    except Exception as e:
-        print(f"Unexpected error in getCarIDArray: {e}")
-        return [-1]
-
 # Handles POST request for login
 @app.route('/login', methods=['POST'])
 def login():
@@ -333,7 +316,7 @@ def login():
     # Successful login, return token and success message
     token = create_access_token(
         identity=str(user_id),
-        expires_delta=datetime.timedelta(hours=2)
+        expires_delta=datetime.timedelta(hours=2) # Amount of time the token is valid for
     )
     return jsonify(access_token=token,message="Login successful!"), 200
 
@@ -375,7 +358,7 @@ def register():
     # Create token to send to browser
     token = create_access_token(
         identity=str(user_id),
-        expires_delta=datetime.timedelta(hours=2)
+        expires_delta=datetime.timedelta(hours=2) # Amount of time the token is valid for
     )
     
     # Send valid response to frontend
@@ -413,6 +396,8 @@ def getSavedCars():
         # Decrypt token
         decoded = decode_token(token)
         id = decoded.get('sub')
+
+        # Is the login valid?
         if isUserIdValid(id):
             carArray = getCarIDArray(id)
             if carArray != [-1]:
@@ -424,6 +409,7 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
+# Add new car id to user's saved car array
 @app.route('/saveCar', methods=['POST'])
 def saveCar():
     data = request.get_json()
@@ -472,6 +458,7 @@ def saveCar():
     else:
         return jsonify({"success": False, "message": "User not logged in"})
     
+# Remove car id from user's saved array
 @app.route('/unsaveCar', methods=['POST'])
 def unsaveCar():
     data = request.get_json()
@@ -520,6 +507,7 @@ def unsaveCar():
     else:
         return jsonify({"success": False, "message": "User not logged in"})
 
+# Adds car to sale csv
 @app.route('/sellCar', methods=['POST'])
 def add_car():
     try:
