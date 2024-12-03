@@ -422,6 +422,7 @@ function getSavedCars() {
     let totalPages = 0;
     let savedVehicleIds = [];
 
+    //Asyncronous idea from ChatGPT to ensure savedVehicleIds are loaded properly
     async function loadCsvAndFilter() {
 
     try {
@@ -440,6 +441,7 @@ function getSavedCars() {
                     step: function (row) {
                         const vehicleId = row.data.Vehicle_ID;
 
+                        // Only add rows to buffer if the ID is in allowedVehicleIds
                         if (savedVehicleIds.includes(vehicleId)) {
                             originalData.push(row.data);
                             buffer.push(row.data);
@@ -506,7 +508,7 @@ function renderTable(savedVehicleIds) {
     const rows = buffer.slice(startIdx, endIdx);
     const originalDataRows = originalData.slice(startIdx,endIdx)
 
-
+   //For each row, append the cell data and save button
     rows.forEach(rowData => {
 
         const row = document.createElement("tr");
@@ -527,10 +529,12 @@ function renderTable(savedVehicleIds) {
 
         // Initialize the button with the save handler
         saveButton.addEventListener('click', () => saveCar(saveButton, savedVehicleIds));
-        
         if(savedVehicleIds.includes(parseInt(saveButton.id))) {
             saveButton.textContent = 'Unsave';
         } 
+        else{
+            console.log("Not included");
+        }
 
         newColumn.appendChild(saveButton);
         row.appendChild(newColumn);
@@ -551,6 +555,7 @@ function renderPagination() {
     paginationContainer.style.marginBottom = "20px"
     paginationContainer.style.textAlign = "center";
 
+    //creating previous button
     const prevButton = document.createElement("button");
     prevButton.id = "prevButton";
     prevButton.textContent = "Previous";
@@ -562,12 +567,14 @@ function renderPagination() {
     }
     paginationContainer.appendChild(prevButton);
 
+    //Creating current and max page info
     const pageInfo = document.createElement("span");
     pageInfo.id = "pageInfo";
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
     pageInfo.style.margin = "0 10px";
     paginationContainer.appendChild(pageInfo);
 
+    //Creating next button
     const nextButton = document.createElement("button");
     nextButton.id = "nextButton";
     nextButton.textContent = "Next";
@@ -593,6 +600,7 @@ function changePage(offset)
 // Filter table based on dropdown selections
 function filterTable()
 {
+    //Gather filter values from dropdown menus
     const yearFilter = document.querySelector("#yearDrop a.selected")?.textContent || "";
     const makeFilter = document.querySelector("#makeDrop a.selected")?.textContent || "";
     const modelFilter = document.querySelector("#modelDrop a.selected")?.textContent || "";
@@ -610,6 +618,7 @@ function filterTable()
         const price = Number(row['Sale Price'] || "0");
         const miles = Number(row['Miles'] || "0");
 
+        //Return the filtered rows
         return (yearFilter === "" || year.toString() === yearFilter) &&
                (makeFilter === "" || make === makeFilter) &&
                (modelFilter === "" || model === modelFilter) &&
@@ -671,9 +680,10 @@ function resetFilters()
 
 </script>
 <script>  
-    // Named function to handle saving a car
-    function saveCar(button, ids) {
-    
+// Named function to handle saving a car
+//Adopted and modified from ChatGPT
+function saveCar(button, ids) {
+    //If the array of ids does not include the id from the clicked button
     if (!ids.includes(Number(button.id))){
         fetch('/saveCar', {
             method: "POST",
@@ -689,12 +699,14 @@ function resetFilters()
             return response.json();
         })
         .then(data => {
+            //If logged in, push car to array of ids
             if (data.success) {
                 ids.push(Number(button.id));
                 button.textContent = 'Unsave';
                 button.style.backgroundColor = 'lightgreen';
             }
             else{
+                //If not logged in, redirect
                 if (data.message == "User not logged in") {
                     window.location.href = "/sign-in";
                 }
@@ -705,7 +717,7 @@ function resetFilters()
             console.error('Request failed: ' + error.message);
         });
     }
-
+    //If the id is in the array, remove it from the array
     else {
         fetch('/unsaveCar', {
             method: "POST",
@@ -721,11 +733,13 @@ function resetFilters()
             return response.json();
         })
         .then(data => {
+            //Remove from the array
             if (data.success) {
                 ids = ids.filter(num => num !== button.id);
                 button.textContent = 'Save';
                 button.style.backgroundColor = '#615b5b';
             }
+            //Handle error for if user is not logged in
             else{
                 if (data.message == "User not logged in") {
                     window.location.href = "/sign-in";
