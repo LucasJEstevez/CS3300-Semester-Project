@@ -407,45 +407,44 @@ function getSavedCars() {
     });
 }
 //Function to serve as the 'hub' for displaying and parsing the csv data.
-async function displayData(){
-    console.log("begin displayData, savedVehicleIds: ",);
+async function displayData() {
+    console.log("begin displayData, savedVehicleIds: ", savedVehicleIds);
     try {
-        allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
+        // Fetch the allowedVehicleIds
+        const allowedVehicleIds = await getSavedCars(); // This now correctly resolves the array
         console.log("Allowed Vehicle IDs in loadCsvAndFilter:", allowedVehicleIds); // Debugging to confirm array
 
-        fetch(csvUrl)
-            .then(response => {
-                if (!response.ok) throw new Error("Network response was not ok");
-                return response.text();
-            })
-            .then(csvText => {
-                Papa.parse(csvText, {
-                    header: true,
-                    dynamicTyping: true,
-                    worker: true,
-                    step: function (row) {
-                        const vehicleId = row.data.Vehicle_ID;
+        // Fetch the CSV data
+        const response = await fetch(csvUrl);
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const csvText = await response.text();
 
-                        // Only add rows to buffer if the ID is in allowedVehicleIds
-                        if (allowedVehicleIds.includes(vehicleId)) {
-                            originalData.push(row.data);
-                            buffer.push(row.data);
-                        }
-                    },
-                    complete: function () {
-                        console.log("CSV parsing complete.");
-                        totalPages = Math.ceil(buffer.length / rowsPerPage);
-                        renderTable();
-                        renderPagination();
-                    }
-                });
-            })
-            .catch(error => {
-                console.error("Error fetching the CSV file:", error);
-                document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
-            });
+        // Parse the CSV text
+        Papa.parse(csvText, {
+            header: true,
+            dynamicTyping: true,
+            worker: true,
+            step: function(row) {
+                const vehicleId = row.data.Vehicle_ID;
+
+                // Only add rows to buffer if the ID is in allowedVehicleIds
+                if (allowedVehicleIds.includes(vehicleId)) {
+                    originalData.push(row.data);
+                    buffer.push(row.data);
+                }
+            },
+            complete: function() {
+                console.log("CSV parsing complete.");
+                totalPages = Math.ceil(buffer.length / rowsPerPage);
+                renderTable();
+                renderPagination();
+            }
+        });
     } catch (error) {
         console.error("Error in loadCsvAndFilter:", error);
+        document.getElementById("tableContainer").innerHTML = "<p>Failed to load CSV file.</p>";
     }
 }
 
