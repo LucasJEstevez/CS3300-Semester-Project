@@ -401,6 +401,7 @@ def isValidToken():
     else:
         return jsonify({"isValid":False})
 
+# Get array of saved cars for a specified user
 @app.route('/getSavedCars', methods=['POST'])
 def getSavedCars():
 
@@ -423,6 +424,7 @@ def getSavedCars():
     else:
         return jsonify({"isValid":False, "message":"no token"})
 
+# Get cars a user is trying to sell
 @app.route('/getSaleCars', methods=['POST'])
 def getSaleCars():
 
