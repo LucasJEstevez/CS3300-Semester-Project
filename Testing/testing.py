@@ -1,7 +1,9 @@
-# These test cases were created mostly by using a template from ChatGPT, which was then modified to work with our specific feature cases
-# Before running any tests, open a terminal and change the working dircetory to the project root (CS3300-Semester-Project) and run: pip install -r requirements.txt
-# Then, run these test by running (in the same open terminal): python -m unittest -v  Testing.testing
-
+"""
+These test cases were created mostly by using a template from ChatGPT, which was then modified to work with our specific feature cases
+this Python file was the original file with most of our tests, but we split these into individual unit tests.
+Before running any tests, open a terminal and change the working dircetory to the project root (CS3300-Semester-Project) and run: pip install -r requirements.txt
+Then, run these test by running (in the same open terminal): python -m unittest -v  Testing.testing
+"""
 
 import unittest
 import sys
