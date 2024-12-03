@@ -658,13 +658,13 @@ function resetFilters()
 
 </script>
 <script>  
-// Named function to handle saving a car
-function saveCar(button, ids) {
+    // Named function to handle saving a car
+    function saveCar(button, ids) {
     console.log("saveCar called");
     console.log("id being sent: ",button.id);
     console.log("array: ",ids);
     
-    if (!ids.includes(button.id)){
+    if (!ids.includes(Number(button.id))){
         console.log("save");
         fetch('/saveCar', {
             method: "POST",
@@ -682,7 +682,7 @@ function saveCar(button, ids) {
         .then(data => {
             console.log(data);
             if (data.success) {
-                ids.append(number(button.id));
+                ids.push(Number(button.id));
                 button.textContent = 'Unsave';
                 button.style.backgroundColor = 'lightgreen';
             }
@@ -716,7 +716,6 @@ function saveCar(button, ids) {
         .then(data => {
             console.log(data);
             if (data.success) {
-                ids.remove(button.id);
                 ids = ids.filter(num => num !== button.id);
                 button.textContent = 'Save';
                 button.style.backgroundColor = '#615b5b';
