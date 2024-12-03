@@ -428,6 +428,7 @@ function getSavedCars() {
                         const vehicleId = row.data.Vehicle_ID;
 
                         // Only add rows to buffer if the ID is in allowedVehicleIds
+                        console.log("array right before includes stmt: ",savedVehicleIds);
                         if (savedVehicleIds.includes(vehicleId)) {
                             originalData.push(row.data);
                             buffer.push(row.data);
