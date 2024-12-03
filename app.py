@@ -485,6 +485,46 @@ def saveCar():
                 return jsonify({"success":False, "message": e})
     else:
         return jsonify({"success":False,"message":"User not logged in"})
+    
+@app.route('unsaveCar', methods=['POST'])
+def unsaveCar():
+    data = request.get_json()
+    token = data.get('token')
+    carId = data.get('id')
+    if(token):
+
+        decoded = decode_token(token)
+        id = decoded.get('sub')
+
+        if isUserIdValid(id):
+            try: 
+                # Read the file
+                with open('User Data/saved_cars.csv', mode='r') as file:
+                    reader = csv.DictReader(file)
+                    rows = list(reader)
+
+                # Modify the rows
+                for row in rows:
+                    if row['User_ID'] == id:  # Ensure 'id' matches as a string
+                        car_ids = parseCarArray(row['Car_IDs'])
+                        car_ids.remove(int(carId))  # Add the new car ID
+                        car_ids = list(sorted(set(car_ids)))
+                        row['Car_IDs'] = str(car_ids)  # Update the Car_IDs field
+
+                # Write the updated data back to the file
+                with open('User Data/saved_cars.csv', mode='w', newline='') as file:
+                    writer = csv.DictWriter(file, fieldnames=rows[0].keys())
+                    writer.writeheader()
+                    writer.writerows(rows)
+                
+                return jsonify({"success":True})
+
+            except FileNotFoundError:
+                return jsonify({"success":False, "message": "file not found"})
+            except Exception as e:
+                return jsonify({"success":False, "message": e})
+    else:
+        return jsonify({"success":False,"message":"User not logged in"})
 
 @app.route('/sellCar', methods=['POST'])
 def add_car():

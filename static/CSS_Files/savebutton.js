@@ -1,5 +1,6 @@
 // Named function to handle saving a car
 function saveCar(button) {
+    console.log("saveCar called");
     console.log("id being sent: ",button.id);
     
     console.log("In saveCar, savedVehicleIds:",savedVehicleIds);
