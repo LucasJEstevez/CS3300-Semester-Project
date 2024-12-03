@@ -22,7 +22,7 @@ function saveCar(button, ids) {
         .then(data => {
             console.log(data);
             if (data.success) {
-                ids.push(button.id);
+                ids.append(number(button.id));
                 button.textContent = 'Unsave';
                 button.style.backgroundColor = 'lightgreen';
             }
