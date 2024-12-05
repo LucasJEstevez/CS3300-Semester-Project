@@ -107,7 +107,7 @@ From there, feel free to add to, delete, and create any files in the repository 
 # User Usage
 
 1. Once the web service is deployed, all the user needs to access the service is a link to the website (which if you are a developer, you can find on your Render Dashboard).
-2. Users visit <https://cs3300-semester-project-ekbv.onrender.com>.
+2. Users visit <[https://cs3300-semester-project-ekbv.onrender.com](https://official-deploy-test.onrender.com)>.
 3. Unregistered users can browse available cars and navigate to all pages except for the sell page and saved cars page.
     - If a user is trying to access the sell page without being logged in, it will re-direct to the login/register pages.
     - Users can login/register using a username and/or valid email and password (which is hashed with BCrypt).
